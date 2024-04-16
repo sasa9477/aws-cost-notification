@@ -8,13 +8,17 @@ export class AwsCostNotificationStack extends cdk.Stack {
 
     const lambdaRole = new cdk.aws_iam.Role(this, "CostNotificationLambdaRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
+      inlinePolicies: {
+        CostExplorerPolicy: new cdk.aws_iam.PolicyDocument({
+          statements: [
+            new cdk.aws_iam.PolicyStatement({
+              actions: ["ce:GetCostAndUsage"],
+              resources: ["*"],
+            }),
+          ],
+        }),
+      },
     });
-    lambdaRole.addToPrincipalPolicy(
-      new cdk.aws_iam.PolicyStatement({
-        actions: ["ce:GetCostAndUsage"],
-        resources: ["*"],
-      }),
-    );
 
     const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "CostNotificationLambda", {
       entry: path.join(__dirname, "./lambda/cost-notification-lambda.ts"),

@@ -36,17 +36,21 @@ describe("AWS Cost Notification", () => {
   });
 
   test("ラムダ関数に ce:GetCostAndUsage のアクションが許可されている", () => {
-    const ceGetCostAndUsagePolicies = template.findResources("AWS::IAM::Policy", {
+    const ceGetCostAndUsagePolicies = template.findResources("AWS::IAM::Role", {
       Properties: {
-        PolicyDocument: {
-          Statement: [
-            {
-              Action: "ce:GetCostAndUsage",
-              Effect: "Allow",
-              Resource: "*",
+        Policies: [
+          {
+            PolicyDocument: {
+              Statement: [
+                {
+                  Action: "ce:GetCostAndUsage",
+                  Effect: "Allow",
+                  Resource: "*",
+                },
+              ],
             },
-          ],
-        },
+          },
+        ],
       },
     });
 
