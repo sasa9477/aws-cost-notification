@@ -7,8 +7,10 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
+    "clean": "tsc --build --clean",
     "test": "jest",
     "cdk": "cdk",
+    "prepare": "husky install",
     "synth": "cdk synth",
     "deploy": "cdk deploy",
     "destory": "cdk destory"
@@ -17,7 +19,9 @@
     "@types/jest": "^29.5.12",
     "@types/node": "20.11.30",
     "aws-cdk": "2.137.0",
+    "cdk-nag": "^2.28.90",
     "esbuild": "^0.20.2",
+    "husky": "^9.0.11",
     "jest": "^29.7.0",
     "prettier": "^3.2.5",
     "ts-jest": "^29.1.2",
