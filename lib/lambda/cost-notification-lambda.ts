@@ -4,15 +4,13 @@ import dayjs from "dayjs";
 const client = new CostExplorerClient({ region: "us-east-1" });
 
 export const handler = async (event: any): Promise<any> => {
-  const { startDate, endDate } = await getDateRange();
-  const totalBilling = await getTotalBilling({ startDate, endDate });
-  const servicesBilling = await getServiceBillings({ startDate, endDate });
+  const { startDate, endDate } = getDateRange();
+  const totalBilling = await getTotalBilling(startDate, endDate);
+  const servicesBilling = await getServiceBillings(startDate, endDate);
 
   const message = `
-期間: ${dayjs(totalBilling.startTime).format("YYYY/MM/DD")} - ${dayjs(totalBilling.endTime).format("YYYY/MM/DD")}
-合計請求額: ${totalBilling.totalBilling} USD
-サービス別請求額:
-${servicesBilling?.map((service) => `${service.serviceName}: ${service.billing} USD`).join("\n")}
+${dayjs(startDate).format("MM/DD")} - ${dayjs(endDate).subtract(1, "day").format("MM/DD")} の請求額は ${totalBilling.totalBilling} USD です。
+${servicesBilling?.map((service) => ` ・${service.serviceName}: ${service.billing} USD`).join("\n")}
 `;
 
   const res = await postLine({ message: message.trim() });
@@ -26,11 +24,14 @@ ${servicesBilling?.map((service) => `${service.serviceName}: ${service.billing} 
   };
 };
 
-async function getDateRange() {
+/**
+ * 取得する期間の開始日と終了日を取得する
+ */
+function getDateRange() {
   const begginningOfMonth = dayjs().startOf("month").format("YYYY-MM-DD");
   const today = dayjs().format("YYYY-MM-DD");
 
-  // 今日が月初めの場合、先月の月初めから今日までの期間を取得
+  // 今日が月初めの場合、先月の月初めから今日までの期間を取得する
   if (today === begginningOfMonth) {
     const begginningOfLastMonth = dayjs().subtract(1, "month").startOf("month").format("YYYY-MM-DD");
     return {
@@ -44,7 +45,10 @@ async function getDateRange() {
   };
 }
 
-async function getTotalBilling({ startDate, endDate }: { startDate: string; endDate: string }) {
+/**
+ * 合計請求額を取得する
+ */
+async function getTotalBilling(startDate: string, endDate: string) {
   const res = await client.send(
     new GetCostAndUsageCommand({
       TimePeriod: {
@@ -53,7 +57,6 @@ async function getTotalBilling({ startDate, endDate }: { startDate: string; endD
       },
       Granularity: "MONTHLY",
       Metrics: ["AmortizedCost"],
-      // Metrics: ["BlendedCost"],
     }),
   );
 
@@ -63,11 +66,14 @@ async function getTotalBilling({ startDate, endDate }: { startDate: string; endD
   return {
     startTime: res.ResultsByTime[0].TimePeriod?.Start,
     endTime: res.ResultsByTime[0].TimePeriod?.End,
-    totalBilling: res.ResultsByTime[0].Total?.AmortizedCost?.Amount,
+    totalBilling: roundUpToDigit(Number(res.ResultsByTime[0].Total?.AmortizedCost?.Amount), 2),
   };
 }
 
-async function getServiceBillings({ startDate, endDate }: { startDate: string; endDate: string }) {
+/**
+ * サービスごとの請求額を取得する
+ */
+async function getServiceBillings(startDate: string, endDate: string) {
   const res = await client.send(
     new GetCostAndUsageCommand({
       TimePeriod: {
@@ -91,18 +97,25 @@ async function getServiceBillings({ startDate, endDate }: { startDate: string; e
 
   return res.ResultsByTime[0].Groups?.map((group) => ({
     serviceName: group.Keys?.[0],
-    billing: group.Metrics?.AmortizedCost?.Amount,
-  }));
+    billing: roundUpToDigit(Number(group.Metrics?.AmortizedCost?.Amount), 2),
+  }))
+    .filter(({ billing }) => billing > 0)
+    .sort((a, b) => b.billing - a.billing);
 }
 
-async function postLine({ message }: { message: string }) {
-  // const totalBilling = await getTotalBilling();
-  // const servicesBilling = await getServicesBillings();
-  // console.log(totalBilling);
-  // console.log(servicesBilling);
+/**
+ * 指定した桁数に値を切り上げる
+ */
+function roundUpToDigit(num: number, digit: number) {
+  return Math.ceil(num * Math.pow(10, digit)) / Math.pow(10, digit);
+}
 
-  // https://notify-bot.line.me/doc/ja/
-  return await fetch("https://notify-api.line.me/api/notify", {
+/**
+ * Line にメッセージを送信する
+ * @see https://notify-bot.line.me/doc/ja/
+ */
+async function postLine({ message }: { message: string }) {
+  return await /** global-fetch */ fetch("https://notify-api.line.me/api/notify", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${process.env.LINE_NOTIFY_TOKEN}`,

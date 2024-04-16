@@ -6,6 +6,8 @@ export class AwsCostNotificationStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
+    const { accountId } = new cdk.ScopedAws(this);
+
     const lambdaRole = new cdk.aws_iam.Role(this, "CostNotificationLambdaRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
       inlinePolicies: {
@@ -13,7 +15,8 @@ export class AwsCostNotificationStack extends cdk.Stack {
           statements: [
             new cdk.aws_iam.PolicyStatement({
               actions: ["ce:GetCostAndUsage"],
-              resources: ["*"],
+              effect: cdk.aws_iam.Effect.ALLOW,
+              resources: [`arn:aws:ce:us-east-1:${accountId}:/GetCostAndUsage`],
             }),
           ],
         }),
@@ -47,5 +50,23 @@ export class AwsCostNotificationStack extends cdk.Stack {
       }),
       targets: [new cdk.aws_events_targets.LambdaFunction(lambda)],
     });
+
+    // const schedulerRole = new cdk.aws_iam.Role(this, "CostNotificationSchedulerRole", {
+    //   assumedBy: new cdk.aws_iam.ServicePrincipal("scheduler.amazonaws.com"),
+    //   managedPolicies: [cdk.aws_iam.ManagedPolicy.fromAwsManagedPolicyName("AWSLambdaBasicExecutionRole")],
+    // });
+
+    // // 月曜日の 10 時に 1回実行する
+    // new cdk.aws_scheduler.CfnSchedule(this, "CostNotificationSchedule", {
+    //   scheduleExpression: "cron(0 10 ? * 1 *)",
+    //   scheduleExpressionTimezone: "Asia/Tokyo",
+    //   flexibleTimeWindow: {
+    //     mode: "OFF",
+    //   },
+    //   target: {
+    //     arn: lambda.functionArn,
+    //     roleArn: schedulerRole.roleArn,
+    //   },
+    // });
   }
 }

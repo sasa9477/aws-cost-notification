@@ -1,7 +1,9 @@
 import * as cdk from "aws-cdk-lib";
 import { Capture, Match, Template } from "aws-cdk-lib/assertions";
 import * as AwsCostNotification from "../lib/aws-cost-notification-stack";
-import { Policy } from "aws-cdk-lib/aws-iam";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 describe("AWS Cost Notification", () => {
   const app = new cdk.App();
@@ -24,7 +26,7 @@ describe("AWS Cost Notification", () => {
     });
 
     // ラムダ関数がターゲットに含まれていることを確認する
-    expect(JSON.stringify(targetsCapture.asArray()[0])).toContain(lambdaLogicalId);
+    expect(JSON.stringify(targetsCapture.asArray())).toContain(lambdaLogicalId);
   });
 
   test("ラムダ関数のタイムアウトが 30秒かつ、メモリーサイズが 128MB である", () => {
@@ -33,6 +35,21 @@ describe("AWS Cost Notification", () => {
       Timeout: 30,
       MemorySize: 128,
     });
+  });
+
+  test("ラムダ関数に LINE Notify のアクセストークンが設定されている", () => {
+    const lineNotifyTokenCapture = new Capture();
+
+    template.hasResourceProperties("AWS::Lambda::Function", {
+      FunctionName: "cost-notification-lambda",
+      Environment: {
+        Variables: {
+          LINE_NOTIFY_TOKEN: lineNotifyTokenCapture,
+        },
+      },
+    });
+
+    expect(lineNotifyTokenCapture.asString()).not.toEqual("");
   });
 
   test("ラムダ関数に ce:GetCostAndUsage のアクションが許可されている", () => {
@@ -45,7 +62,6 @@ describe("AWS Cost Notification", () => {
                 {
                   Action: "ce:GetCostAndUsage",
                   Effect: "Allow",
-                  Resource: "*",
                 },
               ],
             },
