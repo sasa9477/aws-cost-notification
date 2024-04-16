@@ -18,15 +18,17 @@ describe("AWS Cost Notification", () => {
     });
     const lambdaLogicalId = Object.keys(lambda)[0];
 
-    const targetsCapture = new Capture();
+    const targetCapture = new Capture();
 
-    template.hasResourceProperties("AWS::Events::Rule", {
-      Targets: targetsCapture,
+    template.hasResourceProperties("AWS::Scheduler::Schedule", {
+      Target: {
+        Arn: targetCapture,
+      },
       ScheduleExpression: "cron(0 10 ? * 2 *)",
     });
 
     // ラムダ関数がターゲットに含まれていることを確認する
-    expect(JSON.stringify(targetsCapture.asArray())).toContain(lambdaLogicalId);
+    expect(JSON.stringify(targetCapture.asObject())).toContain(lambdaLogicalId);
   });
 
   test("ラムダ関数のタイムアウトが 30秒かつ、メモリーサイズが 128MB である", () => {
