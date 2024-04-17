@@ -13,10 +13,14 @@ export class AwsCostNotificationStack extends cdk.Stack {
       inlinePolicies: {
         CostExplorerPolicy: new cdk.aws_iam.PolicyDocument({
           statements: [
+            // Cost Explorer の GetCostAndUsage アクションを許可
             new cdk.aws_iam.PolicyStatement({
-              actions: ["ce:GetCostAndUsage"],
+              actions: ["ce:GetCostAndUsage", "ce:GetCostForecast"],
               effect: cdk.aws_iam.Effect.ALLOW,
-              resources: [`arn:aws:ce:us-east-1:${accountId}:/GetCostAndUsage`],
+              resources: [
+                `arn:aws:ce:us-east-1:${accountId}:/GetCostAndUsage`,
+                `arn:aws:ce:us-east-1:${accountId}:/GetCostForecast`,
+              ],
             }),
           ],
         }),
@@ -68,5 +72,22 @@ export class AwsCostNotificationStack extends cdk.Stack {
         roleArn: schedulerRole.roleArn,
       },
     });
+
+    // const alarm = new cdk.aws_cloudwatch.Alarm(this, "CostNotificationAlarm", {
+    //   metric: new cdk.aws_cloudwatch.Metric({
+    //     namespace: "AWS/Billing",
+    //     metricName: "EstimatedCharges",
+    //     dimensionsMap: {
+    //       Currency: "USD",
+    //     },
+    //     statistic: "Maximum",
+    //   }),
+    //   threshold: 1,
+    //   evaluationPeriods: 1,
+    //   comparisonOperator: cdk.aws_cloudwatch.ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+    //   treatMissingData: cdk.aws_cloudwatch.TreatMissingData.NOT_BREACHING,
+    // });
+
+    // alarm.addAlarmAction(new cdk.aws_cloudwatch_actions.LambdaAction(lambda));
   }
 }

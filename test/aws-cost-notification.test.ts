@@ -54,7 +54,7 @@ describe("AWS Cost Notification", () => {
     expect(lineNotifyTokenCapture.asString()).not.toEqual("");
   });
 
-  test("ラムダ関数に ce:GetCostAndUsage のアクションが許可されている", () => {
+  test("ラムダ関数に cost exploerer のアクションが許可されている", () => {
     const ceGetCostAndUsagePolicies = template.findResources("AWS::IAM::Role", {
       Properties: {
         Policies: [
@@ -62,7 +62,7 @@ describe("AWS Cost Notification", () => {
             PolicyDocument: {
               Statement: [
                 {
-                  Action: "ce:GetCostAndUsage",
+                  Action: ["ce:GetCostAndUsage", "ce:GetCostForecast"],
                   Effect: "Allow",
                 },
               ],

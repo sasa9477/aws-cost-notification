@@ -1,19 +1,21 @@
-import { CostExplorerClient, GetCostAndUsageCommand } from "@aws-sdk/client-cost-explorer";
+import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
 import dayjs from "dayjs";
+import { postLine } from "./utils/postLine";
 
 const client = new CostExplorerClient({ region: "us-east-1" });
 
 export const handler = async (event: any): Promise<any> => {
   const { startDate, endDate } = getDateRange();
   const totalBilling = await getTotalBilling(startDate, endDate);
-  const servicesBilling = await getServiceBillings(startDate, endDate);
+  const forecastBilling = await getForecastBilling();
+  const serviceBillings = await getServiceBillings(startDate, endDate);
 
   const message = `
-${dayjs(startDate).format("MM/DD")} - ${dayjs(endDate).subtract(1, "day").format("MM/DD")} の請求額は ${totalBilling.totalBilling} USD です。
-${servicesBilling?.map((service) => ` ・${service.serviceName}: ${service.billing} USD`).join("\n")}
-`;
+${dayjs(startDate).format("MM/DD")} - ${dayjs(endDate).subtract(1, "day").format("MM/DD")} の請求額は ${totalBilling} USD です。${forecastBilling ? `今月の予想請求額は ${forecastBilling} USD です。\n` : ""}
+${serviceBillings?.map((service) => ` ・${service.serviceName}: ${service.billing} USD`).join("\n")}
+`.trim();
 
-  const res = await postLine({ message: message.trim() });
+  const res = await postLine(message, process.env.LINE_NOTIFY_TOKEN || "");
 
   return {
     statusCode: 200,
@@ -63,11 +65,33 @@ async function getTotalBilling(startDate: string, endDate: string) {
   if (!res.ResultsByTime || !res.ResultsByTime[0]) {
     throw new Error("No billing data found");
   }
-  return {
-    startTime: res.ResultsByTime[0].TimePeriod?.Start,
-    endTime: res.ResultsByTime[0].TimePeriod?.End,
-    totalBilling: roundUpToDigit(Number(res.ResultsByTime[0].Total?.AmortizedCost?.Amount), 2),
-  };
+  return roundUpToDigit(Number(res.ResultsByTime[0].Total?.AmortizedCost?.Amount), 2);
+}
+
+/**
+ * 予想請求額を取得する
+ */
+async function getForecastBilling() {
+  const _startDate = dayjs().add(1, "day").format("YYYY-MM-DD");
+  const _endDate = dayjs().add(1, "month").startOf("month").format("YYYY-MM-DD");
+
+  // 開始日と終了日が同じ場合は、月末になるので予想請求額を取得しない
+  if (_startDate === _endDate) {
+    return undefined;
+  }
+
+  const res = await client.send(
+    new GetCostForecastCommand({
+      TimePeriod: {
+        Start: _startDate,
+        End: _endDate,
+      },
+      Granularity: "MONTHLY",
+      Metric: "AMORTIZED_COST",
+    }),
+  );
+
+  return roundUpToDigit(Number(res.Total?.Amount), 2);
 }
 
 /**
@@ -108,23 +132,4 @@ async function getServiceBillings(startDate: string, endDate: string) {
  */
 function roundUpToDigit(num: number, digit: number) {
   return Math.ceil(num * Math.pow(10, digit)) / Math.pow(10, digit);
-}
-
-/**
- * Line にメッセージを送信する
- * @see https://notify-bot.line.me/doc/ja/
- */
-async function postLine({ message }: { message: string }) {
-  return await /** global-fetch */ fetch("https://notify-api.line.me/api/notify", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.LINE_NOTIFY_TOKEN}`,
-      ContentType: "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      message,
-    }),
-  }).then((res) => {
-    return res.json();
-  });
 }
