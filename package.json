@@ -12,8 +12,8 @@
     "cdk": "cdk",
     "prepare": "husky install",
     "synth": "cdk synth",
-    "deploy": "cdk deploy",
-    "destory": "cdk destory"
+    "deploy": "cdk deploy --all",
+    "destroy": "cdk destroy --all"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
