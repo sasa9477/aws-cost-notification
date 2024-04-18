@@ -6,7 +6,7 @@ export class BudgetAlartConstruct extends Construct {
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
-    // const { accountId } = new cdk.ScopedAws(this);
+    const { accountId } = new cdk.ScopedAws(this);
 
     const topicLoggingRole = new cdk.aws_iam.Role(this, "BudgetAlartTopicLoggingRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
@@ -15,6 +15,7 @@ export class BudgetAlartConstruct extends Construct {
 
     const topic = new cdk.aws_sns.Topic(this, "BudgetAlartTopic", {
       topicName: "BudgetAlartTopic",
+      displayName: "BudgetAlartTopic",
       loggingConfigs: [
         {
           protocol: cdk.aws_sns.LoggingProtocol.LAMBDA,
@@ -24,38 +25,42 @@ export class BudgetAlartConstruct extends Construct {
         },
       ],
     });
-    // topic.addToResourcePolicy(
-    //   new cdk.aws_iam.PolicyStatement({
-    //     actions: ["SNS:Publish"],
-    //     effect: cdk.aws_iam.Effect.ALLOW,
-    //     principals: [new cdk.aws_iam.ServicePrincipal("budgets.amazonaws.com")],
-    //     resources: [topic.topicArn],
-    //   }),
-    // );
-    // topic.addToResourcePolicy(
-    //   new cdk.aws_iam.PolicyStatement({
-    //     actions: [
-    //       "SNS:GetTopicAttributes",
-    //       "SNS:SetTopicAttributes",
-    //       "SNS:AddPermission",
-    //       "SNS:RemovePermission",
-    //       "SNS:DeleteTopic",
-    //       "SNS:Subscribe",
-    //       "SNS:ListSubscriptionsByTopic",
-    //       "SNS:Publish",
-    //       "SNS:Receive",
-    //     ],
-    //     effect: cdk.aws_iam.Effect.ALLOW,
-    //     principals: [new cdk.aws_iam.AnyPrincipal()],
-    //     resources: [topic.topicArn],
-    //     conditions: {
-    //       StringEquals: {
-    //         "AWS:SourceOwner": accountId,
-    //       },
-    //     },
-    //   }),
-    // );
+    // SNS トピックに対してのアクセスポリシーを設定
+    topic.addToResourcePolicy(
+      new cdk.aws_iam.PolicyStatement({
+        actions: [
+          "SNS:GetTopicAttributes",
+          "SNS:SetTopicAttributes",
+          "SNS:AddPermission",
+          "SNS:RemovePermission",
+          "SNS:DeleteTopic",
+          "SNS:Subscribe",
+          "SNS:ListSubscriptionsByTopic",
+          "SNS:Publish",
+          "SNS:Receive",
+        ],
+        effect: cdk.aws_iam.Effect.ALLOW,
+        principals: [new cdk.aws_iam.AnyPrincipal()],
+        resources: [topic.topicArn],
+        conditions: {
+          StringEquals: {
+            "AWS:SourceOwner": accountId,
+          },
+        },
+      }),
+    );
+    // Budgets から SNS トピックに Publish するためのアクセスポリシーを設定
+    topic.addToResourcePolicy(
+      new cdk.aws_iam.PolicyStatement({
+        actions: ["SNS:Publish"],
+        effect: cdk.aws_iam.Effect.ALLOW,
+        principals: [new cdk.aws_iam.ServicePrincipal("budgets.amazonaws.com")],
+        resources: [topic.topicArn],
+      }),
+    );
 
+    // デッドレターキューを作成
+    // TODO: Lambda が失敗した場合に通知を行うためのデッドレターキューの検証（ role に sns:publish の許可ポリシーが必要かも ）
     const deadLetterQueue = new cdk.aws_sqs.Queue(this, "BudgetAlartDeadLetterQueue", {
       queueName: "BudgetAlartDeadLetterQueue",
     });
