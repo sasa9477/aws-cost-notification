@@ -1,10 +1,11 @@
 import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
 import dayjs from "dayjs";
 import { postLine } from "./utils/postLine";
+import * as lambda from "aws-lambda";
 
 const client = new CostExplorerClient({ region: "us-east-1" });
 
-export const handler = async (event: any): Promise<any> => {
+export const handler: lambda.ScheduledHandler = async () => {
   const { startDate, endDate } = getDateRange();
   const totalBilling = await getTotalBilling(startDate, endDate);
   const forecastBilling = await getForecastBilling();
@@ -15,15 +16,7 @@ ${dayjs(startDate).format("MM/DD")} - ${dayjs(endDate).subtract(1, "day").format
 ${serviceBillings?.map((service) => ` ・${service.serviceName}: ${service.billing} USD`).join("\n")}
 `.trim();
 
-  const res = await postLine(message, process.env.LINE_NOTIFY_TOKEN || "");
-
-  return {
-    statusCode: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ message: res }),
-  };
+  await postLine(message);
 };
 
 /**

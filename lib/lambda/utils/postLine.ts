@@ -2,11 +2,11 @@
  * Line にメッセージを送信する
  * @see https://notify-bot.line.me/doc/ja/
  */
-export async function postLine(message: string, lineNotifyToken: string) {
+export async function postLine(message: string, lineNotifyToken?: string) {
   return await /** global-fetch */ fetch("https://notify-api.line.me/api/notify", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${lineNotifyToken}`,
+      Authorization: `Bearer ${lineNotifyToken ?? process.env.LINE_NOTIFY_TOKEN}`,
       ContentType: "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
