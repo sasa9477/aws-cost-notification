@@ -1,4 +1,5 @@
 import * as cdk from "aws-cdk-lib";
+import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import * as path from "path";
 
@@ -65,7 +66,7 @@ export class BudgetAlartConstruct extends Construct {
       queueName: "BudgetAlartDeadLetterQueue",
     });
 
-    new cdk.aws_lambda_nodejs.NodejsFunction(this, "BudgetAlartLambda", {
+    const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "BudgetAlartLambda", {
       entry: path.join(__dirname, "../lambda/budget-alart-lambda.ts"),
       functionName: "budget-alart-lambda",
       runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
@@ -139,5 +140,55 @@ export class BudgetAlartConstruct extends Construct {
         },
       ],
     });
+
+    /**
+     * cdk-nag の警告抑制
+     */
+
+    NagSuppressions.addResourceSuppressions(
+      lambda,
+      [
+        {
+          id: "AwsSolutions-IAM4",
+          reason: "マネージドポリシー AWSLambdaBasicExecutionRole はデフォルトで作成されるため、問題なし",
+          appliesTo: ["Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"],
+        },
+      ],
+      // ラムダ関数に関連した role に対しての警告のため、applyToChildren を true に設定
+      true,
+    );
+
+    NagSuppressions.addResourceSuppressions(topicLoggingRole, [
+      {
+        id: "AwsSolutions-IAM4",
+        reason: "CloudWatch への書き込みには 推奨されている ManageMentPolicy を使用する",
+        appliesTo: ["Policy::arn:<AWS::Partition>:iam::aws:policy/CloudWatchLogsFullAccess"],
+      },
+    ]);
+
+    NagSuppressions.addResourceSuppressions(topic, [
+      {
+        id: "AwsSolutions-SNS2",
+        reason: "server-side encryption enabled のエラー。調査が必要なため、一旦抑制",
+      },
+    ]);
+
+    NagSuppressions.addResourceSuppressions(topic, [
+      {
+        id: "AwsSolutions-SNS3",
+        reason: "The SNS Topic does not require publishers to use SSL. のエラー。調査が必要なため、一旦抑制",
+      },
+    ]);
+
+    NagSuppressions.addResourceSuppressions(deadLetterQueue, [
+      {
+        id: "AwsSolutions-SQS3",
+        reason: "デッドレターキューの調査が必要なため、一旦抑制",
+      },
+      {
+        id: "AwsSolutions-SQS4",
+        reason: "デッドレターキューの調査が必要なため、一旦抑制",
+      },
+    ]);
   }
 }

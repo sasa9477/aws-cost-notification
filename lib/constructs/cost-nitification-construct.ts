@@ -1,4 +1,5 @@
 import * as cdk from "aws-cdk-lib";
+import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import * as path from "path";
 
@@ -10,7 +11,6 @@ export class CostNotifacationConstruct extends Construct {
 
     const lambdaRole = new cdk.aws_iam.Role(this, "CostNotificationLambdaRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
-      managedPolicies: [cdk.aws_iam.ManagedPolicy.fromAwsManagedPolicyName("service-role/AWSLambdaBasicExecutionRole")],
       inlinePolicies: {
         CostExplorerPolicy: new cdk.aws_iam.PolicyDocument({
           statements: [
@@ -74,5 +74,22 @@ export class CostNotifacationConstruct extends Construct {
         roleArn: schedulerRole.roleArn,
       },
     });
+
+    /**
+     * cdk-nag の警告抑制
+     */
+
+    NagSuppressions.addResourceSuppressions(
+      lambda,
+      [
+        {
+          id: "AwsSolutions-IAM4",
+          reason: "ラムダの実行ロールには 推奨されている ManageMentPolicy を使用する",
+          appliesTo: ["Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"],
+        },
+      ],
+      // ラムダ関数に関連した cdk-nag の警告のため、applyToChildren を true に設定
+      true,
+    );
   }
 }

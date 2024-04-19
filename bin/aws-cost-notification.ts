@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import "source-map-support/register";
 import { AwsCostAnomalyNotificationStack } from "../lib/aws-cost-anomaly-notification-stack";
 import { AwsCostNotificationStack } from "../lib/aws-cost-notification-stack";
+import { AwsSolutionsChecks } from "cdk-nag";
 
 dotenv.config();
 
@@ -30,4 +31,4 @@ new AwsCostNotificationStack(app, "AwsCostNotificationStack", {
 // awsCostAnomalyNotificationStack.addDependency(awsCostNotificationStack);
 
 // AWS のセキュリティマトリックスのセキュリティを確認する
-// cdk.Aspects.of(app).add(new AwsSolutionsChecks({ verbose: true }));
+cdk.Aspects.of(app).add(new AwsSolutionsChecks({ verbose: true }));

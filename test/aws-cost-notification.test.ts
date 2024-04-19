@@ -1,14 +1,32 @@
 import * as cdk from "aws-cdk-lib";
-import { Capture, Match, Template } from "aws-cdk-lib/assertions";
+import { Annotations, Capture, Match, Template } from "aws-cdk-lib/assertions";
 import * as AwsCostNotification from "../lib/aws-cost-notification-stack";
 import * as dotenv from "dotenv";
+import { AwsSolutionsChecks } from "cdk-nag";
 
 dotenv.config();
 
 describe("AWS Cost Notification", () => {
-  const app = new cdk.App();
-  const stack = new AwsCostNotification.AwsCostNotificationStack(app, "MyTestStack");
-  const template = Template.fromStack(stack);
+  let stack: cdk.Stack;
+  let template: Template;
+
+  beforeAll(() => {
+    const app = new cdk.App();
+    stack = new AwsCostNotification.AwsCostNotificationStack(app, "MyTestStack");
+    cdk.Aspects.of(stack).add(new AwsSolutionsChecks());
+
+    template = Template.fromStack(stack);
+  });
+
+  test("cdk-nag のセキュリティチェックで warnning が無い", () => {
+    const warnings = Annotations.fromStack(stack).findWarning("*", Match.stringLikeRegexp("AwsSolutions-.*"));
+    expect(warnings).toHaveLength(0);
+  });
+
+  test("cdk-nag のチェックで Errors が無い", () => {
+    const errors = Annotations.fromStack(stack).findError("*", Match.stringLikeRegexp("AwsSolutions-.*"));
+    expect(errors).toHaveLength(0);
+  });
 
   test("毎週月曜日の 10時 0分に起動する", () => {
     const lambda = template.findResources("AWS::Lambda::Function", {
