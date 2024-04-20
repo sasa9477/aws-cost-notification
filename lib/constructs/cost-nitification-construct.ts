@@ -29,22 +29,26 @@ export class CostNotifacationConstruct extends Construct {
     });
 
     const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "CostNotificationLambda", {
+      role: lambdaRole,
       entry: path.join(__dirname, "../lambda/cost-notification-lambda.ts"),
       functionName: "cost-notification-lambda",
-      role: lambdaRole,
-      runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
-      memorySize: 128,
-      timeout: cdk.Duration.seconds(30),
       bundling: {
         // Lambda で builtin されているためバンドルから除外
         externalModules: ["@aws-sdk/*"],
         tsconfig: path.join(__dirname, "../../tsconfig.json"),
       },
+      runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
+      memorySize: 128,
+      timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
         LINE_NOTIFY_TOKEN: process.env.LINE_NOTIFY_TOKEN || "",
       },
-      logRetention: cdk.aws_logs.RetentionDays.INFINITE,
+      logGroup: new cdk.aws_logs.LogGroup(this, "CostNotificationLambdaLogGroup", {
+        logGroupName: `/aws/lambda/CostNotificationStack/cost-notification-lambda`,
+        removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
+        retention: cdk.aws_logs.RetentionDays.INFINITE,
+      }),
     });
 
     const schedulerRole = new cdk.aws_iam.Role(this, "CostNotificationSchedulerRole", {
@@ -74,22 +78,5 @@ export class CostNotifacationConstruct extends Construct {
         roleArn: schedulerRole.roleArn,
       },
     });
-
-    /**
-     * cdk-nag の警告抑制
-     */
-
-    NagSuppressions.addResourceSuppressions(
-      lambda,
-      [
-        {
-          id: "AwsSolutions-IAM4",
-          reason: "ラムダの実行ロールには 推奨されている ManageMentPolicy を使用する",
-          appliesTo: ["Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"],
-        },
-      ],
-      // ラムダ関数に関連した cdk-nag の警告のため、applyToChildren を true に設定
-      true,
-    );
   }
 }

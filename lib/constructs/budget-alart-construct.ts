@@ -7,11 +7,28 @@ export class BudgetAlartConstruct extends Construct {
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
-    const { accountId } = new cdk.ScopedAws(this);
+    const { region, accountId } = new cdk.ScopedAws(this);
 
     const topicLoggingRole = new cdk.aws_iam.Role(this, "BudgetAlartTopicLoggingRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
-      managedPolicies: [cdk.aws_iam.ManagedPolicy.fromAwsManagedPolicyName("CloudWatchLogsFullAccess")],
+      inlinePolicies: {
+        CloudWatchLogsPolicy: new cdk.aws_iam.PolicyDocument({
+          statements: [
+            new cdk.aws_iam.PolicyStatement({
+              actions: ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
+              effect: cdk.aws_iam.Effect.ALLOW,
+              resources: [`arn:aws:logs:${region}:${accountId}:log-group:/sns/${region}${accountId}/BudgetAlartTopic`],
+            }),
+          ],
+        }),
+      },
+    });
+
+    const topicSseKey = new cdk.aws_kms.Key(this, "BudgetAlartTopicKey", {
+      alias: "BudgetAlartTopicKey",
+      description: "BudgetAlartTopicKey",
+      enableKeyRotation: true,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
     const topic = new cdk.aws_sns.Topic(this, "BudgetAlartTopic", {
@@ -25,6 +42,9 @@ export class BudgetAlartConstruct extends Construct {
           successFeedbackSampleRate: 100,
         },
       ],
+      enforceSSL: true,
+      // SNS トピックのサーバー側暗号化 (SSE) を有効
+      masterKey: topicSseKey,
     });
     // SNS トピックに対してのアクセスポリシーを設定
     topic.addToResourcePolicy(
@@ -60,32 +80,33 @@ export class BudgetAlartConstruct extends Construct {
       }),
     );
 
-    // デッドレターキューを作成
-    // TODO: Lambda が失敗した場合に通知を行うためのデッドレターキューの検証（ role に sns:publish の許可ポリシーが必要かも ）
-    const deadLetterQueue = new cdk.aws_sqs.Queue(this, "BudgetAlartDeadLetterQueue", {
-      queueName: "BudgetAlartDeadLetterQueue",
+    const lambdaRole = new cdk.aws_iam.Role(this, "BudgetAlartLambdaRole", {
+      assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
     });
 
-    const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "BudgetAlartLambda", {
+    new cdk.aws_lambda_nodejs.NodejsFunction(this, "BudgetAlartLambda", {
+      role: lambdaRole,
       entry: path.join(__dirname, "../lambda/budget-alart-lambda.ts"),
       functionName: "budget-alart-lambda",
-      runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
-      memorySize: 128,
-      timeout: cdk.Duration.seconds(30),
       bundling: {
-        // Lambda で builtin されているためバンドルから除外
         externalModules: ["@aws-sdk/*"],
         tsconfig: path.join(__dirname, "../../tsconfig.json"),
       },
+      runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
+      memorySize: 128,
+      timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
         LINE_NOTIFY_TOKEN: process.env.LINE_NOTIFY_TOKEN || "",
       },
-      events: [
-        new cdk.aws_lambda_event_sources.SnsEventSource(topic, {
-          deadLetterQueue: deadLetterQueue,
-        }),
-      ],
+      logGroup: new cdk.aws_logs.LogGroup(this, "BudgetAlartLambdaLogGroup", {
+        logGroupName: `/aws/lambda/CostNotificationStack/udget-alart-lambda`,
+        removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
+        retention: cdk.aws_logs.RetentionDays.INFINITE,
+      }),
+      events: [new cdk.aws_lambda_event_sources.SnsEventSource(topic)],
+      // deadLetter に SNS トピックを設定
+      deadLetterTopic: topic,
     });
 
     new cdk.aws_budgets.CfnBudget(this, "MonthlyCostBudget", {
@@ -140,55 +161,5 @@ export class BudgetAlartConstruct extends Construct {
         },
       ],
     });
-
-    /**
-     * cdk-nag の警告抑制
-     */
-
-    NagSuppressions.addResourceSuppressions(
-      lambda,
-      [
-        {
-          id: "AwsSolutions-IAM4",
-          reason: "マネージドポリシー AWSLambdaBasicExecutionRole はデフォルトで作成されるため、問題なし",
-          appliesTo: ["Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"],
-        },
-      ],
-      // ラムダ関数に関連した role に対しての警告のため、applyToChildren を true に設定
-      true,
-    );
-
-    NagSuppressions.addResourceSuppressions(topicLoggingRole, [
-      {
-        id: "AwsSolutions-IAM4",
-        reason: "CloudWatch への書き込みには 推奨されている ManageMentPolicy を使用する",
-        appliesTo: ["Policy::arn:<AWS::Partition>:iam::aws:policy/CloudWatchLogsFullAccess"],
-      },
-    ]);
-
-    NagSuppressions.addResourceSuppressions(topic, [
-      {
-        id: "AwsSolutions-SNS2",
-        reason: "server-side encryption enabled のエラー。調査が必要なため、一旦抑制",
-      },
-    ]);
-
-    NagSuppressions.addResourceSuppressions(topic, [
-      {
-        id: "AwsSolutions-SNS3",
-        reason: "The SNS Topic does not require publishers to use SSL. のエラー。調査が必要なため、一旦抑制",
-      },
-    ]);
-
-    NagSuppressions.addResourceSuppressions(deadLetterQueue, [
-      {
-        id: "AwsSolutions-SQS3",
-        reason: "デッドレターキューの調査が必要なため、一旦抑制",
-      },
-      {
-        id: "AwsSolutions-SQS4",
-        reason: "デッドレターキューの調査が必要なため、一旦抑制",
-      },
-    ]);
   }
 }
