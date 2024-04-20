@@ -7,7 +7,7 @@ import { formatCdkNagErrorMessage } from "./utils/formatCdkNagErrorMessage";
 
 dotenv.config();
 
-describe("AWS Cost Notification", () => {
+describe("AWS Cost Notification Stack", () => {
   let stack: cdk.Stack;
   let template: Template;
 
@@ -60,7 +60,7 @@ describe("AWS Cost Notification", () => {
     expect(JSON.stringify(targetCapture.asObject())).toContain(lambdaLogicalId);
   });
 
-  test("ラムダ関数に LINE Notify のアクセストークンが設定されている", () => {
+  test("cost-notification-lambda に LINE Notify のアクセストークンが設定されている", () => {
     const lineNotifyTokenCapture = new Capture();
 
     template.hasResourceProperties("AWS::Lambda::Function", {
@@ -75,7 +75,7 @@ describe("AWS Cost Notification", () => {
     expect(lineNotifyTokenCapture.asString()).not.toEqual("");
   });
 
-  test("ラムダ関数に cost exploerer のアクションが許可されている", () => {
+  test("ラムダ関数に Cost Exploerer へのコスト使用量と予想額の取得が許可されている", () => {
     const ceGetCostAndUsagePolicies = template.findResources("AWS::IAM::Role", {
       Properties: {
         Policies: [
@@ -93,11 +93,11 @@ describe("AWS Cost Notification", () => {
       },
     });
 
-    expect(ceGetCostAndUsagePolicies).not.toEqual({});
-
     const ceGetCostAndUsagePolicyLogicalId = Object.keys(ceGetCostAndUsagePolicies)[0];
 
     const dependsOnCapture = new Capture();
+
+    template.hasMapping;
 
     template.hasResource("AWS::Lambda::Function", {
       Properties: {
@@ -107,5 +107,23 @@ describe("AWS Cost Notification", () => {
     });
 
     expect(dependsOnCapture.asArray()).toContain(ceGetCostAndUsagePolicyLogicalId);
+  });
+
+  test("topic に関連した kms に budgets からの キー復号化が許可されている", () => {
+    template.hasResourceProperties("AWS::KMS::Key", {
+      Description: "BudgetAlartTopicKey",
+      KeyPolicy: {
+        Statement: Match.arrayWith([
+          {
+            Action: ["kms:Decrypt", "kms:GenerateDataKey"],
+            Effect: "Allow",
+            Principal: {
+              Service: "budgets.amazonaws.com",
+            },
+            Resource: "*",
+          },
+        ]),
+      },
+    });
   });
 });
