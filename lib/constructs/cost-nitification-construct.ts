@@ -30,7 +30,7 @@ export class CostNotifacationConstruct extends Construct {
 
     const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "CostNotificationLambda", {
       role: lambdaRole,
-      entry: path.join(__dirname, "../lambda/cost-notification-lambda.ts"),
+      entry: path.join(__dirname, "../functions/cost-notification-lambda.ts"),
       functionName: "cost-notification-lambda",
       bundling: {
         // Lambda で builtin されているためバンドルから除外

@@ -86,7 +86,7 @@ export class BudgetAlartConstruct extends Construct {
 
     new cdk.aws_lambda_nodejs.NodejsFunction(this, "BudgetAlartLambda", {
       role: lambdaRole,
-      entry: path.join(__dirname, "../lambda/budget-alart-lambda.ts"),
+      entry: path.join(__dirname, "../functions/budget-alart-lambda.ts"),
       functionName: "budget-alart-lambda",
       bundling: {
         externalModules: ["@aws-sdk/*"],
