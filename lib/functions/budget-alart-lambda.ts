@@ -1,6 +1,10 @@
 import * as lambda from "aws-lambda";
 import { postLine } from "./utils/postLine";
 
+export const BUDGET_ALART_LAMBDA_ENV = {
+  LINE_NOTIFY_TOKEN: "LINE_NOTIFY_TOKEN",
+};
+
 export const handler: lambda.SNSHandler = async (event) => {
   console.log(JSON.stringify(event));
 
@@ -26,7 +30,7 @@ export const handler: lambda.SNSHandler = async (event) => {
       }
       message += `\n${record.Sns.Message}`;
 
-      return postLine(message);
+      return postLine(message, process.env.LINE_NOTIFY_TOKEN || "");
     }),
   );
 };

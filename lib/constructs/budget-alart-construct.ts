@@ -2,6 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import * as path from "path";
+import { BUDGET_ALART_LAMBDA_ENV } from "../functions/budget-alart-lambda";
 
 export class BudgetAlartConstruct extends Construct {
   constructor(scope: Construct, id: string) {
@@ -97,7 +98,7 @@ export class BudgetAlartConstruct extends Construct {
       timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
-        LINE_NOTIFY_TOKEN: process.env.LINE_NOTIFY_TOKEN || "",
+        [BUDGET_ALART_LAMBDA_ENV.LINE_NOTIFY_TOKEN]: process.env.LINE_NOTIFY_TOKEN || "",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "BudgetAlartLambdaLogGroup", {
         logGroupName: `/aws/lambda/CostNotificationStack/udget-alart-lambda`,

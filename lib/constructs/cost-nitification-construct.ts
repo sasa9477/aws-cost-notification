@@ -2,6 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import * as path from "path";
+import { COST_NOTIFICATION_LAMBDA_ENV } from "../functions/cost-notification-lambda";
 
 export class CostNotifacationConstruct extends Construct {
   constructor(scope: Construct, id: string) {
@@ -42,7 +43,7 @@ export class CostNotifacationConstruct extends Construct {
       timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
-        LINE_NOTIFY_TOKEN: process.env.LINE_NOTIFY_TOKEN || "",
+        [COST_NOTIFICATION_LAMBDA_ENV.LINE_NOTIFY_TOKEN]: process.env.LINE_NOTIFY_TOKEN || "",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "CostNotificationLambdaLogGroup", {
         logGroupName: `/aws/lambda/CostNotificationStack/cost-notification-lambda`,
