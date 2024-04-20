@@ -8,7 +8,7 @@ export class CostNotifacationConstruct extends Construct {
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
-    const { accountId } = new cdk.ScopedAws(this);
+    const { region, accountId } = new cdk.ScopedAws(this);
 
     const lambdaRole = new cdk.aws_iam.Role(this, "CostNotificationLambdaRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
@@ -29,10 +29,11 @@ export class CostNotifacationConstruct extends Construct {
       },
     });
 
+    const functionName = "cost-notification-lambda";
     const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "CostNotificationLambda", {
       role: lambdaRole,
       entry: path.join(__dirname, "../functions/cost-notification-lambda.ts"),
-      functionName: "cost-notification-lambda",
+      functionName,
       bundling: {
         // Lambda で builtin されているためバンドルから除外
         externalModules: ["@aws-sdk/*"],
@@ -47,11 +48,19 @@ export class CostNotifacationConstruct extends Construct {
           process.env[COST_NOTIFICATION_LAMBDA_ENV.LINE_NOTIFY_TOKEN] || "",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "CostNotificationLambdaLogGroup", {
-        logGroupName: `/aws/lambda/CostNotificationStack/cost-notification-lambda`,
+        logGroupName: `/aws/lambda/${cdk.Stack.of(this).stackName}/${functionName}`,
         removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
         retention: cdk.aws_logs.RetentionDays.INFINITE,
       }),
     });
+
+    lambdaRole.addToPolicy(
+      new cdk.aws_iam.PolicyStatement({
+        actions: ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
+        effect: cdk.aws_iam.Effect.ALLOW,
+        resources: [lambda.logGroup.logGroupArn],
+      }),
+    );
 
     const schedulerRole = new cdk.aws_iam.Role(this, "CostNotificationSchedulerRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("scheduler.amazonaws.com"),
