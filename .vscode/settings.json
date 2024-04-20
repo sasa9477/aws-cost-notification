@@ -1,8 +1,0 @@
-{
-  "jest.runMode": {
-    "type": "on-save",
-    "deferred": true,
-    "runAllTestsOnStartup": false
-  },
-  "jest.jestCommandLine": "npm run test --"
-}
