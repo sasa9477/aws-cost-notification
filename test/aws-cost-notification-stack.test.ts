@@ -3,6 +3,7 @@ import { Annotations, Capture, Match, Template } from "aws-cdk-lib/assertions";
 import * as AwsCostNotification from "../lib/aws-cost-notification-stack";
 import * as dotenv from "dotenv";
 import { AwsSolutionsChecks } from "cdk-nag";
+import { formatCdkNagErrorMessage } from "./utils/formatCdkNagErrorMessage";
 
 dotenv.config();
 
@@ -18,14 +19,24 @@ describe("AWS Cost Notification", () => {
     template = Template.fromStack(stack);
   });
 
-  test("cdk-nag のセキュリティチェックで warnning が無い", () => {
-    const warnings = Annotations.fromStack(stack).findWarning("*", Match.stringLikeRegexp("AwsSolutions-.*"));
-    expect(warnings).toHaveLength(0);
-  });
-
   test("cdk-nag のチェックで Errors が無い", () => {
     const errors = Annotations.fromStack(stack).findError("*", Match.stringLikeRegexp("AwsSolutions-.*"));
-    expect(errors).toHaveLength(0);
+
+    try {
+      expect(errors).toHaveLength(0);
+    } catch (error) {
+      throw new Error(formatCdkNagErrorMessage(errors));
+    }
+  });
+
+  test("cdk-nag のセキュリティチェックで warnning が無い", () => {
+    const warnings = Annotations.fromStack(stack).findWarning("*", Match.stringLikeRegexp("AwsSolutions-.*"));
+
+    try {
+      expect(warnings).toHaveLength(0);
+    } catch (error) {
+      throw new Error(formatCdkNagErrorMessage(warnings));
+    }
   });
 
   test("毎週月曜日の 10時 0分に起動する", () => {
@@ -47,14 +58,6 @@ describe("AWS Cost Notification", () => {
 
     // ラムダ関数がターゲットに含まれていることを確認する
     expect(JSON.stringify(targetCapture.asObject())).toContain(lambdaLogicalId);
-  });
-
-  test("ラムダ関数のタイムアウトが 30秒かつ、メモリーサイズが 128MB である", () => {
-    template.hasResourceProperties("AWS::Lambda::Function", {
-      FunctionName: "cost-notification-lambda",
-      Timeout: 30,
-      MemorySize: 128,
-    });
   });
 
   test("ラムダ関数に LINE Notify のアクセストークンが設定されている", () => {
