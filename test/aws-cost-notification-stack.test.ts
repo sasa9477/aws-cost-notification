@@ -13,8 +13,8 @@ describe("AWS Cost Notification", () => {
 
   beforeAll(() => {
     const app = new cdk.App();
-    stack = new AwsCostNotification.AwsCostNotificationStack(app, "MyTestStack");
-    cdk.Aspects.of(stack).add(new AwsSolutionsChecks());
+    cdk.Aspects.of(app).add(new AwsSolutionsChecks());
+    stack = new AwsCostNotification.AwsCostNotificationStack(app, "JestStack");
 
     template = Template.fromStack(stack);
   });
