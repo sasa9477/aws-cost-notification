@@ -20,7 +20,7 @@ ${dayjs(startDate).format("MM/DD")} - ${dayjs(endDate).subtract(1, "day").format
 ${serviceBillings?.map((service) => ` ・${service.serviceName}: ${service.billing} USD`).join("\n")}
 `.trim();
 
-  await postLine(message, process.env.LINE_NOTIFY_TOKEN || "");
+  await postLine(message, process.env[COST_NOTIFICATION_LAMBDA_ENV.LINE_NOTIFY_TOKEN] || "");
 };
 
 /**

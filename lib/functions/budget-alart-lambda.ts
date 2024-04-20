@@ -30,7 +30,7 @@ export const handler: lambda.SNSHandler = async (event) => {
       }
       message += `\n${record.Sns.Message}`;
 
-      return postLine(message, process.env.LINE_NOTIFY_TOKEN || "");
+      return postLine(message, process.env[BUDGET_ALART_LAMBDA_ENV.LINE_NOTIFY_TOKEN] || "");
     }),
   );
 };

@@ -43,7 +43,8 @@ export class CostNotifacationConstruct extends Construct {
       timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
-        [COST_NOTIFICATION_LAMBDA_ENV.LINE_NOTIFY_TOKEN]: process.env.LINE_NOTIFY_TOKEN || "",
+        [COST_NOTIFICATION_LAMBDA_ENV.LINE_NOTIFY_TOKEN]:
+          process.env[COST_NOTIFICATION_LAMBDA_ENV.LINE_NOTIFY_TOKEN] || "",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "CostNotificationLambdaLogGroup", {
         logGroupName: `/aws/lambda/CostNotificationStack/cost-notification-lambda`,

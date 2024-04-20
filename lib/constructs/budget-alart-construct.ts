@@ -98,7 +98,7 @@ export class BudgetAlartConstruct extends Construct {
       timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
-        [BUDGET_ALART_LAMBDA_ENV.LINE_NOTIFY_TOKEN]: process.env.LINE_NOTIFY_TOKEN || "",
+        [BUDGET_ALART_LAMBDA_ENV.LINE_NOTIFY_TOKEN]: process.env[BUDGET_ALART_LAMBDA_ENV.LINE_NOTIFY_TOKEN] || "",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "BudgetAlartLambdaLogGroup", {
         logGroupName: `/aws/lambda/CostNotificationStack/udget-alart-lambda`,

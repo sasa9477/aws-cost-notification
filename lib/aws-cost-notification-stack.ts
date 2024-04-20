@@ -1,8 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { BudgetAlartConstruct } from "./constructs/budget-alart-construct";
-import { CostNotifacationConstruct } from "./constructs/cost-nitification-construct";
-import { NagSuppressions } from "cdk-nag";
+import { CostNotifacationConstruct } from "./constructs/cost-notification-construct";
 
 export class AwsCostNotificationStack extends cdk.Stack {
   readonly costAlarmTopic: cdk.aws_sns.Topic;
