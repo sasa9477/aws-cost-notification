@@ -16,12 +16,50 @@ export class BudgetAlartConstruct extends Construct {
       enableKeyRotation: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
+    // SNS Topic に Publish するための KMS の復号化ポリシーを許可
+    topicSseKey.addToResourcePolicy(
+      new cdk.aws_iam.PolicyStatement({
+        actions: ["kms:Decrypt", "kms:GenerateDataKey"],
+        effect: cdk.aws_iam.Effect.ALLOW,
+        principals: [new cdk.aws_iam.ServicePrincipal("budgets.amazonaws.com")],
+        resources: ["*"],
+      }),
+    );
+
+    const topicLoggingRole = new cdk.aws_iam.Role(this, "BudgetAlartTopicLoggingRole", {
+      assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
+      inlinePolicies: {
+        CloudWatchWritePolicy: new cdk.aws_iam.PolicyDocument({
+          statements: [
+            new cdk.aws_iam.PolicyStatement({
+              actions: [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+                "logs:PutMetricFilter",
+                "logs:PutRetentionPolicy",
+              ],
+              effect: cdk.aws_iam.Effect.ALLOW,
+              resources: [`arn:aws:logs:${region}:${accountId}:log-group:*`],
+            }),
+          ],
+        }),
+      },
+    });
 
     const topic = new cdk.aws_sns.Topic(this, "BudgetAlartTopic", {
       topicName: "BudgetAlartTopic",
       displayName: "BudgetAlartTopic",
       // SNS トピックのサーバー側暗号化 (SSE) を有効
-      // masterKey: topicSseKey,
+      masterKey: topicSseKey,
+      loggingConfigs: [
+        {
+          protocol: cdk.aws_sns.LoggingProtocol.LAMBDA,
+          successFeedbackRole: topicLoggingRole,
+          failureFeedbackRole: topicLoggingRole,
+          successFeedbackSampleRate: 100,
+        },
+      ],
     });
 
     // SNS トピックに対してのアクセスポリシーを設定
@@ -55,26 +93,6 @@ export class BudgetAlartConstruct extends Construct {
         effect: cdk.aws_iam.Effect.ALLOW,
         principals: [new cdk.aws_iam.ServicePrincipal("budgets.amazonaws.com")],
         resources: [topic.topicArn],
-      }),
-    );
-
-    // SNS トピックのログを CloudWatch Logs に保存
-    const topicLoggingRole = new cdk.aws_iam.Role(this, "BudgetAlartTopicLoggingRole", {
-      assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
-    });
-
-    topic.addLoggingConfig({
-      protocol: cdk.aws_sns.LoggingProtocol.LAMBDA,
-      successFeedbackRole: topicLoggingRole,
-      failureFeedbackRole: topicLoggingRole,
-      successFeedbackSampleRate: 100,
-    });
-
-    topicLoggingRole.addToPolicy(
-      new cdk.aws_iam.PolicyStatement({
-        actions: ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
-        effect: cdk.aws_iam.Effect.ALLOW,
-        resources: [`arn:aws:logs:${region}:${accountId}:log-group:/sns/${region}/${accountId}/${topic.topicName}`],
       }),
     );
 
@@ -168,18 +186,19 @@ export class BudgetAlartConstruct extends Construct {
       ],
     });
 
-    NagSuppressions.addResourceSuppressions(topic, [
-      {
-        id: "AwsSolutions-SNS2",
-        reason: "server-side encryption enabled のエラー。調査が必要なため、一旦抑制",
-      },
-    ]);
+    /**
+     * cdk-nag のセキュリティ抑制設定
+     */
 
-    NagSuppressions.addResourceSuppressions(topic, [
-      {
-        id: "AwsSolutions-SNS3",
-        reason: "The SNS Topic does not require publishers to use SSL. のエラー。調査が必要なため、一旦抑制",
-      },
-    ]);
+    NagSuppressions.addResourceSuppressions(
+      topicLoggingRole,
+      [
+        {
+          id: "AwsSolutions-IAM5",
+          reason: "SNS のログ出力には :* が必要なため、抑制する。",
+        },
+      ],
+      true,
+    );
   }
 }
