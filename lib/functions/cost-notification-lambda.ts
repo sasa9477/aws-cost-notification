@@ -1,15 +1,10 @@
 import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
 import dayjs from "dayjs";
-import { postLine } from "./utils/postLine";
 import * as lambda from "aws-lambda";
-
-export const COST_NOTIFICATION_LAMBDA_ENV = {
-  LINE_NOTIFY_TOKEN: "LINE_NOTIFY_TOKEN",
-};
 
 const client = new CostExplorerClient({ region: "us-east-1" });
 
-export const handler: lambda.ScheduledHandler = async () => {
+export const handler: lambda.EventBridgeHandler<"Scheduled Event", any, string> = async () => {
   const { startDate, endDate } = getDateRange();
   const totalBilling = await getTotalBilling(startDate, endDate);
   const forecastBilling = await getForecastBilling();
@@ -20,7 +15,7 @@ ${dayjs(startDate).format("MM/DD")} - ${dayjs(endDate).subtract(1, "day").format
 ${serviceBillings?.map((service) => ` ・${service.serviceName}: ${service.billing} USD`).join("\n")}
 `.trim();
 
-  await postLine(message, process.env[COST_NOTIFICATION_LAMBDA_ENV.LINE_NOTIFY_TOKEN] || "");
+  return message;
 };
 
 /**

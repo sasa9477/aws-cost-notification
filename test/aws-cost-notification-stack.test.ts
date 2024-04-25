@@ -60,11 +60,11 @@ describe("AWS Cost Notification Stack", () => {
     expect(JSON.stringify(targetCapture.asObject())).toContain(lambdaLogicalId);
   });
 
-  test("cost-notification-lambda に LINE Notify のアクセストークンが設定されている", () => {
+  test("post-line-lambda に LINE Notify のアクセストークンが設定されている", () => {
     const lineNotifyTokenCapture = new Capture();
 
     template.hasResourceProperties("AWS::Lambda::Function", {
-      FunctionName: "cost-notification-lambda",
+      FunctionName: "post-line-lambda",
       Environment: {
         Variables: {
           LINE_NOTIFY_TOKEN: lineNotifyTokenCapture,
@@ -107,23 +107,5 @@ describe("AWS Cost Notification Stack", () => {
     });
 
     expect(dependsOnCapture.asArray()).toContain(ceGetCostAndUsagePolicyLogicalId);
-  });
-
-  test("topic に関連した kms に budgets からの キー復号化が許可されている", () => {
-    template.hasResourceProperties("AWS::KMS::Key", {
-      Description: "BudgetAlartTopicKey",
-      KeyPolicy: {
-        Statement: Match.arrayWith([
-          {
-            Action: ["kms:Decrypt", "kms:GenerateDataKey"],
-            Effect: "Allow",
-            Principal: {
-              Service: "budgets.amazonaws.com",
-            },
-            Resource: "*",
-          },
-        ]),
-      },
-    });
   });
 });

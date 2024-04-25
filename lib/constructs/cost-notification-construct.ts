@@ -1,14 +1,18 @@
 import * as cdk from "aws-cdk-lib";
-import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import * as path from "path";
-import { COST_NOTIFICATION_LAMBDA_ENV } from "../functions/cost-notification-lambda";
+
+export interface CostNotifacationConstructProps {
+  readonly notificationTopic: cdk.aws_sns.Topic;
+}
 
 export class CostNotifacationConstruct extends Construct {
-  constructor(scope: Construct, id: string) {
+  constructor(scope: Construct, id: string, props: CostNotifacationConstructProps) {
     super(scope, id);
 
-    const { region, accountId } = new cdk.ScopedAws(this);
+    const { notificationTopic } = props;
+
+    const { accountId } = new cdk.ScopedAws(this);
 
     const lambdaRole = new cdk.aws_iam.Role(this, "CostNotificationLambdaRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
@@ -44,14 +48,14 @@ export class CostNotifacationConstruct extends Construct {
       timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
-        [COST_NOTIFICATION_LAMBDA_ENV.LINE_NOTIFY_TOKEN]:
-          process.env[COST_NOTIFICATION_LAMBDA_ENV.LINE_NOTIFY_TOKEN] || "",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "CostNotificationLambdaLogGroup", {
         logGroupName: `/aws/lambda/${cdk.Stack.of(this).stackName}/${functionName}`,
         removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
         retention: cdk.aws_logs.RetentionDays.INFINITE,
       }),
+      onSuccess: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
+      onFailure: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
     });
 
     lambdaRole.addToPolicy(
