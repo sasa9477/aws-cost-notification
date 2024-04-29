@@ -33,11 +33,10 @@ export class CostNotifacationConstruct extends Construct {
       },
     });
 
-    const functionName = "cost-notification-lambda";
     const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "CostNotificationLambda", {
       role: lambdaRole,
       entry: path.join(__dirname, "../functions/cost-notification-lambda.ts"),
-      functionName,
+      functionName: `${cdk.Stack.of(this).stackName}-cost-notification-lambda`,
       bundling: {
         // Lambda で builtin されているためバンドルから除外
         externalModules: ["@aws-sdk/*"],
@@ -50,7 +49,6 @@ export class CostNotifacationConstruct extends Construct {
         TZ: "Asia/Tokyo",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "CostNotificationLambdaLogGroup", {
-        logGroupName: `/aws/lambda/${cdk.Stack.of(this).stackName}/${functionName}`,
         removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
         retention: cdk.aws_logs.RetentionDays.INFINITE,
       }),

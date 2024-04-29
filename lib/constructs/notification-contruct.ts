@@ -35,8 +35,8 @@ export class NotificationConstruct extends Construct {
     });
 
     const topic = new cdk.aws_sns.Topic(this, "NotificationTopic", {
-      topicName: "NotificationTopic",
-      displayName: "NotificationTopic",
+      topicName: `${cdk.Stack.of(this).stackName}-NotificationTopic`,
+      displayName: `${cdk.Stack.of(this).stackName}-NotificationTopic`,
       enforceSSL: true,
       loggingConfigs: [
         {
@@ -77,12 +77,10 @@ export class NotificationConstruct extends Construct {
       assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
     });
 
-    const functionName = "post-line-lambda";
-
     const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "PostLineLambda", {
       role: lambdaRole,
       entry: path.join(__dirname, "../functions/post-line-lambda.ts"),
-      functionName,
+      functionName: `${cdk.Stack.of(this).stackName}-post-line-lambda`,
       bundling: {
         externalModules: ["@aws-sdk/*"],
         tsconfig: path.join(__dirname, "../../tsconfig.json"),
@@ -95,7 +93,6 @@ export class NotificationConstruct extends Construct {
         [POST_LINE_LAMBDA_ENV.LINE_NOTIFY_TOKEN]: process.env[POST_LINE_LAMBDA_ENV.LINE_NOTIFY_TOKEN] || "",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "PostLineLambdaLogGroup", {
-        logGroupName: `/aws/lambda/${cdk.Stack.of(this).stackName}/${functionName}`,
         removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
         retention: cdk.aws_logs.RetentionDays.INFINITE,
       }),

@@ -6,6 +6,7 @@ import { NotificationConstruct } from "../constructs/notification-contruct";
 
 export class AwsCostNotificationStack extends cdk.Stack {
   readonly costAlarmTopic: cdk.aws_sns.Topic;
+  readonly monthlyCostBudget: cdk.aws_budgets.CfnBudget;
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -16,9 +17,11 @@ export class AwsCostNotificationStack extends cdk.Stack {
       notificationTopic,
     });
 
-    new BudgetAlartConstruct(this, "BudgetAlartConstruct", {
+    const { monthlyCostBudget } = new BudgetAlartConstruct(this, "BudgetAlartConstruct", {
       notificationTopic,
     });
+
+    this.monthlyCostBudget = monthlyCostBudget;
 
     // // 外部から参照するために保持
     // this.costAlarmTopic = topic;

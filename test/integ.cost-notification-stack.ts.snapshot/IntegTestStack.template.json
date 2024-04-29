@@ -1,0 +1,923 @@
+{
+ "Resources": {
+  "NotificationConstructNotificationTopicLoggingRole52DEBAA0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "sns.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "logs:PutMetricFilter",
+          "logs:PutRetentionPolicy"
+         ],
+         "Effect": "Allow",
+         "Resource": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:aws:logs:",
+            {
+             "Ref": "AWS::Region"
+            },
+            ":",
+            {
+             "Ref": "AWS::AccountId"
+            },
+            ":log-group:*"
+           ]
+          ]
+         }
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "CloudWatchWritePolicy"
+     }
+    ]
+   },
+   "Metadata": {
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "U05TIOOBruODreOCsOWHuuWKm+OBq+OBryA6KiDjgYzlv4XopoHjgarjgZ/jgoHjgIHmipHliLbjgZnjgovjgII=",
+       "id": "AwsSolutions-IAM5",
+       "is_reason_encoded": true
+      }
+     ]
+    }
+   }
+  },
+  "NotificationConstructNotificationTopic211862B9": {
+   "Type": "AWS::SNS::Topic",
+   "Properties": {
+    "DeliveryStatusLogging": [
+     {
+      "FailureFeedbackRoleArn": {
+       "Fn::GetAtt": [
+        "NotificationConstructNotificationTopicLoggingRole52DEBAA0",
+        "Arn"
+       ]
+      },
+      "Protocol": "lambda",
+      "SuccessFeedbackRoleArn": {
+       "Fn::GetAtt": [
+        "NotificationConstructNotificationTopicLoggingRole52DEBAA0",
+        "Arn"
+       ]
+      },
+      "SuccessFeedbackSampleRate": "100"
+     }
+    ],
+    "DisplayName": "IntegTestStack-NotificationTopic",
+    "TopicName": "IntegTestStack-NotificationTopic"
+   },
+   "Metadata": {
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "S01TIOOCreODvOOCkuS9nOaIkOOBmeOCi+OBqCAkMSAvIG1vbnRoIOOBi+OBi+OCi+OBn+OCgeOAgeaKkeWItuOBmeOCi+OAgg==",
+       "id": "AwsSolutions-SNS2",
+       "is_reason_encoded": true
+      }
+     ]
+    }
+   }
+  },
+  "NotificationConstructNotificationTopicPolicy085A78FC": {
+   "Type": "AWS::SNS::TopicPolicy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "SNS:AddPermission",
+        "SNS:DeleteTopic",
+        "SNS:GetTopicAttributes",
+        "SNS:ListSubscriptionsByTopic",
+        "SNS:Publish",
+        "SNS:Receive",
+        "SNS:RemovePermission",
+        "SNS:SetTopicAttributes",
+        "SNS:Subscribe"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "AWS:SourceOwner": {
+          "Ref": "AWS::AccountId"
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": {
+        "Ref": "NotificationConstructNotificationTopic211862B9"
+       },
+       "Sid": "0"
+      },
+      {
+       "Action": "sns:Publish",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": "*",
+       "Resource": {
+        "Ref": "NotificationConstructNotificationTopic211862B9"
+       },
+       "Sid": "AllowPublishThroughSSLOnly"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Topics": [
+     {
+      "Ref": "NotificationConstructNotificationTopic211862B9"
+     }
+    ]
+   },
+   "Metadata": {
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "S01TIOOCreODvOOCkuS9nOaIkOOBmeOCi+OBqCAkMSAvIG1vbnRoIOOBi+OBi+OCi+OBn+OCgeOAgeaKkeWItuOBmeOCi+OAgg==",
+       "id": "AwsSolutions-SNS2",
+       "is_reason_encoded": true
+      }
+     ]
+    }
+   }
+  },
+  "NotificationConstructPostLineLambdaRole467F5CA0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "NotificationConstructPostLineLambdaRoleDefaultPolicy093F583B": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "NotificationConstructPostLineLambdaLogGroupFE62F9FA",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "NotificationConstructPostLineLambdaRoleDefaultPolicy093F583B",
+    "Roles": [
+     {
+      "Ref": "NotificationConstructPostLineLambdaRole467F5CA0"
+     }
+    ]
+   }
+  },
+  "NotificationConstructPostLineLambdaLogGroupFE62F9FA": {
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "RetainExceptOnCreate"
+  },
+  "NotificationConstructPostLineLambdaF49033E2": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "6f3ee296b617ed0fa64934a764c67e0934ad6541ec8a11dc9c0f3961f2c80932.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TZ": "Asia/Tokyo",
+      "LINE_NOTIFY_TOKEN": "",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "FunctionName": "IntegTestStack-post-line-lambda",
+    "Handler": "index.handler",
+    "LoggingConfig": {
+     "LogGroup": {
+      "Ref": "NotificationConstructPostLineLambdaLogGroupFE62F9FA"
+     }
+    },
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "NotificationConstructPostLineLambdaRole467F5CA0",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "NotificationConstructPostLineLambdaRoleDefaultPolicy093F583B",
+    "NotificationConstructPostLineLambdaRole467F5CA0"
+   ]
+  },
+  "NotificationConstructPostLineLambdaAllowInvokeIntegTestStackNotificationConstructNotificationTopic292BC32B7A748BF6": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "NotificationConstructPostLineLambdaF49033E2",
+      "Arn"
+     ]
+    },
+    "Principal": "sns.amazonaws.com",
+    "SourceArn": {
+     "Ref": "NotificationConstructNotificationTopic211862B9"
+    }
+   }
+  },
+  "NotificationConstructPostLineLambdaNotificationTopic432E721D": {
+   "Type": "AWS::SNS::Subscription",
+   "Properties": {
+    "Endpoint": {
+     "Fn::GetAtt": [
+      "NotificationConstructPostLineLambdaF49033E2",
+      "Arn"
+     ]
+    },
+    "Protocol": "lambda",
+    "TopicArn": {
+     "Ref": "NotificationConstructNotificationTopic211862B9"
+    }
+   }
+  },
+  "CostNotificationConstructCostNotificationLambdaRoleD358572B": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "ce:GetCostAndUsage",
+          "ce:GetCostForecast"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:aws:ce:us-east-1:",
+             {
+              "Ref": "AWS::AccountId"
+             },
+             ":/GetCostAndUsage"
+            ]
+           ]
+          },
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:aws:ce:us-east-1:",
+             {
+              "Ref": "AWS::AccountId"
+             },
+             ":/GetCostForecast"
+            ]
+           ]
+          }
+         ]
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "CostExplorerPolicy"
+     }
+    ]
+   }
+  },
+  "CostNotificationConstructCostNotificationLambdaRoleDefaultPolicy934BC470": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sns:Publish",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "NotificationConstructNotificationTopic211862B9"
+       }
+      },
+      {
+       "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "CostNotificationConstructCostNotificationLambdaLogGroup782625FE",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CostNotificationConstructCostNotificationLambdaRoleDefaultPolicy934BC470",
+    "Roles": [
+     {
+      "Ref": "CostNotificationConstructCostNotificationLambdaRoleD358572B"
+     }
+    ]
+   }
+  },
+  "CostNotificationConstructCostNotificationLambdaLogGroup782625FE": {
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "RetainExceptOnCreate"
+  },
+  "CostNotificationConstructCostNotificationLambdaB2DC0955": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "19c71aede154bc26d257466cb21a4196752b3b890b6e2181ea4969d177cd40bd.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TZ": "Asia/Tokyo",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "FunctionName": "IntegTestStack-cost-notification-lambda",
+    "Handler": "index.handler",
+    "LoggingConfig": {
+     "LogGroup": {
+      "Ref": "CostNotificationConstructCostNotificationLambdaLogGroup782625FE"
+     }
+    },
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "CostNotificationConstructCostNotificationLambdaRoleD358572B",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "CostNotificationConstructCostNotificationLambdaRoleDefaultPolicy934BC470",
+    "CostNotificationConstructCostNotificationLambdaRoleD358572B"
+   ]
+  },
+  "CostNotificationConstructCostNotificationLambdaEventInvokeConfig699B97E7": {
+   "Type": "AWS::Lambda::EventInvokeConfig",
+   "Properties": {
+    "DestinationConfig": {
+     "OnFailure": {
+      "Destination": {
+       "Ref": "NotificationConstructNotificationTopic211862B9"
+      }
+     },
+     "OnSuccess": {
+      "Destination": {
+       "Ref": "NotificationConstructNotificationTopic211862B9"
+      }
+     }
+    },
+    "FunctionName": {
+     "Ref": "CostNotificationConstructCostNotificationLambdaB2DC0955"
+    },
+    "Qualifier": "$LATEST"
+   }
+  },
+  "CostNotificationConstructCostNotificationSchedulerRoleE682387F": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "scheduler.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": "lambda:InvokeFunction",
+         "Effect": "Allow",
+         "Resource": {
+          "Fn::GetAtt": [
+           "CostNotificationConstructCostNotificationLambdaB2DC0955",
+           "Arn"
+          ]
+         }
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "CloudWatchPolicy"
+     }
+    ]
+   }
+  },
+  "CostNotificationConstructCostNotificationScheduleEEF3B607": {
+   "Type": "AWS::Scheduler::Schedule",
+   "Properties": {
+    "FlexibleTimeWindow": {
+     "Mode": "OFF"
+    },
+    "ScheduleExpression": "cron(0 10 ? * 2 *)",
+    "ScheduleExpressionTimezone": "Asia/Tokyo",
+    "Target": {
+     "Arn": {
+      "Fn::GetAtt": [
+       "CostNotificationConstructCostNotificationLambdaB2DC0955",
+       "Arn"
+      ]
+     },
+     "RoleArn": {
+      "Fn::GetAtt": [
+       "CostNotificationConstructCostNotificationSchedulerRoleE682387F",
+       "Arn"
+      ]
+     }
+    }
+   }
+  },
+  "BudgetAlartConstructBudgetAlartTopicLoggingRole870C03D2": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "sns.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "logs:PutMetricFilter",
+          "logs:PutRetentionPolicy"
+         ],
+         "Effect": "Allow",
+         "Resource": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:aws:logs:",
+            {
+             "Ref": "AWS::Region"
+            },
+            ":",
+            {
+             "Ref": "AWS::AccountId"
+            },
+            ":log-group:*"
+           ]
+          ]
+         }
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "CloudWatchWritePolicy"
+     }
+    ]
+   },
+   "Metadata": {
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "U05TIOOBruODreOCsOWHuuWKm+OBq+OBryA6KiDjgYzlv4XopoHjgarjgZ/jgoHjgIHmipHliLbjgZnjgovjgII=",
+       "id": "AwsSolutions-IAM5",
+       "is_reason_encoded": true
+      }
+     ]
+    }
+   }
+  },
+  "BudgetAlartConstructBudgetAlartTopicCDCEEA28": {
+   "Type": "AWS::SNS::Topic",
+   "Properties": {
+    "DeliveryStatusLogging": [
+     {
+      "FailureFeedbackRoleArn": {
+       "Fn::GetAtt": [
+        "BudgetAlartConstructBudgetAlartTopicLoggingRole870C03D2",
+        "Arn"
+       ]
+      },
+      "Protocol": "lambda",
+      "SuccessFeedbackRoleArn": {
+       "Fn::GetAtt": [
+        "BudgetAlartConstructBudgetAlartTopicLoggingRole870C03D2",
+        "Arn"
+       ]
+      },
+      "SuccessFeedbackSampleRate": "100"
+     }
+    ],
+    "DisplayName": "IntegTestStack-BudgetAlartTopic",
+    "TopicName": "IntegTestStack-BudgetAlartTopic"
+   },
+   "Metadata": {
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "S01TIOOCreODvOOCkuS9nOaIkOOBmeOCi+OBqCAkMSAvIG1vbnRoIOOBi+OBi+OCi+OBn+OCgeOAgeaKkeWItuOBmeOCi+OAgg==",
+       "id": "AwsSolutions-SNS2",
+       "is_reason_encoded": true
+      }
+     ]
+    }
+   }
+  },
+  "BudgetAlartConstructBudgetAlartTopicPolicyB18977E7": {
+   "Type": "AWS::SNS::TopicPolicy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "SNS:AddPermission",
+        "SNS:DeleteTopic",
+        "SNS:GetTopicAttributes",
+        "SNS:ListSubscriptionsByTopic",
+        "SNS:Publish",
+        "SNS:Receive",
+        "SNS:RemovePermission",
+        "SNS:SetTopicAttributes",
+        "SNS:Subscribe"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "AWS:SourceOwner": {
+          "Ref": "AWS::AccountId"
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": {
+        "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+       },
+       "Sid": "0"
+      },
+      {
+       "Action": "sns:Publish",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": "*",
+       "Resource": {
+        "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+       },
+       "Sid": "AllowPublishThroughSSLOnly"
+      },
+      {
+       "Action": "SNS:Publish",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "budgets.amazonaws.com"
+       },
+       "Resource": {
+        "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+       },
+       "Sid": "2"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Topics": [
+     {
+      "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+     }
+    ]
+   },
+   "Metadata": {
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "S01TIOOCreODvOOCkuS9nOaIkOOBmeOCi+OBqCAkMSAvIG1vbnRoIOOBi+OBi+OCi+OBn+OCgeOAgeaKkeWItuOBmeOCi+OAgg==",
+       "id": "AwsSolutions-SNS2",
+       "is_reason_encoded": true
+      }
+     ]
+    }
+   }
+  },
+  "BudgetAlartConstructBudgetAlartLambdaRole89D12972": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "BudgetAlartConstructBudgetAlartLambdaRoleDefaultPolicy09C4CADB": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sns:Publish",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "NotificationConstructNotificationTopic211862B9"
+       }
+      },
+      {
+       "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BudgetAlartConstructBudgetAlartLambdaLogGroup3B42667E",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BudgetAlartConstructBudgetAlartLambdaRoleDefaultPolicy09C4CADB",
+    "Roles": [
+     {
+      "Ref": "BudgetAlartConstructBudgetAlartLambdaRole89D12972"
+     }
+    ]
+   }
+  },
+  "BudgetAlartConstructBudgetAlartLambdaLogGroup3B42667E": {
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "RetainExceptOnCreate"
+  },
+  "BudgetAlartConstructBudgetAlartLambdaB9176DDA": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "a5d7e4dfdb49094e69a2a799823d746eaad421bedfc886186db6c8b618720392.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TZ": "Asia/Tokyo",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "FunctionName": "IntegTestStack-budget-alart-lambda",
+    "Handler": "index.handler",
+    "LoggingConfig": {
+     "LogGroup": {
+      "Ref": "BudgetAlartConstructBudgetAlartLambdaLogGroup3B42667E"
+     }
+    },
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "BudgetAlartConstructBudgetAlartLambdaRole89D12972",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "BudgetAlartConstructBudgetAlartLambdaRoleDefaultPolicy09C4CADB",
+    "BudgetAlartConstructBudgetAlartLambdaRole89D12972"
+   ]
+  },
+  "BudgetAlartConstructBudgetAlartLambdaAllowInvokeIntegTestStackBudgetAlartConstructBudgetAlartTopic6878672ECB27C927": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "BudgetAlartConstructBudgetAlartLambdaB9176DDA",
+      "Arn"
+     ]
+    },
+    "Principal": "sns.amazonaws.com",
+    "SourceArn": {
+     "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+    }
+   }
+  },
+  "BudgetAlartConstructBudgetAlartLambdaBudgetAlartTopic639CB94B": {
+   "Type": "AWS::SNS::Subscription",
+   "Properties": {
+    "Endpoint": {
+     "Fn::GetAtt": [
+      "BudgetAlartConstructBudgetAlartLambdaB9176DDA",
+      "Arn"
+     ]
+    },
+    "Protocol": "lambda",
+    "TopicArn": {
+     "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+    }
+   }
+  },
+  "BudgetAlartConstructBudgetAlartLambdaEventInvokeConfigD0B657FF": {
+   "Type": "AWS::Lambda::EventInvokeConfig",
+   "Properties": {
+    "DestinationConfig": {
+     "OnFailure": {
+      "Destination": {
+       "Ref": "NotificationConstructNotificationTopic211862B9"
+      }
+     },
+     "OnSuccess": {
+      "Destination": {
+       "Ref": "NotificationConstructNotificationTopic211862B9"
+      }
+     }
+    },
+    "FunctionName": {
+     "Ref": "BudgetAlartConstructBudgetAlartLambdaB9176DDA"
+    },
+    "Qualifier": "$LATEST"
+   }
+  },
+  "BudgetAlartConstructMonthlyCostBudgetDA307CF9": {
+   "Type": "AWS::Budgets::Budget",
+   "Properties": {
+    "Budget": {
+     "BudgetLimit": {
+      "Amount": 4,
+      "Unit": "USD"
+     },
+     "BudgetName": "IntegTestStack-MonthlyCostBudget",
+     "BudgetType": "COST",
+     "TimeUnit": "MONTHLY"
+    },
+    "NotificationsWithSubscribers": [
+     {
+      "Notification": {
+       "ComparisonOperator": "GREATER_THAN",
+       "NotificationType": "ACTUAL",
+       "Threshold": 50,
+       "ThresholdType": "PERCENTAGE"
+      },
+      "Subscribers": [
+       {
+        "Address": {
+         "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+        },
+        "SubscriptionType": "SNS"
+       }
+      ]
+     },
+     {
+      "Notification": {
+       "ComparisonOperator": "GREATER_THAN",
+       "NotificationType": "FORECASTED",
+       "Threshold": 80,
+       "ThresholdType": "PERCENTAGE"
+      },
+      "Subscribers": [
+       {
+        "Address": {
+         "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+        },
+        "SubscriptionType": "SNS"
+       }
+      ]
+     }
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

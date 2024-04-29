@@ -8,6 +8,8 @@ export interface BudgetAlartConstructProps {
 }
 
 export class BudgetAlartConstruct extends Construct {
+  public readonly monthlyCostBudget: cdk.aws_budgets.CfnBudget;
+
   constructor(scope: Construct, id: string, props: BudgetAlartConstructProps) {
     super(scope, id);
 
@@ -37,8 +39,8 @@ export class BudgetAlartConstruct extends Construct {
     });
 
     const topic = new cdk.aws_sns.Topic(this, "BudgetAlartTopic", {
-      topicName: "BudgetAlartTopic",
-      displayName: "BudgetAlartTopic",
+      topicName: `${cdk.Stack.of(this).stackName}-BudgetAlartTopic`,
+      displayName: `${cdk.Stack.of(this).stackName}-BudgetAlartTopic`,
       enforceSSL: true,
       loggingConfigs: [
         {
@@ -88,12 +90,10 @@ export class BudgetAlartConstruct extends Construct {
       assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
     });
 
-    const functionName = "budget-alart-lambda";
-
     const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "BudgetAlartLambda", {
       role: lambdaRole,
       entry: path.join(__dirname, "../functions/budget-alart-lambda.ts"),
-      functionName,
+      functionName: `${cdk.Stack.of(this).stackName}-budget-alart-lambda`,
       bundling: {
         externalModules: ["@aws-sdk/*"],
         tsconfig: path.join(__dirname, "../../tsconfig.json"),
@@ -105,7 +105,6 @@ export class BudgetAlartConstruct extends Construct {
         TZ: "Asia/Tokyo",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "BudgetAlartLambdaLogGroup", {
-        logGroupName: `/aws/lambda/${cdk.Stack.of(this).stackName}/${functionName}`,
         removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
         retention: cdk.aws_logs.RetentionDays.INFINITE,
       }),
@@ -122,9 +121,9 @@ export class BudgetAlartConstruct extends Construct {
       }),
     );
 
-    new cdk.aws_budgets.CfnBudget(this, "MonthlyCostBudget", {
+    this.monthlyCostBudget = new cdk.aws_budgets.CfnBudget(this, "MonthlyCostBudget", {
       budget: {
-        budgetName: "MonthlyCostBudget",
+        budgetName: `${cdk.Stack.of(this).stackName}-MonthlyCostBudget`,
         budgetType: "COST",
         timeUnit: "MONTHLY",
         // 5 USD 以上の場合に通知

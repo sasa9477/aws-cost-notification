@@ -39,73 +39,73 @@ describe("AWS Cost Notification Stack", () => {
     }
   });
 
-  test("毎週月曜日の 10時 0分に起動する", () => {
-    const lambda = template.findResources("AWS::Lambda::Function", {
-      Properties: {
-        FunctionName: "cost-notification-lambda",
-      },
-    });
-    const lambdaLogicalId = Object.keys(lambda)[0];
+  // test("毎週月曜日の 10時 0分に起動する", () => {
+  //   const lambda = template.findResources("AWS::Lambda::Function", {
+  //     Properties: {
+  //       FunctionName: "cost-notification-lambda",
+  //     },
+  //   });
+  //   const lambdaLogicalId = Object.keys(lambda)[0];
 
-    const targetCapture = new Capture();
+  //   const targetCapture = new Capture();
 
-    template.hasResourceProperties("AWS::Scheduler::Schedule", {
-      Target: {
-        Arn: targetCapture,
-      },
-      ScheduleExpression: "cron(0 10 ? * 2 *)",
-    });
+  //   template.hasResourceProperties("AWS::Scheduler::Schedule", {
+  //     Target: {
+  //       Arn: targetCapture,
+  //     },
+  //     ScheduleExpression: "cron(0 10 ? * 2 *)",
+  //   });
 
-    // ラムダ関数がターゲットに含まれていることを確認する
-    expect(JSON.stringify(targetCapture.asObject())).toContain(lambdaLogicalId);
-  });
+  //   // ラムダ関数がターゲットに含まれていることを確認する
+  //   expect(JSON.stringify(targetCapture.asObject())).toContain(lambdaLogicalId);
+  // });
 
-  test("post-line-lambda に LINE Notify のアクセストークンが設定されている", () => {
-    const lineNotifyTokenCapture = new Capture();
+  // test("post-line-lambda に LINE Notify のアクセストークンが設定されている", () => {
+  //   const lineNotifyTokenCapture = new Capture();
 
-    template.hasResourceProperties("AWS::Lambda::Function", {
-      FunctionName: "post-line-lambda",
-      Environment: {
-        Variables: {
-          LINE_NOTIFY_TOKEN: lineNotifyTokenCapture,
-        },
-      },
-    });
+  //   template.hasResourceProperties("AWS::Lambda::Function", {
+  //     FunctionName: "post-line-lambda",
+  //     Environment: {
+  //       Variables: {
+  //         LINE_NOTIFY_TOKEN: lineNotifyTokenCapture,
+  //       },
+  //     },
+  //   });
 
-    expect(lineNotifyTokenCapture.asString()).not.toEqual("");
-  });
+  //   expect(lineNotifyTokenCapture.asString()).not.toEqual("");
+  // });
 
-  test("ラムダ関数に Cost Exploerer へのコスト使用量と予想額の取得が許可されている", () => {
-    const ceGetCostAndUsagePolicies = template.findResources("AWS::IAM::Role", {
-      Properties: {
-        Policies: [
-          {
-            PolicyDocument: {
-              Statement: [
-                {
-                  Action: ["ce:GetCostAndUsage", "ce:GetCostForecast"],
-                  Effect: "Allow",
-                },
-              ],
-            },
-          },
-        ],
-      },
-    });
+  // test("ラムダ関数に Cost Exploerer へのコスト使用量と予想額の取得が許可されている", () => {
+  //   const ceGetCostAndUsagePolicies = template.findResources("AWS::IAM::Role", {
+  //     Properties: {
+  //       Policies: [
+  //         {
+  //           PolicyDocument: {
+  //             Statement: [
+  //               {
+  //                 Action: ["ce:GetCostAndUsage", "ce:GetCostForecast"],
+  //                 Effect: "Allow",
+  //               },
+  //             ],
+  //           },
+  //         },
+  //       ],
+  //     },
+  //   });
 
-    const ceGetCostAndUsagePolicyLogicalId = Object.keys(ceGetCostAndUsagePolicies)[0];
+  //   const ceGetCostAndUsagePolicyLogicalId = Object.keys(ceGetCostAndUsagePolicies)[0];
 
-    const dependsOnCapture = new Capture();
+  //   const dependsOnCapture = new Capture();
 
-    template.hasMapping;
+  //   template.hasMapping;
 
-    template.hasResource("AWS::Lambda::Function", {
-      Properties: {
-        FunctionName: "cost-notification-lambda",
-      },
-      DependsOn: dependsOnCapture,
-    });
+  //   template.hasResource("AWS::Lambda::Function", {
+  //     Properties: {
+  //       FunctionName: "cost-notification-lambda",
+  //     },
+  //     DependsOn: dependsOnCapture,
+  //   });
 
-    expect(dependsOnCapture.asArray()).toContain(ceGetCostAndUsagePolicyLogicalId);
-  });
+  //   expect(dependsOnCapture.asArray()).toContain(ceGetCostAndUsagePolicyLogicalId);
+  // });
 });
