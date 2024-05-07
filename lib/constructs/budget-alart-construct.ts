@@ -126,7 +126,7 @@ export class BudgetAlartConstruct extends Construct {
         budgetName: `${cdk.Stack.of(this).stackName}-MonthlyCostBudget`,
         budgetType: "COST",
         timeUnit: "MONTHLY",
-        // 5 USD 以上の場合に通知
+        // 4 USD 以上の場合に通知
         budgetLimit: {
           amount: 4,
           unit: "USD",

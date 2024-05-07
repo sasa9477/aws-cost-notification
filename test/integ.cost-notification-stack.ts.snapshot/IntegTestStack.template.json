@@ -52,6 +52,8 @@
      }
     ]
    },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
    "Metadata": {
     "cdk_nag": {
      "rules_to_suppress": [
@@ -88,6 +90,8 @@
     "DisplayName": "IntegTestStack-NotificationTopic",
     "TopicName": "IntegTestStack-NotificationTopic"
    },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
    "Metadata": {
     "cdk_nag": {
      "rules_to_suppress": [
@@ -156,6 +160,8 @@
      }
     ]
    },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
    "Metadata": {
     "cdk_nag": {
      "rules_to_suppress": [
@@ -183,7 +189,9 @@
      ],
      "Version": "2012-10-17"
     }
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "NotificationConstructPostLineLambdaRoleDefaultPolicy093F583B": {
    "Type": "AWS::IAM::Policy",
@@ -213,25 +221,28 @@
       "Ref": "NotificationConstructPostLineLambdaRole467F5CA0"
      }
     ]
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "NotificationConstructPostLineLambdaLogGroupFE62F9FA": {
    "Type": "AWS::Logs::LogGroup",
-   "UpdateReplacePolicy": "Retain",
-   "DeletionPolicy": "RetainExceptOnCreate"
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "NotificationConstructPostLineLambdaF49033E2": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-     },
-     "S3Key": "6f3ee296b617ed0fa64934a764c67e0934ad6541ec8a11dc9c0f3961f2c80932.zip"
+     "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
+     "S3Key": "85a3965dd254bd5def15b6d0a04788d1fbcb8b651b40af263bb0043a77855b51.zip"
     },
     "Environment": {
      "Variables": {
       "TZ": "Asia/Tokyo",
+      "LINE_NOTIFY_URL": {
+       "Fn::ImportValue": "IntegTestMockStack:ExportsOutputFnGetAttNotificationTestLambdaFunctionUrlE7F86D1AFunctionUrl1ADD5C39"
+      },
       "LINE_NOTIFY_TOKEN": "",
       "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
      }
@@ -256,7 +267,9 @@
    "DependsOn": [
     "NotificationConstructPostLineLambdaRoleDefaultPolicy093F583B",
     "NotificationConstructPostLineLambdaRole467F5CA0"
-   ]
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "NotificationConstructPostLineLambdaAllowInvokeIntegTestStackNotificationConstructNotificationTopic292BC32B7A748BF6": {
    "Type": "AWS::Lambda::Permission",
@@ -272,7 +285,9 @@
     "SourceArn": {
      "Ref": "NotificationConstructNotificationTopic211862B9"
     }
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "NotificationConstructPostLineLambdaNotificationTopic432E721D": {
    "Type": "AWS::SNS::Subscription",
@@ -287,7 +302,9 @@
     "TopicArn": {
      "Ref": "NotificationConstructNotificationTopic211862B9"
     }
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "CostNotificationConstructCostNotificationLambdaRoleD358572B": {
    "Type": "AWS::IAM::Role",
@@ -347,7 +364,9 @@
       "PolicyName": "CostExplorerPolicy"
      }
     ]
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "CostNotificationConstructCostNotificationLambdaRoleDefaultPolicy934BC470": {
    "Type": "AWS::IAM::Policy",
@@ -384,20 +403,20 @@
       "Ref": "CostNotificationConstructCostNotificationLambdaRoleD358572B"
      }
     ]
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "CostNotificationConstructCostNotificationLambdaLogGroup782625FE": {
    "Type": "AWS::Logs::LogGroup",
-   "UpdateReplacePolicy": "Retain",
-   "DeletionPolicy": "RetainExceptOnCreate"
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "CostNotificationConstructCostNotificationLambdaB2DC0955": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-     },
+     "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
      "S3Key": "19c71aede154bc26d257466cb21a4196752b3b890b6e2181ea4969d177cd40bd.zip"
     },
     "Environment": {
@@ -426,7 +445,9 @@
    "DependsOn": [
     "CostNotificationConstructCostNotificationLambdaRoleDefaultPolicy934BC470",
     "CostNotificationConstructCostNotificationLambdaRoleD358572B"
-   ]
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "CostNotificationConstructCostNotificationLambdaEventInvokeConfig699B97E7": {
    "Type": "AWS::Lambda::EventInvokeConfig",
@@ -447,7 +468,9 @@
      "Ref": "CostNotificationConstructCostNotificationLambdaB2DC0955"
     },
     "Qualifier": "$LATEST"
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "CostNotificationConstructCostNotificationSchedulerRoleE682387F": {
    "Type": "AWS::IAM::Role",
@@ -484,7 +507,9 @@
       "PolicyName": "CloudWatchPolicy"
      }
     ]
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "CostNotificationConstructCostNotificationScheduleEEF3B607": {
    "Type": "AWS::Scheduler::Schedule",
@@ -508,7 +533,9 @@
       ]
      }
     }
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "BudgetAlartConstructBudgetAlartTopicLoggingRole870C03D2": {
    "Type": "AWS::IAM::Role",
@@ -562,6 +589,8 @@
      }
     ]
    },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
    "Metadata": {
     "cdk_nag": {
      "rules_to_suppress": [
@@ -598,6 +627,8 @@
     "DisplayName": "IntegTestStack-BudgetAlartTopic",
     "TopicName": "IntegTestStack-BudgetAlartTopic"
    },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
    "Metadata": {
     "cdk_nag": {
      "rules_to_suppress": [
@@ -677,6 +708,8 @@
      }
     ]
    },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
    "Metadata": {
     "cdk_nag": {
      "rules_to_suppress": [
@@ -704,7 +737,9 @@
      ],
      "Version": "2012-10-17"
     }
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "BudgetAlartConstructBudgetAlartLambdaRoleDefaultPolicy09C4CADB": {
    "Type": "AWS::IAM::Policy",
@@ -741,20 +776,20 @@
       "Ref": "BudgetAlartConstructBudgetAlartLambdaRole89D12972"
      }
     ]
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "BudgetAlartConstructBudgetAlartLambdaLogGroup3B42667E": {
    "Type": "AWS::Logs::LogGroup",
-   "UpdateReplacePolicy": "Retain",
-   "DeletionPolicy": "RetainExceptOnCreate"
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "BudgetAlartConstructBudgetAlartLambdaB9176DDA": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-     },
+     "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
      "S3Key": "a5d7e4dfdb49094e69a2a799823d746eaad421bedfc886186db6c8b618720392.zip"
     },
     "Environment": {
@@ -783,7 +818,9 @@
    "DependsOn": [
     "BudgetAlartConstructBudgetAlartLambdaRoleDefaultPolicy09C4CADB",
     "BudgetAlartConstructBudgetAlartLambdaRole89D12972"
-   ]
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "BudgetAlartConstructBudgetAlartLambdaAllowInvokeIntegTestStackBudgetAlartConstructBudgetAlartTopic6878672ECB27C927": {
    "Type": "AWS::Lambda::Permission",
@@ -799,7 +836,9 @@
     "SourceArn": {
      "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
     }
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "BudgetAlartConstructBudgetAlartLambdaBudgetAlartTopic639CB94B": {
    "Type": "AWS::SNS::Subscription",
@@ -814,7 +853,9 @@
     "TopicArn": {
      "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
     }
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "BudgetAlartConstructBudgetAlartLambdaEventInvokeConfigD0B657FF": {
    "Type": "AWS::Lambda::EventInvokeConfig",
@@ -835,7 +876,9 @@
      "Ref": "BudgetAlartConstructBudgetAlartLambdaB9176DDA"
     },
     "Qualifier": "$LATEST"
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   },
   "BudgetAlartConstructMonthlyCostBudgetDA307CF9": {
    "Type": "AWS::Budgets::Budget",
@@ -883,7 +926,9 @@
       ]
      }
     ]
-   }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   }
  },
  "Parameters": {

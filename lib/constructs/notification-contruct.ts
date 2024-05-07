@@ -90,6 +90,7 @@ export class NotificationConstruct extends Construct {
       timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
+        [POST_LINE_LAMBDA_ENV.LINE_NOTIFY_URL]: process.env[POST_LINE_LAMBDA_ENV.LINE_NOTIFY_URL] || "",
         [POST_LINE_LAMBDA_ENV.LINE_NOTIFY_TOKEN]: process.env[POST_LINE_LAMBDA_ENV.LINE_NOTIFY_TOKEN] || "",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "PostLineLambdaLogGroup", {
