@@ -349,7 +349,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/21fbb51d7b23f6a6c262b46a9caee79d744a3ac019fd45422d988b96d44b2a22.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/35c5e9557465d51e2e14bde9dec5eb7af3465308e2dd7f1bf5a845f8f8e3c660.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -365,6 +365,36 @@
         "DataFlowTestDefaultTestDeployAssert0E9374E1.assets"
       ],
       "metadata": {
+        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
+          }
+        ],
+        "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SingletonFunction1488541a7b23466481b69b4408076b81Role37ABCE73"
+          }
+        ],
+        "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/LogGroup": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SingletonFunction1488541a7b23466481b69b4408076b81LogGroupB3CD1BAA"
+          }
+        ],
+        "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SingletonFunction1488541a7b23466481b69b4408076b81HandlerCD40AE9F"
+          }
+        ],
+        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3HeadBuckete7525cb82a4b0844c6f0994fc7bc31d2/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AwsApiCalls3HeadBuckete7525cb82a4b0844c6f0994fc7bc31d2"
+          }
+        ],
         "/DataFlowTest/DefaultTest/DeployAssert/BootstrapVersion": [
           {
             "type": "aws:cdk:logicalId",

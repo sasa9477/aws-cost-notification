@@ -1,4 +1,159 @@
 {
+ "Resources": {
+  "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862": {
+   "Type": "Custom::DeployAssert@SdkCallbudgetsUpdateBudget",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "SingletonFunction1488541a7b23466481b69b4408076b81HandlerCD40AE9F",
+      "Arn"
+     ]
+    },
+    "service": "budgets",
+    "api": "UpdateBudget",
+    "parameters": {
+     "AccountId": "\"643202082981\"",
+     "NewBudget": "{\"BudgetLimit\":{\"Amount\":\"0.01\",\"Unit\":\"USD\"},\"BudgetName\":\"IntegTestStack-MonthlyCostBudget\",\"BudgetType\":\"COST\",\"TimeUnit\":\"MONTHLY\"}",
+     "RetentionDays": "1"
+    },
+    "flattenResponse": "false",
+    "salt": "1715519151510"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "SingletonFunction1488541a7b23466481b69b4408076b81Role37ABCE73": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyName": "Inline",
+      "PolicyDocument": {
+       "Version": "2012-10-17",
+       "Statement": [
+        {
+         "Action": [
+          "budgets:UpdateBudget"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          "*"
+         ]
+        },
+        {
+         "Action": [
+          "s3:HeadBucket"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          "*"
+         ]
+        },
+        {
+         "Effect": "Allow",
+         "Action": [
+          "budgets:*"
+         ],
+         "Resource": [
+          "*"
+         ]
+        },
+        {
+         "Effect": "Allow",
+         "Action": [
+          "s3:GetObject*",
+          "s3:List*"
+         ],
+         "Resource": [
+          "arn:aws:s3:::integtestmockstack-test-bucket",
+          "arn:aws:s3:::integtestmockstack-test-bucket/*"
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "SingletonFunction1488541a7b23466481b69b4408076b81LogGroupB3CD1BAA": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/aws/lambda/SingletonFunction1488541a7b23466481b69b4408076b81",
+    "RetentionInDays": 1
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "SingletonFunction1488541a7b23466481b69b4408076b81HandlerCD40AE9F": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Runtime": "nodejs18.x",
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "65c9f57ca55e2d458059a930e997f2bc96560b3a3654cc442616d12089449d39.zip"
+    },
+    "Timeout": 120,
+    "Handler": "index.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "SingletonFunction1488541a7b23466481b69b4408076b81Role37ABCE73",
+      "Arn"
+     ]
+    },
+    "LoggingConfig": {
+     "LogGroup": {
+      "Ref": "SingletonFunction1488541a7b23466481b69b4408076b81LogGroupB3CD1BAA"
+     }
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "AwsApiCalls3HeadBuckete7525cb82a4b0844c6f0994fc7bc31d2": {
+   "Type": "Custom::DeployAssert@SdkCalls3HeadBucket",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "SingletonFunction1488541a7b23466481b69b4408076b81HandlerCD40AE9F",
+      "Arn"
+     ]
+    },
+    "service": "s3",
+    "api": "HeadBucket",
+    "parameters": {
+     "Bucket": "\"integtestmockstack-test-bucket\""
+    },
+    "flattenResponse": "false",
+    "salt": "1715519151510"
+   },
+   "DependsOn": [
+    "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  }
+ },
  "Parameters": {
   "BootstrapVersion": {
    "Type": "AWS::SSM::Parameter::Value<String>",

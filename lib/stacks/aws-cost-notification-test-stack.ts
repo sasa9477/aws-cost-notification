@@ -16,6 +16,14 @@ export class AwsCostNotificationTestStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
+    bucket.addToResourcePolicy(
+      new cdk.aws_iam.PolicyStatement({
+        effect: cdk.aws_iam.Effect.ALLOW,
+        actions: ["s3:GetBucket*", "s3:List*", "s3:DeleteObject*", "s3:PutBucketPolicy"],
+        principals: [new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com")],
+        resources: [bucket.bucketArn, bucket.arnForObjects("*")],
+      }),
+    );
 
     const lambdaRole = new cdk.aws_iam.Role(this, "NotificationTestLambdaRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
