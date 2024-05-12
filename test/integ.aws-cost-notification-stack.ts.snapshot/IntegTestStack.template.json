@@ -417,11 +417,12 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-     "S3Key": "19c71aede154bc26d257466cb21a4196752b3b890b6e2181ea4969d177cd40bd.zip"
+     "S3Key": "028d1eb4869d4c090c2c7c1392137072426998f5d6abb0911edf0f925e95b7b0.zip"
     },
     "Environment": {
      "Variables": {
       "TZ": "Asia/Tokyo",
+      "EXCHANGE_RATE_API_KEY": "",
       "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
      }
     },
@@ -790,11 +791,12 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-     "S3Key": "a5d7e4dfdb49094e69a2a799823d746eaad421bedfc886186db6c8b618720392.zip"
+     "S3Key": "019aee7f663fab9cc7c6963101c12fb37433070a57ced747d3cc74cdab4fe9b2.zip"
     },
     "Environment": {
      "Variables": {
       "TZ": "Asia/Tokyo",
+      "EXCHANGE_RATE_API_KEY": "",
       "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
      }
     },

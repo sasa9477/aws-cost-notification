@@ -1,6 +1,12 @@
 import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
 import dayjs from "dayjs";
 import * as lambda from "aws-lambda";
+import { roundDigit } from "./helpers/round-disit";
+import { getExchangeRate } from "./helpers/get-exchange-rate";
+
+export const COST_NOTIFICATION_LAMBDA_ENV = {
+  EXCHANGE_RATE_API_KEY: "EXCHANGE_RATE_API_KEY",
+};
 
 const client = new CostExplorerClient({ region: "us-east-1" });
 
@@ -9,10 +15,11 @@ export const handler: lambda.EventBridgeHandler<"Scheduled Event", any, string> 
   const totalBilling = await getTotalBilling(startDate, endDate);
   const forecastBilling = await getForecastBilling();
   const serviceBillings = await getServiceBillings(startDate, endDate);
+  const exchangeRate = await getExchangeRate(process.env[COST_NOTIFICATION_LAMBDA_ENV.EXCHANGE_RATE_API_KEY] || "");
 
   const message = `
-${dayjs(startDate).format("MM/DD")} - ${dayjs(endDate).subtract(1, "day").format("MM/DD")} の請求額は ${totalBilling} USD です。${forecastBilling ? `今月の予想請求額は ${forecastBilling} USD です。\n` : ""}
-${serviceBillings?.map((service) => ` ・${service.serviceName}: ${service.billing} USD`).join("\n")}
+${dayjs(startDate).format("MM/DD")} - ${dayjs(endDate).subtract(1, "day").format("MM/DD")} の請求額は ${totalBilling} USD です。${forecastBilling ? `\n今月の予想請求額は ${forecastBilling} USD です。\n` : ""}
+${serviceBillings?.map((service) => ` ・${service.serviceName}: ${roundDigit(service.billing)} USD ${exchangeRate ? `${roundDigit(service.billing * exchangeRate)} JPY` : ""}`).join("\n")}
 `.trim();
 
   return message;

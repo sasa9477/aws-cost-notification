@@ -1,6 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as path from "path";
+import { COST_NOTIFICATION_LAMBDA_ENV } from "../functions/cost-notification-lambda";
 
 export interface CostNotifacationConstructProps {
   readonly notificationTopic: cdk.aws_sns.Topic;
@@ -47,6 +48,8 @@ export class CostNotifacationConstruct extends Construct {
       timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
+        [COST_NOTIFICATION_LAMBDA_ENV.EXCHANGE_RATE_API_KEY]:
+          process.env[COST_NOTIFICATION_LAMBDA_ENV.EXCHANGE_RATE_API_KEY] || "",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "CostNotificationLambdaLogGroup", {
         removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,

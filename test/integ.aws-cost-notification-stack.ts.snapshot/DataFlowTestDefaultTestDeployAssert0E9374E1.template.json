@@ -17,7 +17,7 @@
      "RetentionDays": "1"
     },
     "flattenResponse": "false",
-    "salt": "1715519151510"
+    "salt": "1715536654955"
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
@@ -97,7 +97,38 @@
   "SingletonFunction1488541a7b23466481b69b4408076b81LogGroupB3CD1BAA": {
    "Type": "AWS::Logs::LogGroup",
    "Properties": {
-    "LogGroupName": "/aws/lambda/SingletonFunction1488541a7b23466481b69b4408076b81",
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Fn::Select": [
+         0,
+         {
+          "Fn::Split": [
+           "-",
+           {
+            "Fn::Select": [
+             2,
+             {
+              "Fn::Split": [
+               "/",
+               {
+                "Ref": "AWS::StackId"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "/SingletonFunction1488541a7b23466481b69b4408076b81"
+      ]
+     ]
+    },
     "RetentionInDays": 1
    },
    "UpdateReplacePolicy": "Delete",
@@ -145,7 +176,7 @@
      "Bucket": "\"integtestmockstack-test-bucket\""
     },
     "flattenResponse": "false",
-    "salt": "1715519151510"
+    "salt": "1715536654956"
    },
    "DependsOn": [
     "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
