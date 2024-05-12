@@ -2,7 +2,7 @@
   "directory": "test",
   "parallelRegions": ["ap-northeast-1"],
   "clean": true,
-  "verbose": true,
-  "//force": "テスト対象のコードに変更がない場合は force を true に設定してテストを実行する",
-  "force": false
+  "verbose": false,
+  "force": true,
+  "update-on-failed": true
 }

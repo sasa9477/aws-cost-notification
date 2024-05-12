@@ -6,8 +6,6 @@ export const NOTIFICATION_TEST_LAMBDA_ENV = {
   BUCKET_NAME: "BUCKET_NAME",
 };
 
-export const testFileName = "test.txt";
-
 export const handler: lambda.LambdaFunctionURLHandler<CompleteMultipartUploadCommandOutput> = async (event) => {
   console.log(JSON.stringify(event));
 
@@ -15,11 +13,8 @@ export const handler: lambda.LambdaFunctionURLHandler<CompleteMultipartUploadCom
     client: new S3({}) || new S3Client({}),
     params: {
       Bucket: process.env[NOTIFICATION_TEST_LAMBDA_ENV.BUCKET_NAME],
-      Key: testFileName,
-      Body:
-        event.body && event.isBase64Encoded
-          ? decodeURI(Buffer.from(event.body, "base64").toString("utf8"))
-          : event.body,
+      Key: `${new Date().toISOString()}.txt`,
+      Body: event.body && event.isBase64Encoded ? Buffer.from(event.body, "base64").toString() : event.body,
       ContentType: "text/plain",
     },
   });

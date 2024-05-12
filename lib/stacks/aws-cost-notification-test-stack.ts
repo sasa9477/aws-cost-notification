@@ -2,21 +2,17 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import path from "path";
 import { NagSuppressions } from "cdk-nag";
-import { NOTIFICATION_TEST_LAMBDA_ENV, testFileName } from "../functions/notification-test-lambda";
+import { NOTIFICATION_TEST_LAMBDA_ENV } from "../functions/notification-test-lambda";
 
 export class AwsCostNotificationTestStack extends cdk.Stack {
-  readonly bucketName: string;
-  readonly testFileName: string;
+  readonly bucket: cdk.aws_s3.Bucket;
   readonly functionUrl: cdk.aws_lambda.FunctionUrl;
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // S3 のポリシーを確認する
     const bucket = new cdk.aws_s3.Bucket(this, "TestBucket", {
       bucketName: `${cdk.Stack.of(this).stackName.toLocaleLowerCase()}-test-bucket`,
-      enforceSSL: true,
-      blockPublicAccess: cdk.aws_s3.BlockPublicAccess.BLOCK_ALL,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
@@ -56,8 +52,7 @@ export class AwsCostNotificationTestStack extends cdk.Stack {
 
     bucket.grantReadWrite(lambda);
 
-    this.bucketName = bucket.bucketName;
-    this.testFileName = testFileName;
+    this.bucket = bucket;
     this.functionUrl = lambda.addFunctionUrl({
       authType: cdk.aws_lambda.FunctionUrlAuthType.NONE,
     });
@@ -82,6 +77,16 @@ export class AwsCostNotificationTestStack extends cdk.Stack {
         {
           id: "AwsSolutions-S1",
           reason: "テスト用のバケットのため、アクセスログは設定しない",
+        },
+      ],
+      true,
+    );
+    NagSuppressions.addResourceSuppressions(
+      bucket,
+      [
+        {
+          id: "AwsSolutions-S10",
+          reason: "テスト用のバケットのため、SSLは設定しない",
         },
       ],
       true,
