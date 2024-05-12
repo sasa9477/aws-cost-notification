@@ -1,0 +1,48 @@
+{
+  "version": "36.0.0",
+  "files": {
+    "6c1e9b465fa4b2d651dbc9ce3e732d8702a7b19137327684a71d89f1d355f1a2": {
+      "source": {
+        "path": "asset.6c1e9b465fa4b2d651dbc9ce3e732d8702a7b19137327684a71d89f1d355f1a2",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "643202082981-ap-northeast-1": {
+          "bucketName": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
+          "objectKey": "6c1e9b465fa4b2d651dbc9ce3e732d8702a7b19137327684a71d89f1d355f1a2.zip",
+          "region": "ap-northeast-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-file-publishing-role-643202082981-ap-northeast-1"
+        }
+      }
+    },
+    "2095af6367d83996415c8c79757c3c4d8546eaa0d4db640bc7bd0a98a69c9df9": {
+      "source": {
+        "path": "asset.2095af6367d83996415c8c79757c3c4d8546eaa0d4db640bc7bd0a98a69c9df9",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "643202082981-ap-northeast-1": {
+          "bucketName": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
+          "objectKey": "2095af6367d83996415c8c79757c3c4d8546eaa0d4db640bc7bd0a98a69c9df9.zip",
+          "region": "ap-northeast-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-file-publishing-role-643202082981-ap-northeast-1"
+        }
+      }
+    },
+    "57d2e4b691072839efff0485edd931bfb69184f1e2feb32ea6d8a54454a8176e": {
+      "source": {
+        "path": "IntegTestMockStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "643202082981-ap-northeast-1": {
+          "bucketName": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
+          "objectKey": "57d2e4b691072839efff0485edd931bfb69184f1e2feb32ea6d8a54454a8176e.json",
+          "region": "ap-northeast-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-file-publishing-role-643202082981-ap-northeast-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
