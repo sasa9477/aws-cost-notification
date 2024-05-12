@@ -57,7 +57,8 @@
           "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
           "Arn"
          ]
-        }
+        },
+        "Service": "lambda.amazonaws.com"
        },
        "Resource": [
         {
