@@ -5,6 +5,7 @@
     "aws-cost-notification": "bin/aws-cost-notification.js"
   },
   "scripts": {
+    "postinstall": "patch-package",
     "build": "tsc",
     "watch": "tsc -w",
     "clean": "tsc --build --clean",
@@ -41,6 +42,7 @@
     "constructs": "^10.0.0",
     "dayjs": "^1.11.10",
     "dotenv": "^16.4.5",
+    "patch-package": "^8.0.0",
     "source-map-support": "^0.5.21"
   }
 }

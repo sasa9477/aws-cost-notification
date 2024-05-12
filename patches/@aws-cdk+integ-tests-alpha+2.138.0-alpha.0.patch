@@ -1,0 +1,25 @@
+diff --git a/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js b/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js
+index 480116c..9336873 100644
+--- a/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js
++++ b/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js
+@@ -8,6 +8,11 @@ const path = require("path");
+ const core_1 = require("aws-cdk-lib/core");
+ const constructs_1 = require("constructs");
+ const helpers_internal_1 = require("aws-cdk-lib/custom-resources/lib/helpers-internal");
++
++function uniqueStackIdPart() {
++    return core_1.Fn.select(0, core_1.Fn.split("-", core_1.Fn.select(2, core_1.Fn.split("/", `${core_1.Aws.STACK_ID}`))));
++}
++
+ /**
+  * integ-tests can only depend on '@aws-cdk/core' so
+  * this construct creates a lambda function provider using
+@@ -66,7 +71,7 @@ class LambdaFunctionProvider extends constructs_1.Construct {
+             const logGroup = new core_1.CfnResource(this, 'LogGroup', {
+                 type: 'AWS::Logs::LogGroup',
+                 properties: {
+-                    LogGroupName: `/aws/lambda/${id}`,
++                    LogGroupName: `/aws/lambda/${uniqueStackIdPart()}/${id}`,
+                     RetentionInDays: props.logRetention,
+                 },
+             });
