@@ -1,14 +1,13 @@
+import { IntegTest } from "@aws-cdk/integ-tests-alpha";
 import * as cdk from "aws-cdk-lib";
-import * as dotenv from "dotenv";
-import { AwsCostNotificationStack } from "../lib/stacks/aws-cost-notification-stack";
 import { AwsSolutionsChecks } from "cdk-nag";
-import { ExpectedResult, IntegTest } from "@aws-cdk/integ-tests-alpha";
-import { AwsCostNotificationTestStack } from "../lib/stacks/aws-cost-notification-test-stack";
+import * as dotenv from "dotenv";
 import { ApplyDestroyPolicyAspect } from "../lib/helpers/ApplyDestroyPolicyAspect";
-import { uniqueStackIdPart } from "../lib/helpers/uniqueStackIdPart";
-import * as fs from "fs";
+import { AwsCostNotificationStack } from "../lib/stacks/aws-cost-notification-stack";
+import { AwsCostNotificationTestStack } from "../lib/stacks/aws-cost-notification-test-stack";
 
-dotenv.config();
+// .env.test から環境変数を読み込む
+dotenv.config({ path: ".env.test" });
 
 const app = new cdk.App();
 

@@ -30,9 +30,14 @@ export async function getExchangeRate(apiKey: string): Promise<number | undefine
       return undefined;
     });
 
-  if (resJson && resJson.success && resJson.rates?.USD > 0 && resJson.rates?.JPY > 0) {
+  if (!resJson) {
+    return undefined;
+  }
+
+  if (resJson.success && resJson.rates?.USD > 0 && resJson.rates?.JPY > 0) {
     return roundDigit(resJson.rates.JPY / resJson.rates.USD);
   }
 
+  console.error("Failed to get exchange rate", resJson);
   return undefined;
 }
