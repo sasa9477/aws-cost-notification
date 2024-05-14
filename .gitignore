@@ -10,4 +10,3 @@ cdk.out
 .history
 
 .env*
-!.env.example
