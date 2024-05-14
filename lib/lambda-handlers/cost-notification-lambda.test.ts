@@ -1,7 +1,9 @@
-import { CostExplorer, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
+import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
+import * as lambda from "aws-lambda";
+import MockDate from "mockdate";
 import { commonLambdaHandlerContext } from "../../test/fixtures/common-lambda-handler-context";
 import { handler } from "./cost-notification-lambda";
-import * as lambda from "aws-lambda";
+import { mockClient } from "aws-sdk-client-mock";
 
 const commonEvent: lambda.EventBridgeEvent<"Scheduled Event", any> = {
   id: "test",
@@ -15,8 +17,13 @@ const commonEvent: lambda.EventBridgeEvent<"Scheduled Event", any> = {
   detail: {},
 };
 
+const costEcplorerMock = mockClient(CostExplorerClient);
+
 describe("cost-notification-lambda", () => {
   beforeAll(() => {
+    // dayjs の日付を固定する
+    MockDate.set("2024-05-14");
+
     // api.exchangeratesapi.io の API をモック化する
     jest.spyOn(global, "fetch").mockImplementation(() =>
       Promise.resolve({
@@ -36,109 +43,99 @@ describe("cost-notification-lambda", () => {
       } as Response),
     );
 
-    jest.mock("@aws-sdk/client-cost-explorer", () => {
-      class StubCostExplorerClient {
-        async send(command: unknown, ...args: unknown[]) {
-          if (command instanceof GetCostAndUsageCommand) {
-            if (
-              command.input.GroupBy &&
-              command.input.GroupBy[0].Type === "DIMENSION" &&
-              command.input.GroupBy[0].Key === "SERVICE"
-            ) {
-              return {
-                $metadata: {
-                  httpStatusCode: 200,
-                  requestId: "",
-                  attempts: 1,
-                  totalRetryDelay: 0,
-                },
-                DimensionValueAttributes: [],
-                GroupDefinitions: [{ Key: "SERVICE", Type: "DIMENSION" }],
-                ResultsByTime: [
-                  {
-                    Estimated: true,
-                    Groups: [
-                      { Keys: ["AWS Amplify"], Metrics: { AmortizedCost: { Amount: "0.0010353708", Unit: "USD" } } },
-                      { Keys: ["AWS Cost Explorer"], Metrics: { AmortizedCost: { Amount: "0.06", Unit: "USD" } } },
-                      {
-                        Keys: ["AWS Key Management Service"],
-                        Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
-                      },
-                      { Keys: ["AWS Lambda"], Metrics: { AmortizedCost: { Amount: "0.0000462902", Unit: "USD" } } },
-                      { Keys: ["AWS Step Functions"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-                      {
-                        Keys: ["AWS Systems Manager"],
-                        Metrics: { AmortizedCost: { Amount: "0.000195", Unit: "USD" } },
-                      },
-                      { Keys: ["AWS X-Ray"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-                      { Keys: ["Amazon CloudFront"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-                      { Keys: ["Amazon Cognito"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-                      { Keys: ["Amazon DynamoDB"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-                      { Keys: ["Amazon Route 53"], Metrics: { AmortizedCost: { Amount: "0.5009144", Unit: "USD" } } },
-                      {
-                        Keys: ["Amazon Simple Notification Service"],
-                        Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
-                      },
-                      {
-                        Keys: ["Amazon Simple Storage Service"],
-                        Metrics: { AmortizedCost: { Amount: "0.0237715209", Unit: "USD" } },
-                      },
-                      { Keys: ["AmazonCloudWatch"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-                      { Keys: ["CloudWatch Events"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-                      { Keys: ["Tax"], Metrics: { AmortizedCost: { Amount: "0.06", Unit: "USD" } } },
-                    ],
-                    TimePeriod: { End: "2024-05-14", Start: "2024-05-01" },
-                    Total: {},
-                  },
-                ],
-              };
-            }
-            return {
-              $metadata: {
-                httpStatusCode: 200,
-                requestId: "",
-                attempts: 1,
-                totalRetryDelay: 0,
+    // AWS SDK の CostExplorerClient をモック化する
+    costEcplorerMock
+      .on(GetCostAndUsageCommand)
+      .resolves({
+        $metadata: {
+          httpStatusCode: 200,
+          requestId: "",
+          attempts: 1,
+          totalRetryDelay: 0,
+        },
+        DimensionValueAttributes: [],
+        ResultsByTime: [
+          {
+            Estimated: true,
+            Groups: [],
+            TimePeriod: { End: "2024-05-14", Start: "2024-05-01" },
+            Total: { AmortizedCost: { Amount: "0.6459625819", Unit: "USD" } },
+          },
+        ],
+      })
+      .on(GetCostAndUsageCommand, {
+        GroupBy: [
+          {
+            Type: "DIMENSION",
+            Key: "SERVICE",
+          },
+        ],
+      })
+      .resolves({
+        $metadata: {
+          httpStatusCode: 200,
+          requestId: "",
+          attempts: 1,
+          totalRetryDelay: 0,
+        },
+        DimensionValueAttributes: [],
+        GroupDefinitions: [{ Key: "SERVICE", Type: "DIMENSION" }],
+        ResultsByTime: [
+          {
+            Estimated: true,
+            Groups: [
+              { Keys: ["AWS Amplify"], Metrics: { AmortizedCost: { Amount: "0.0010353708", Unit: "USD" } } },
+              { Keys: ["AWS Cost Explorer"], Metrics: { AmortizedCost: { Amount: "0.06", Unit: "USD" } } },
+              {
+                Keys: ["AWS Key Management Service"],
+                Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
               },
-              DimensionValueAttributes: [],
-              ResultsByTime: [
-                {
-                  Estimated: true,
-                  Groups: [],
-                  TimePeriod: { End: "2024-05-14", Start: "2024-05-01" },
-                  Total: { AmortizedCost: { Amount: "0.6459625819", Unit: "USD" } },
-                },
-              ],
-            };
-          }
-
-          if (command instanceof GetCostForecastCommand) {
-            return {
-              $metadata: {
-                httpStatusCode: 200,
-                requestId: "",
-                attempts: 1,
-                totalRetryDelay: 0,
+              { Keys: ["AWS Lambda"], Metrics: { AmortizedCost: { Amount: "0.0000462902", Unit: "USD" } } },
+              { Keys: ["AWS Step Functions"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
+              {
+                Keys: ["AWS Systems Manager"],
+                Metrics: { AmortizedCost: { Amount: "0.000195", Unit: "USD" } },
               },
-              ForecastResultsByTime: [
-                { MeanValue: "1.11254067343557", TimePeriod: { End: "2024-06-01", Start: "2024-05-01" } },
-              ],
-              Total: { Amount: "1.11254067343557", Unit: "USD" },
-            };
-          }
-
-          return {};
-        }
-      }
-      return {
-        // CostExplorerClient 以外は実際のモジュールを使用する
-        ...jest.requireActual("@aws-sdk/@aws-sdk/client-cost-explorer"),
-        CostExplorerClient: StubCostExplorerClient,
-      };
-    });
+              { Keys: ["AWS X-Ray"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
+              { Keys: ["Amazon CloudFront"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
+              { Keys: ["Amazon Cognito"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
+              { Keys: ["Amazon DynamoDB"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
+              { Keys: ["Amazon Route 53"], Metrics: { AmortizedCost: { Amount: "0.5009144", Unit: "USD" } } },
+              {
+                Keys: ["Amazon Simple Notification Service"],
+                Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
+              },
+              {
+                Keys: ["Amazon Simple Storage Service"],
+                Metrics: { AmortizedCost: { Amount: "0.0237715209", Unit: "USD" } },
+              },
+              { Keys: ["AmazonCloudWatch"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
+              { Keys: ["CloudWatch Events"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
+              { Keys: ["Tax"], Metrics: { AmortizedCost: { Amount: "0.06", Unit: "USD" } } },
+            ],
+            TimePeriod: { End: "2024-05-14", Start: "2024-05-01" },
+            Total: {},
+          },
+        ],
+      })
+      .on(GetCostForecastCommand)
+      .resolves({
+        $metadata: {
+          httpStatusCode: 200,
+          requestId: "",
+          attempts: 1,
+          totalRetryDelay: 0,
+        },
+        ForecastResultsByTime: [
+          { MeanValue: "1.11254067343557", TimePeriod: { End: "2024-06-01", Start: "2024-05-01" } },
+        ],
+        Total: { Amount: "1.11254067343557", Unit: "USD" },
+      });
   });
 
   afterAll(() => {
+    MockDate.reset();
+    costEcplorerMock.restore();
     jest.restoreAllMocks();
   });
 
