@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import path from "path";
 import { NagSuppressions } from "cdk-nag";
-import { NOTIFICATION_TEST_LAMBDA_ENV } from "../functions/notification-test-lambda";
+import { NOTIFICATION_TEST_LAMBDA_ENV } from "../lambda-handlers/notification-test-lambda";
 
 export class AwsCostNotificationTestStack extends cdk.Stack {
   readonly bucket: cdk.aws_s3.Bucket;
@@ -32,7 +32,7 @@ export class AwsCostNotificationTestStack extends cdk.Stack {
 
     const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "NotificationTestLambda", {
       role: lambdaRole,
-      entry: path.join(__dirname, "../functions/notification-test-lambda.ts"),
+      entry: path.join(__dirname, "../lambda-handlers/notification-test-lambda.ts"),
       functionName: `${cdk.Stack.of(this).stackName}-notification-test-lambda`,
       bundling: {
         externalModules: ["@aws-sdk/*"],

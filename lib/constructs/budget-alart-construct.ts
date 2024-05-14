@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import * as path from "path";
-import { BUDGET_LAMBDA_LAMBDA_ENV } from "../functions/budget-alart-lambda";
+import { BUDGET_LAMBDA_LAMBDA_ENV } from "../lambda-handlers/budget-alart-lambda";
 
 export interface BudgetAlartConstructProps {
   notificationTopic: cdk.aws_sns.Topic;
@@ -93,7 +93,7 @@ export class BudgetAlartConstruct extends Construct {
 
     const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "BudgetAlartLambda", {
       role: lambdaRole,
-      entry: path.join(__dirname, "../functions/budget-alart-lambda.ts"),
+      entry: path.join(__dirname, "../lambda-handlers/budget-alart-lambda.ts"),
       functionName: `${cdk.Stack.of(this).stackName}-budget-alart-lambda`,
       bundling: {
         externalModules: ["@aws-sdk/*"],

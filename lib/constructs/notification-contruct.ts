@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import * as path from "path";
-import { POST_LINE_LAMBDA_ENV } from "../functions/post-line-lambda";
+import { POST_LINE_LAMBDA_ENV } from "../lambda-handlers/post-line-lambda";
 
 export class NotificationConstruct extends Construct {
   readonly notificationTopic: cdk.aws_sns.Topic;
@@ -79,7 +79,7 @@ export class NotificationConstruct extends Construct {
 
     const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "PostLineLambda", {
       role: lambdaRole,
-      entry: path.join(__dirname, "../functions/post-line-lambda.ts"),
+      entry: path.join(__dirname, "../lambda-handlers/post-line-lambda.ts"),
       functionName: `${cdk.Stack.of(this).stackName}-post-line-lambda`,
       bundling: {
         externalModules: ["@aws-sdk/*"],
