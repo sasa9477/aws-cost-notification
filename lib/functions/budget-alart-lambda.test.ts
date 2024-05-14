@@ -56,7 +56,10 @@ describe("budget-alart-lambda", () => {
 
     const result = await handler(event, commonLambdaHandlerContext, () => {});
     expect(result).toMatch(
-      /⚠️ AWS の予測コストが予算額を超えそうです。\n予算額 : 0.01 USD \(1.5 JPY\)\n閾値 : 0.01 USD \(1.5 JPY\)\n予想額 : 0.5 USD \(75 JPY\)/,
+      `⚠️ AWS の予測コストが予算額を超えそうです。
+予算額 : 0.01 USD (1.5 JPY)
+閾値 : 0.01 USD (1.5 JPY)
+予想額 : 0.5 USD (75 JPY)`,
     );
   });
 
@@ -91,7 +94,10 @@ describe("budget-alart-lambda", () => {
 
     const result = await handler(event, commonLambdaHandlerContext, () => {});
     expect(result).toMatch(
-      /🔥 AWS の実際のコストが予算額を超えそうです。\n予算額 : 0.01 USD \(1.5 JPY\)\n閾値 : 0.01 USD \(1.5 JPY\)\n実際のコスト : 0.5 USD \(75 JPY\)/,
+      `🔥 AWS の実際のコストが予算額を超えそうです。
+予算額 : 0.01 USD (1.5 JPY)
+閾値 : 0.01 USD (1.5 JPY)
+実際のコスト : 0.5 USD (75 JPY)`,
     );
   });
 });
