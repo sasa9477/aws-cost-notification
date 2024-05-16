@@ -37,8 +37,8 @@ export class BudgetAlartConstruct extends Construct {
     );
 
     const topic = new cdk.aws_sns.Topic(this, "BudgetAlartTopic", {
-      topicName: `${cdk.Stack.of(this).stackName}-BudgetAlartTopic`,
-      displayName: `${cdk.Stack.of(this).stackName}-BudgetAlartTopic`,
+      topicName: `${cdk.Stack.of(this).stackName}BudgetAlartTopic`,
+      displayName: `${cdk.Stack.of(this).stackName}BudgetAlartTopic`,
       enforceSSL: true,
       loggingConfigs: [
         {
@@ -74,7 +74,7 @@ export class BudgetAlartConstruct extends Construct {
         },
       }),
     );
-    // Budgets から SNS トピックに Publish するためのアクセスポリシーを設定
+    // Budget から SNS トピックに Publish するためのアクセスポリシーを設定
     topic.addToResourcePolicy(
       new cdk.aws_iam.PolicyStatement({
         actions: ["SNS:Publish"],
@@ -93,17 +93,6 @@ export class BudgetAlartConstruct extends Construct {
       },
       onSuccess: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
       onFailure: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
-      initialPolicy: [
-        // Cost Explorer のコスト使用量と 予想額の取得 を許可
-        new cdk.aws_iam.PolicyStatement({
-          actions: ["ce:GetCostAndUsage", "ce:GetCostForecast"],
-          effect: cdk.aws_iam.Effect.ALLOW,
-          resources: [
-            `arn:aws:ce:us-east-1:${cdk.Stack.of(this).account}:/GetCostAndUsage`,
-            `arn:aws:ce:us-east-1:${cdk.Stack.of(this).account}:/GetCostForecast`,
-          ],
-        }),
-      ],
     });
 
     this.monthlyCostBudget = new cdk.aws_budgets.CfnBudget(this, "MonthlyCostBudget", {

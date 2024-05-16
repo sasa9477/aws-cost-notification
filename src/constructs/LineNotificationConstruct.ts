@@ -17,8 +17,6 @@ export class LineNotificationConstruct extends Construct {
   constructor(scope: Construct, id: string, props: LineNotificationConstructProps) {
     super(scope, id);
 
-    const { region, accountId } = new cdk.ScopedAws(this);
-
     const topicLoggingRole = new cdk.aws_iam.Role(this, "NotificationTopicLoggingRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
     });
@@ -26,13 +24,13 @@ export class LineNotificationConstruct extends Construct {
       new cdk.aws_iam.PolicyStatement({
         actions: ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
         effect: cdk.aws_iam.Effect.ALLOW,
-        resources: [`arn:aws:logs:${region}:${accountId}:log-group:*`],
+        resources: ["*"],
       }),
     );
 
     const topic = new cdk.aws_sns.Topic(this, "NotificationTopic", {
-      topicName: `${cdk.Stack.of(this).stackName}-NotificationTopic`,
-      displayName: `${cdk.Stack.of(this).stackName}-NotificationTopic`,
+      topicName: `${cdk.Stack.of(this).stackName}NotificationTopic`,
+      displayName: `${cdk.Stack.of(this).stackName}NotificationTopic`,
       enforceSSL: true,
       loggingConfigs: [
         {
@@ -63,7 +61,7 @@ export class LineNotificationConstruct extends Construct {
         resources: [topic.topicArn],
         conditions: {
           StringEquals: {
-            "AWS:SourceOwner": accountId,
+            "AWS:SourceOwner": cdk.Stack.of(this).account,
           },
         },
       }),

@@ -16,8 +16,6 @@ export class CostNotifacationConstruct extends Construct {
 
     const { config, notificationTopic } = props;
 
-    const { accountId } = new cdk.ScopedAws(this);
-
     const lambda = new NodeJsLambdaFunction(this, "CostNotificationHandler", {
       entryFileName: "CostNotificationHandler",
       environment: {
@@ -33,8 +31,8 @@ export class CostNotifacationConstruct extends Construct {
           actions: ["ce:GetCostAndUsage", "ce:GetCostForecast"],
           effect: cdk.aws_iam.Effect.ALLOW,
           resources: [
-            `arn:aws:ce:us-east-1:${accountId}:/GetCostAndUsage`,
-            `arn:aws:ce:us-east-1:${accountId}:/GetCostForecast`,
+            `arn:aws:ce:us-east-1:${cdk.Stack.of(this).account}:/GetCostAndUsage`,
+            `arn:aws:ce:us-east-1:${cdk.Stack.of(this).account}:/GetCostForecast`,
           ],
         }),
       ],
