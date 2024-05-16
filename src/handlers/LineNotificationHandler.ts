@@ -1,7 +1,7 @@
 import * as lambda from "aws-lambda";
 import { LambdaSnsContext } from "../types/LambdaSnsContext";
 
-export const POST_LINE_LAMBDA_ENV = {
+export const LINE_NOTIFICATION_HANDLER_ENV = {
   LINE_NOTIFY_URL: "LINE_NOTIFY_URL",
   LINE_NOTIFY_TOKEN: "LINE_NOTIFY_TOKEN",
 };
@@ -16,10 +16,10 @@ export const handler: lambda.SNSHandler = async (event) => {
       ? requestContext.responsePayload
       : requestContext.responsePayload.errorMessage;
 
-  const json = await /** global-fetch */ fetch(process.env[POST_LINE_LAMBDA_ENV.LINE_NOTIFY_URL] || "", {
+  const json = await /** global-fetch */ fetch(process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_URL] || "", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${process.env[POST_LINE_LAMBDA_ENV.LINE_NOTIFY_TOKEN]}`,
+      Authorization: `Bearer ${process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN]}`,
       ContentType: "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({

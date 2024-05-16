@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import * as path from "path";
-import { POST_LINE_LAMBDA_ENV } from "../handlers/LineNotificationHandler";
+import { LINE_NOTIFICATION_HANDLER_ENV } from "../handlers/LineNotificationHandler";
 
 export class NotificationConstruct extends Construct {
   readonly notificationTopic: cdk.aws_sns.Topic;
@@ -90,8 +90,10 @@ export class NotificationConstruct extends Construct {
       timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
-        [POST_LINE_LAMBDA_ENV.LINE_NOTIFY_URL]: process.env[POST_LINE_LAMBDA_ENV.LINE_NOTIFY_URL] || "",
-        [POST_LINE_LAMBDA_ENV.LINE_NOTIFY_TOKEN]: process.env[POST_LINE_LAMBDA_ENV.LINE_NOTIFY_TOKEN] || "",
+        [LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_URL]:
+          process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_URL] || "",
+        [LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN]:
+          process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN] || "",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "PostLineLambdaLogGroup", {
         removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,

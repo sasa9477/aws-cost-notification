@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import path from "path";
 import { NagSuppressions } from "cdk-nag";
-import { NOTIFICATION_TEST_LAMBDA_ENV } from "../handlers/S3SaveTestHandler";
+import { S3_SAVE_TEST_HANDLER_ENV } from "../handlers/S3SaveTestHandler";
 
 export class AwsCostNotificationTestStack extends cdk.Stack {
   readonly bucket: cdk.aws_s3.Bucket;
@@ -46,7 +46,7 @@ export class AwsCostNotificationTestStack extends cdk.Stack {
       }),
       environment: {
         TZ: "Asia/Tokyo",
-        [NOTIFICATION_TEST_LAMBDA_ENV.BUCKET_NAME]: bucket.bucketName,
+        [S3_SAVE_TEST_HANDLER_ENV.BUCKET_NAME]: bucket.bucketName,
       },
     });
 

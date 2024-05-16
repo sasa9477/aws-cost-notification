@@ -4,7 +4,7 @@ import * as lambda from "aws-lambda";
 import { roundDigit } from "../utils/roundDigit";
 import { getExchangeRate } from "../utils/getExchangeRate";
 
-export const COST_NOTIFICATION_LAMBDA_ENV = {
+export const COST_NOTIFICATION_HANDLER_ENV = {
   EXCHANGE_RATE_API_KEY: "EXCHANGE_RATE_API_KEY",
 };
 
@@ -15,7 +15,7 @@ export const handler: lambda.EventBridgeHandler<"Scheduled Event", any, string> 
   const totalBilling = await getTotalBilling(startDate, endDate);
   const forecastBilling = await getForecastBilling();
   const serviceBillings = await getServiceBillings(startDate, endDate);
-  const exchangeRate = await getExchangeRate(process.env[COST_NOTIFICATION_LAMBDA_ENV.EXCHANGE_RATE_API_KEY] || "");
+  const exchangeRate = await getExchangeRate(process.env[COST_NOTIFICATION_HANDLER_ENV.EXCHANGE_RATE_API_KEY] || "");
 
   const message = `
 ${dayjs(startDate).format("MM/DD")} - ${dayjs(endDate).subtract(1, "day").format("MM/DD")} の請求額は ${totalBilling} USD です。${forecastBilling ? `\n今月の予想請求額は ${forecastBilling} USD です。\n` : ""}

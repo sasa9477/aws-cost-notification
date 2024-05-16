@@ -2,7 +2,7 @@ import * as lambda from "aws-lambda";
 import { getExchangeRate } from "../utils/getExchangeRate";
 import { roundDigit } from "../utils/roundDigit";
 
-export const BUDGET_LAMBDA_LAMBDA_ENV = {
+export const BUDGET_ALART_HANDLER_ENV = {
   EXCHANGE_RATE_API_KEY: "EXCHANGE_RATE_API_KEY",
 };
 
@@ -15,7 +15,7 @@ const actualAmountRegex = /ACTUAL Amount: \$(.+)\n/;
 export const handler: lambda.Handler<lambda.SNSEvent, string> = async (event) => {
   console.log(JSON.stringify(event));
 
-  const exchangeRate = await getExchangeRate(process.env[BUDGET_LAMBDA_LAMBDA_ENV.EXCHANGE_RATE_API_KEY] || "");
+  const exchangeRate = await getExchangeRate(process.env[BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY] || "");
 
   const snsMessage = event.Records[0].Sns.Message;
 

@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import * as path from "path";
-import { BUDGET_LAMBDA_LAMBDA_ENV } from "../handlers/BudgetAlartHandler";
+import { BUDGET_ALART_HANDLER_ENV } from "../handlers/BudgetAlartHandler";
 
 export interface BudgetAlartConstructProps {
   notificationTopic: cdk.aws_sns.Topic;
@@ -104,8 +104,8 @@ export class BudgetAlartConstruct extends Construct {
       timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
-        [BUDGET_LAMBDA_LAMBDA_ENV.EXCHANGE_RATE_API_KEY]:
-          process.env[BUDGET_LAMBDA_LAMBDA_ENV.EXCHANGE_RATE_API_KEY] || "",
+        [BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY]:
+          process.env[BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY] || "",
       },
       logGroup: new cdk.aws_logs.LogGroup(this, "BudgetAlartLambdaLogGroup", {
         removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
