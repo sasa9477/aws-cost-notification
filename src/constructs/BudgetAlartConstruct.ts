@@ -91,6 +91,7 @@ export class BudgetAlartConstruct extends Construct {
         [BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY]:
           process.env[BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY] || "",
       },
+      events: [new cdk.aws_lambda_event_sources.SnsEventSource(topic)],
       onSuccess: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
       onFailure: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
     });
