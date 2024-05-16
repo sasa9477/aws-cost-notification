@@ -1,10 +1,10 @@
 import * as cdk from "aws-cdk-lib";
 import * as dotenv from "dotenv";
 import "source-map-support/register";
-import { AwsCostAnomalyNotificationStack } from "../lib/stacks/aws-cost-anomaly-notification-stack";
-import { AwsCostNotificationStack } from "../lib/stacks/aws-cost-notification-stack";
+import { AwsCostAnomalyNotificationStack } from "./stacks/AwsCostAnomalyNotificationStack";
+import { AwsCostNotificationStack } from "./stacks/AwsCostNotificationStack";
 import { AwsSolutionsChecks } from "cdk-nag";
-import { AwsCostNotificationTestStack } from "../lib/stacks/aws-cost-notification-test-stack";
+import { AwsCostNotificationTestStack } from "./stacks/AwsCostNotificationTestStack";
 
 dotenv.config();
 

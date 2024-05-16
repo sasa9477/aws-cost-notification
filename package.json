@@ -1,9 +1,6 @@
 {
   "name": "aws-cost-notification",
   "version": "0.1.0",
-  "bin": {
-    "aws-cost-notification": "bin/aws-cost-notification.js"
-  },
   "scripts": {
     "postinstall": "patch-package",
     "build": "tsc",
