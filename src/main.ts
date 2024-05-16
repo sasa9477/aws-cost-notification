@@ -5,6 +5,7 @@ import { AwsCostAnomalyNotificationStack } from "./stacks/AwsCostAnomalyNotifica
 import { AwsCostNotificationStack } from "./stacks/AwsCostNotificationStack";
 import { AwsSolutionsChecks, NagSuppressions } from "cdk-nag";
 import { AwsCostNotificationTestStack } from "./stacks/AwsCostNotificationTestStack";
+import { config } from "./config/config";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ new AwsCostNotificationStack(app, "AwsCostNotificationStack", {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: "ap-northeast-1",
   },
+  config,
   crossRegionReferences: true,
 });
 

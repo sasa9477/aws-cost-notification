@@ -3,10 +3,12 @@ import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
 import { BUDGET_ALART_HANDLER_ENV } from "../handlers/BudgetAlartHandler";
+import { Config } from "../config/config";
 
-export interface BudgetAlartConstructProps {
-  notificationTopic: cdk.aws_sns.Topic;
-}
+export type BudgetAlartConstructProps = {
+  readonly config: Config;
+  readonly notificationTopic: cdk.aws_sns.Topic;
+};
 
 export class BudgetAlartConstruct extends Construct {
   public readonly monthlyCostBudget: cdk.aws_budgets.CfnBudget;
@@ -14,7 +16,7 @@ export class BudgetAlartConstruct extends Construct {
   constructor(scope: Construct, id: string, props: BudgetAlartConstructProps) {
     super(scope, id);
 
-    const { notificationTopic } = props;
+    const { config, notificationTopic } = props;
 
     const topicLoggingRole = new cdk.aws_iam.Role(this, "BudgetAlartTopicLoggingRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
@@ -109,9 +111,8 @@ export class BudgetAlartConstruct extends Construct {
         budgetName: `${cdk.Stack.of(this).stackName}-MonthlyCostBudget`,
         budgetType: "COST",
         timeUnit: "MONTHLY",
-        // 4 USD 以上の場合に通知
         budgetLimit: {
-          amount: 4,
+          amount: config.budgetAlartConfig.budgetAmount,
           unit: "USD",
         },
         // // 自動調整予算を有効化
@@ -124,11 +125,11 @@ export class BudgetAlartConstruct extends Construct {
       },
       notificationsWithSubscribers: [
         {
-          // 実際のコストが 50% 以上の場合に通知
+          // 実際のコストの通知
           notification: {
             notificationType: "ACTUAL",
             comparisonOperator: "GREATER_THAN",
-            threshold: 50,
+            threshold: config.budgetAlartConfig.actualAmountCostAlertThreshold,
             thresholdType: "PERCENTAGE",
           },
           subscribers: [
@@ -140,11 +141,11 @@ export class BudgetAlartConstruct extends Construct {
           ],
         },
         {
-          // 予算の 80% 以上の場合に通知
+          // 予算額の通知
           notification: {
             notificationType: "FORECASTED",
             comparisonOperator: "GREATER_THAN",
-            threshold: 80,
+            threshold: config.budgetAlartConfig.forecastedAmountCostAlertThreshold,
             thresholdType: "PERCENTAGE",
           },
           subscribers: [

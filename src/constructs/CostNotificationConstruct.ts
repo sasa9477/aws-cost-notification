@@ -3,16 +3,18 @@ import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
 import { COST_NOTIFICATION_HANDLER_ENV } from "../handlers/CostNotificationHandler";
+import { Config } from "../config/config";
 
-export interface CostNotifacationConstructProps {
+export type CostNotifacationConstructProps = {
+  readonly config: Config;
   readonly notificationTopic: cdk.aws_sns.Topic;
-}
+};
 
 export class CostNotifacationConstruct extends Construct {
   constructor(scope: Construct, id: string, props: CostNotifacationConstructProps) {
     super(scope, id);
 
-    const { notificationTopic } = props;
+    const { config, notificationTopic } = props;
 
     const { accountId } = new cdk.ScopedAws(this);
 
@@ -49,9 +51,8 @@ export class CostNotifacationConstruct extends Construct {
       }),
     );
 
-    // 月曜日の 10 時に 1回実行する
     new cdk.aws_scheduler.CfnSchedule(this, "CostNotificationSchedule", {
-      scheduleExpression: "cron(0 10 ? * 2 *)",
+      scheduleExpression: config.constNotificationScheduleConfig.scheduleExpression,
       scheduleExpressionTimezone: "Asia/Tokyo",
       flexibleTimeWindow: {
         mode: "OFF",

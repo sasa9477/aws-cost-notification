@@ -5,6 +5,7 @@ import * as dotenv from "dotenv";
 import { ApplyDestroyPolicyAspect } from "../src/aspects/ApplyDestroyPolicyAspect";
 import { AwsCostNotificationStack } from "../src/stacks/AwsCostNotificationStack";
 import { AwsCostNotificationTestStack } from "../src/stacks/AwsCostNotificationTestStack";
+import { config } from "../src/config/config";
 
 // .env.test から環境変数を読み込む
 dotenv.config({ path: ".env.test" });
@@ -26,6 +27,7 @@ const stack = new AwsCostNotificationStack(app, "IntegTestStack", {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: "ap-northeast-1",
   },
+  config,
   crossRegionReferences: true,
 });
 

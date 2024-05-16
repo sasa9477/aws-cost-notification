@@ -4,12 +4,17 @@ import { Construct } from "constructs";
 import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
 import { LINE_NOTIFICATION_HANDLER_ENV } from "../handlers/LineNotificationHandler";
 import { lambda } from "cdk-nag/lib/rules";
+import { Config } from "../config/config";
+
+export type LineNotificationConstructProps = {
+  readonly config: Config;
+};
 
 export class LineNotificationConstruct extends Construct {
   readonly notificationTopic: cdk.aws_sns.Topic;
   readonly topicSseKey: cdk.aws_kms.Key;
 
-  constructor(scope: Construct, id: string) {
+  constructor(scope: Construct, id: string, props: LineNotificationConstructProps) {
     super(scope, id);
 
     const { region, accountId } = new cdk.ScopedAws(this);
@@ -115,7 +120,6 @@ export class LineNotificationConstruct extends Construct {
       [
         {
           id: "AwsSolutions-SNS2",
-          // detail: "SNSトピックにサーバー側の暗号化が有効になっていません。サーバー側の暗号化は、サブスクライバーにメッセージとして配信される機密データを追加で保護します。"
           reason: "KMS キーを作成すると $1 / month かかるため、抑制する。",
         },
       ],
