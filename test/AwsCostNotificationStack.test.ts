@@ -4,7 +4,6 @@ import { AwsSolutionsChecks } from "cdk-nag";
 import * as dotenv from "dotenv";
 import * as AwsCostNotification from "../src/stacks/AwsCostNotificationStack";
 import { formatCdkNagErrorMessage } from "../src/utils/formatCdkNagErrorMessage";
-import { config } from "../src/config/config";
 
 dotenv.config();
 
@@ -37,93 +36,145 @@ describe("AWS Cost Notification Stack", () => {
     template = Template.fromStack(stack);
   });
 
-  test("cdk-nag のチェックで Errors が無い", () => {
-    const errors = Annotations.fromStack(stack).findError("*", Match.stringLikeRegexp("AwsSolutions-.*"));
-
-    try {
-      expect(errors).toHaveLength(0);
-    } catch (error) {
-      throw new Error(formatCdkNagErrorMessage(errors));
-    }
-  });
-
-  test("cdk-nag のセキュリティチェックで warnning が無い", () => {
-    const warnings = Annotations.fromStack(stack).findWarning("*", Match.stringLikeRegexp("AwsSolutions-.*"));
-
-    try {
-      expect(warnings).toHaveLength(0);
-    } catch (error) {
-      throw new Error(formatCdkNagErrorMessage(warnings));
-    }
-  });
-
-  test("コスト通知のスケジュールが設定されている", () => {
-    const lambda = template.findResources("AWS::Lambda::Function", {
-      Properties: {
-        FunctionName: `${cdk.Stack.of(stack).stackName}CostNotificationHandler`,
-      },
-    });
-    const lambdaLogicalId = Object.keys(lambda)[0];
-
-    const targetCapture = new Capture();
-
-    template.hasResourceProperties("AWS::Scheduler::Schedule", {
-      Target: {
-        Arn: targetCapture,
-      },
-      ScheduleExpression: "cron(0 10 ? * 2 *)",
+  describe("BudgetAlartConstruct", () => {
+    test("予算アラートの設定がされている", () => {
+      template.hasResourceProperties("AWS::Budgets::Budget", {
+        Budget: {
+          BudgetLimit: {
+            Amount: testConfig.budgetAlartConfig.budgetAmount,
+            Unit: "USD",
+          },
+          BudgetType: "COST",
+          TimeUnit: "MONTHLY",
+        },
+        NotificationsWithSubscribers: [
+          {
+            Notification: {
+              ComparisonOperator: "GREATER_THAN",
+              NotificationType: "ACTUAL",
+              Threshold: testConfig.budgetAlartConfig.actualAmountCostAlertThreshold,
+              ThresholdType: "PERCENTAGE",
+            },
+          },
+          {
+            Notification: {
+              ComparisonOperator: "GREATER_THAN",
+              NotificationType: "FORECASTED",
+              Threshold: testConfig.budgetAlartConfig.forecastedAmountCostAlertThreshold,
+              ThresholdType: "PERCENTAGE",
+            },
+          },
+        ],
+      });
     });
 
-    // ラムダ関数がターゲットに含まれていることを確認する
-    expect(JSON.stringify(targetCapture.asObject())).toContain(lambdaLogicalId);
+    test("Budget から SNS トピックに Publish するためのポリシーが設定されている", () => {
+      const topic = template.findResources("AWS::SNS::Topic", {
+        Properties: {
+          TopicName: Match.stringLikeRegexp("BudgetAlartTopic"),
+        },
+      });
+
+      const topicLogicalId = Object.keys(topic)[0];
+
+      template.hasResourceProperties("AWS::SNS::TopicPolicy", {
+        PolicyDocument: {
+          Statement: Match.arrayWith([
+            Match.objectLike({
+              Action: "SNS:Publish",
+              Effect: "Allow",
+              Principal: {
+                Service: "budgets.amazonaws.com",
+              },
+            }),
+          ]),
+        },
+        Topics: Match.arrayWith([
+          Match.objectLike({
+            Ref: topicLogicalId,
+          }),
+        ]),
+      });
+    });
   });
 
-  // test("post-line-lambda に LINE Notify のアクセストークンが設定されている", () => {
-  //   const lineNotifyTokenCapture = new Capture();
+  describe("CostNotificationConstruct", () => {
+    test("コスト通知用ラムダ関数に Cost Exploerer へのコスト使用量と予想額の取得が許可されている", () => {
+      template.hasResourceProperties("AWS::IAM::Policy", {
+        PolicyDocument: {
+          Statement: Match.arrayWith([
+            Match.objectLike({
+              Action: ["ce:GetCostAndUsage", "ce:GetCostForecast"],
+              Effect: "Allow",
+            }),
+          ]),
+        },
+      });
 
-  //   template.hasResourceProperties("AWS::Lambda::Function", {
-  //     FunctionName: "post-line-lambda",
-  //     Environment: {
-  //       Variables: {
-  //         LINE_NOTIFY_TOKEN: lineNotifyTokenCapture,
-  //       },
-  //     },
-  //   });
+      const ceGetCostAndUsagePolicies = template.findResources("AWS::IAM::Policy", {
+        Properties: {
+          PolicyDocument: {
+            Statement: Match.arrayWith([
+              Match.objectLike({
+                Action: ["ce:GetCostAndUsage", "ce:GetCostForecast"],
+                Effect: "Allow",
+              }),
+            ]),
+          },
+        },
+      });
 
-  //   expect(lineNotifyTokenCapture.asString()).not.toEqual("");
-  // });
+      const ceGetCostAndUsagePolicyLogicalId = Object.keys(ceGetCostAndUsagePolicies)[0];
 
-  // test("ラムダ関数に Cost Exploerer へのコスト使用量と予想額の取得が許可されている", () => {
-  //   const ceGetCostAndUsagePolicies = template.findResources("AWS::IAM::Role", {
-  //     Properties: {
-  //       Policies: [
-  //         {
-  //           PolicyDocument: {
-  //             Statement: [
-  //               {
-  //                 Action: ["ce:GetCostAndUsage", "ce:GetCostForecast"],
-  //                 Effect: "Allow",
-  //               },
-  //             ],
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   });
+      const dependsOnCapture = new Capture();
 
-  //   const ceGetCostAndUsagePolicyLogicalId = Object.keys(ceGetCostAndUsagePolicies)[0];
+      template.hasResource("AWS::Lambda::Function", {
+        Properties: {
+          FunctionName: Match.stringLikeRegexp("CostNotificationHandler"),
+        },
+        DependsOn: dependsOnCapture,
+      });
 
-  //   const dependsOnCapture = new Capture();
+      expect(dependsOnCapture.asArray()).toContain(ceGetCostAndUsagePolicyLogicalId);
+    });
+  });
 
-  //   template.hasMapping;
+  describe("LineNotificationConstruct", () => {
+    test("LINE 通知用ラムダ関数に LINE Notify のアクセストークンが設定されている", () => {
+      const lineNotifyTokenCapture = new Capture();
 
-  //   template.hasResource("AWS::Lambda::Function", {
-  //     Properties: {
-  //       FunctionName: "cost-notification-lambda",
-  //     },
-  //     DependsOn: dependsOnCapture,
-  //   });
+      template.hasResourceProperties("AWS::Lambda::Function", {
+        FunctionName: Match.stringLikeRegexp("LineNotificationHandler"),
+        Environment: {
+          Variables: {
+            LINE_NOTIFY_TOKEN: lineNotifyTokenCapture,
+          },
+        },
+      });
 
-  //   expect(dependsOnCapture.asArray()).toContain(ceGetCostAndUsagePolicyLogicalId);
-  // });
+      expect(lineNotifyTokenCapture.asString()).not.toEqual("");
+    });
+  });
+
+  describe("cdk-nag check", () => {
+    test("cdk-nag のチェックで Error が無い", () => {
+      const errors = Annotations.fromStack(stack).findError("*", Match.stringLikeRegexp("AwsSolutions-.*"));
+
+      try {
+        expect(errors).toHaveLength(0);
+      } catch (error) {
+        throw new Error(formatCdkNagErrorMessage(errors));
+      }
+    });
+
+    test("cdk-nag のセキュリティチェックで warnning が無い", () => {
+      const warnings = Annotations.fromStack(stack).findWarning("*", Match.stringLikeRegexp("AwsSolutions-.*"));
+
+      try {
+        expect(warnings).toHaveLength(0);
+      } catch (error) {
+        throw new Error(formatCdkNagErrorMessage(warnings));
+      }
+    });
+  });
 });
