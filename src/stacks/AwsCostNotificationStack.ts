@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { BudgetAlartConstruct } from "../constructs/BudgetAlartConstruct";
 import { CostNotifacationConstruct } from "../constructs/CostNotificationConstruct";
-import { NotificationConstruct } from "../constructs/NotificationContruct";
+import { LineNotificationConstruct } from "../constructs/LineNotificationConstruct";
 
 export class AwsCostNotificationStack extends cdk.Stack {
   readonly costAlarmTopic: cdk.aws_sns.Topic;
@@ -11,7 +11,7 @@ export class AwsCostNotificationStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const { notificationTopic } = new NotificationConstruct(this, "NotificationConstruct");
+    const { notificationTopic } = new LineNotificationConstruct(this, "NotificationConstruct");
 
     new CostNotifacationConstruct(this, "CostNotificationConstruct", {
       notificationTopic,

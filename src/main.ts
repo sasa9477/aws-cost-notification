@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 import "source-map-support/register";
 import { AwsCostAnomalyNotificationStack } from "./stacks/AwsCostAnomalyNotificationStack";
 import { AwsCostNotificationStack } from "./stacks/AwsCostNotificationStack";
-import { AwsSolutionsChecks } from "cdk-nag";
+import { AwsSolutionsChecks, NagSuppressions } from "cdk-nag";
 import { AwsCostNotificationTestStack } from "./stacks/AwsCostNotificationTestStack";
 
 dotenv.config();

@@ -1,10 +1,11 @@
 import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
-import * as path from "path";
+import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
 import { LINE_NOTIFICATION_HANDLER_ENV } from "../handlers/LineNotificationHandler";
+import { lambda } from "cdk-nag/lib/rules";
 
-export class NotificationConstruct extends Construct {
+export class LineNotificationConstruct extends Construct {
   readonly notificationTopic: cdk.aws_sns.Topic;
   readonly topicSseKey: cdk.aws_kms.Key;
 
@@ -15,24 +16,14 @@ export class NotificationConstruct extends Construct {
 
     const topicLoggingRole = new cdk.aws_iam.Role(this, "NotificationTopicLoggingRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
-      inlinePolicies: {
-        CloudWatchWritePolicy: new cdk.aws_iam.PolicyDocument({
-          statements: [
-            new cdk.aws_iam.PolicyStatement({
-              actions: [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents",
-                "logs:PutMetricFilter",
-                "logs:PutRetentionPolicy",
-              ],
-              effect: cdk.aws_iam.Effect.ALLOW,
-              resources: [`arn:aws:logs:${region}:${accountId}:log-group:*`],
-            }),
-          ],
-        }),
-      },
     });
+    topicLoggingRole.addToPolicy(
+      new cdk.aws_iam.PolicyStatement({
+        actions: ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
+        effect: cdk.aws_iam.Effect.ALLOW,
+        resources: [`arn:aws:logs:${region}:${accountId}:log-group:*`],
+      }),
+    );
 
     const topic = new cdk.aws_sns.Topic(this, "NotificationTopic", {
       topicName: `${cdk.Stack.of(this).stackName}-NotificationTopic`,
@@ -48,7 +39,7 @@ export class NotificationConstruct extends Construct {
       ],
     });
 
-    // SNS トピックに対してのアクセスポリシーを設定
+    // SNS トピックのリソースポリシーを設定
     topic.addToResourcePolicy(
       new cdk.aws_iam.PolicyStatement({
         actions: [
@@ -73,48 +64,40 @@ export class NotificationConstruct extends Construct {
       }),
     );
 
-    const lambdaRole = new cdk.aws_iam.Role(this, "PostLineLambdaRole", {
-      assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
-    });
-
-    const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "PostLineLambda", {
-      role: lambdaRole,
-      entry: path.join(__dirname, "../handlers/LineNotificationHandler.ts"),
-      functionName: `${cdk.Stack.of(this).stackName}-post-line-lambda`,
-      bundling: {
-        externalModules: ["@aws-sdk/*"],
-        tsconfig: path.join(__dirname, "../../tsconfig.json"),
-      },
-      runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
-      memorySize: 128,
-      timeout: cdk.Duration.seconds(10),
+    const lambda = new NodeJsLambdaFunction(this, "LineNotificationHandler", {
+      entryFileName: "LineNotificationHandler",
       environment: {
-        TZ: "Asia/Tokyo",
         [LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_URL]:
           process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_URL] || "",
         [LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN]:
           process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN] || "",
       },
-      logGroup: new cdk.aws_logs.LogGroup(this, "PostLineLambdaLogGroup", {
-        removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
-        retention: cdk.aws_logs.RetentionDays.INFINITE,
-      }),
       events: [new cdk.aws_lambda_event_sources.SnsEventSource(topic)],
     });
-
-    lambdaRole.addToPolicy(
-      new cdk.aws_iam.PolicyStatement({
-        actions: ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
-        effect: cdk.aws_iam.Effect.ALLOW,
-        resources: [lambda.logGroup.logGroupArn],
-      }),
-    );
 
     this.notificationTopic = topic;
 
     /**
      * cdk-nag のセキュリティ抑制設定
      */
+
+    NagSuppressions.addResourceSuppressions(lambda, [
+      {
+        id: "AwsSolutions-L1",
+        reason: "Lambda で Nodejs 18x を使用するため、抑制する。",
+      },
+    ]);
+
+    NagSuppressions.addResourceSuppressions(
+      lambda.role,
+      [
+        {
+          id: "AwsSolutions-IAM4",
+          reason: "Lambda で AWSLambdaBasicExecutionRole Managed Policy を使用するため、抑制する。",
+        },
+      ],
+      true,
+    );
 
     NagSuppressions.addResourceSuppressions(
       topicLoggingRole,

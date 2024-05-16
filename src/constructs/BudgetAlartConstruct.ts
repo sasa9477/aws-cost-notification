@@ -1,7 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
-import * as path from "path";
+import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
 import { BUDGET_ALART_HANDLER_ENV } from "../handlers/BudgetAlartHandler";
 
 export interface BudgetAlartConstructProps {
@@ -16,28 +16,23 @@ export class BudgetAlartConstruct extends Construct {
 
     const { notificationTopic } = props;
 
-    const { region, accountId } = new cdk.ScopedAws(this);
-
     const topicLoggingRole = new cdk.aws_iam.Role(this, "BudgetAlartTopicLoggingRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
-      inlinePolicies: {
-        CloudWatchWritePolicy: new cdk.aws_iam.PolicyDocument({
-          statements: [
-            new cdk.aws_iam.PolicyStatement({
-              actions: [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents",
-                "logs:PutMetricFilter",
-                "logs:PutRetentionPolicy",
-              ],
-              effect: cdk.aws_iam.Effect.ALLOW,
-              resources: [`arn:aws:logs:${region}:${accountId}:log-group:*`],
-            }),
-          ],
-        }),
-      },
     });
+
+    topicLoggingRole.addToPolicy(
+      new cdk.aws_iam.PolicyStatement({
+        actions: [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "logs:PutMetricFilter",
+          "logs:PutRetentionPolicy",
+        ],
+        effect: cdk.aws_iam.Effect.ALLOW,
+        resources: ["*"],
+      }),
+    );
 
     const topic = new cdk.aws_sns.Topic(this, "BudgetAlartTopic", {
       topicName: `${cdk.Stack.of(this).stackName}-BudgetAlartTopic`,
@@ -72,7 +67,7 @@ export class BudgetAlartConstruct extends Construct {
         resources: [topic.topicArn],
         conditions: {
           StringEquals: {
-            "AWS:SourceOwner": accountId,
+            "AWS:SourceOwner": cdk.Stack.of(this).account,
           },
         },
       }),
@@ -87,39 +82,27 @@ export class BudgetAlartConstruct extends Construct {
       }),
     );
 
-    const lambdaRole = new cdk.aws_iam.Role(this, "BudgetAlartLambdaRole", {
-      assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
-    });
-
-    const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "BudgetAlartLambda", {
-      role: lambdaRole,
-      entry: path.join(__dirname, "../handlers/BudgetAlartHandler.ts"),
-      functionName: `${cdk.Stack.of(this).stackName}-budget-alart-lambda`,
-      bundling: {
-        externalModules: ["@aws-sdk/*"],
-        tsconfig: path.join(__dirname, "../../tsconfig.json"),
-      },
-      runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
-      memorySize: 128,
-      timeout: cdk.Duration.seconds(10),
+    const lambda = new NodeJsLambdaFunction(this, "BudgetAlartHandler", {
+      entryFileName: "BudgetAlartHandler",
       environment: {
         TZ: "Asia/Tokyo",
         [BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY]:
           process.env[BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY] || "",
       },
-      logGroup: new cdk.aws_logs.LogGroup(this, "BudgetAlartLambdaLogGroup", {
-        removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
-        retention: cdk.aws_logs.RetentionDays.INFINITE,
-      }),
+      onSuccess: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
+      onFailure: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
+      initialPolicy: [
+        // Cost Explorer のコスト使用量と 予想額の取得 を許可
+        new cdk.aws_iam.PolicyStatement({
+          actions: ["ce:GetCostAndUsage", "ce:GetCostForecast"],
+          effect: cdk.aws_iam.Effect.ALLOW,
+          resources: [
+            `arn:aws:ce:us-east-1:${cdk.Stack.of(this).account}:/GetCostAndUsage`,
+            `arn:aws:ce:us-east-1:${cdk.Stack.of(this).account}:/GetCostForecast`,
+          ],
+        }),
+      ],
     });
-
-    lambdaRole.addToPolicy(
-      new cdk.aws_iam.PolicyStatement({
-        actions: ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
-        effect: cdk.aws_iam.Effect.ALLOW,
-        resources: [lambda.logGroup.logGroupArn],
-      }),
-    );
 
     this.monthlyCostBudget = new cdk.aws_budgets.CfnBudget(this, "MonthlyCostBudget", {
       budget: {
@@ -177,6 +160,24 @@ export class BudgetAlartConstruct extends Construct {
     /**
      * cdk-nag のセキュリティ抑制設定
      */
+
+    NagSuppressions.addResourceSuppressions(lambda, [
+      {
+        id: "AwsSolutions-L1",
+        reason: "Lambda で Nodejs 18x を使用するため、抑制する。",
+      },
+    ]);
+
+    NagSuppressions.addResourceSuppressions(
+      lambda.role,
+      [
+        {
+          id: "AwsSolutions-IAM4",
+          reason: "Lambda で AWSLambdaBasicExecutionRole Managed Policy を使用するため、抑制する。",
+        },
+      ],
+      true,
+    );
 
     NagSuppressions.addResourceSuppressions(
       topicLoggingRole,

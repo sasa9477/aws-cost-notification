@@ -1,7 +1,7 @@
 import * as cdk from "aws-cdk-lib";
-import { Construct } from "constructs";
-import path from "path";
 import { NagSuppressions } from "cdk-nag";
+import { Construct } from "constructs";
+import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
 import { S3_SAVE_TEST_HANDLER_ENV } from "../handlers/S3SaveTestHandler";
 
 export class AwsCostNotificationTestStack extends cdk.Stack {
@@ -25,38 +25,12 @@ export class AwsCostNotificationTestStack extends cdk.Stack {
       }),
     );
 
-    const lambdaRole = new cdk.aws_iam.Role(this, "NotificationTestLambdaRole", {
-      assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
-      inlinePolicies: {},
-    });
-
-    const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "NotificationTestLambda", {
-      role: lambdaRole,
-      entry: path.join(__dirname, "../handlers/S3SaveTestHandler.ts"),
-      functionName: `${cdk.Stack.of(this).stackName}-notification-test-lambda`,
-      bundling: {
-        externalModules: ["@aws-sdk/*"],
-        tsconfig: path.join(__dirname, "../../tsconfig.json"),
-      },
-      runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
-      memorySize: 128,
-      timeout: cdk.Duration.seconds(10),
-      logGroup: new cdk.aws_logs.LogGroup(this, "NotificationTestLambdaLogGroup", {
-        removalPolicy: cdk.RemovalPolicy.DESTROY,
-      }),
+    const lambda = new NodeJsLambdaFunction(this, "S3SaveTestHandler", {
+      entryFileName: "S3SaveTestHandler",
       environment: {
-        TZ: "Asia/Tokyo",
         [S3_SAVE_TEST_HANDLER_ENV.BUCKET_NAME]: bucket.bucketName,
       },
     });
-
-    lambdaRole.addToPolicy(
-      new cdk.aws_iam.PolicyStatement({
-        actions: ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
-        effect: cdk.aws_iam.Effect.ALLOW,
-        resources: [lambda.logGroup.logGroupArn],
-      }),
-    );
 
     bucket.grantReadWrite(lambda);
 
