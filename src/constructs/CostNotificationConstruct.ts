@@ -1,7 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as path from "path";
-import { COST_NOTIFICATION_LAMBDA_ENV } from "../lambda-handlers/cost-notification-lambda";
+import { COST_NOTIFICATION_LAMBDA_ENV } from "../handlers/CostNotificationHandler";
 
 export interface CostNotifacationConstructProps {
   readonly notificationTopic: cdk.aws_sns.Topic;
@@ -36,7 +36,7 @@ export class CostNotifacationConstruct extends Construct {
 
     const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "CostNotificationLambda", {
       role: lambdaRole,
-      entry: path.join(__dirname, "../lambda-handlers/cost-notification-lambda.ts"),
+      entry: path.join(__dirname, "../handlers/CostNotificationHandler.ts"),
       functionName: `${cdk.Stack.of(this).stackName}-cost-notification-lambda`,
       bundling: {
         // Lambda で builtin されているためバンドルから除外

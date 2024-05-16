@@ -1,6 +1,6 @@
 import * as lambda from "aws-lambda";
-import { getExchangeRate } from "./helpers/get-exchange-rate";
-import { roundDigit } from "./helpers/round-disit";
+import { getExchangeRate } from "../utils/getExchangeRate";
+import { roundDigit } from "../utils/roundDigit";
 
 export const BUDGET_LAMBDA_LAMBDA_ENV = {
   EXCHANGE_RATE_API_KEY: "EXCHANGE_RATE_API_KEY",

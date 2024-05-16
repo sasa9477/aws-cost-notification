@@ -1,8 +1,8 @@
 import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
 import * as lambda from "aws-lambda";
 import MockDate from "mockdate";
-import { commonLambdaHandlerContext } from "../../test/fixtures/common-lambda-handler-context";
-import { handler } from "./cost-notification-lambda";
+import { commonLambdaHandlerContext } from "../fixtures/commonLambdaHandlerContext";
+import { handler } from "../../src/handlers/CostNotificationHandler";
 import { mockClient } from "aws-sdk-client-mock";
 
 const commonEvent: lambda.EventBridgeEvent<"Scheduled Event", any> = {

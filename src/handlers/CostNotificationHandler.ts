@@ -1,8 +1,8 @@
 import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
 import dayjs from "dayjs";
 import * as lambda from "aws-lambda";
-import { roundDigit } from "./helpers/round-disit";
-import { getExchangeRate } from "./helpers/get-exchange-rate";
+import { roundDigit } from "../utils/roundDigit";
+import { getExchangeRate } from "../utils/getExchangeRate";
 
 export const COST_NOTIFICATION_LAMBDA_ENV = {
   EXCHANGE_RATE_API_KEY: "EXCHANGE_RATE_API_KEY",

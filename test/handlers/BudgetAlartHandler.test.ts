@@ -1,5 +1,5 @@
-import { commonLambdaHandlerContext } from "../../test/fixtures/common-lambda-handler-context";
-import { handler } from "./budget-alart-lambda";
+import { commonLambdaHandlerContext } from "../fixtures/commonLambdaHandlerContext";
+import { handler } from "../../src/handlers/BudgetAlartHandler";
 
 describe("budget-alart-lambda", () => {
   beforeAll(() => {

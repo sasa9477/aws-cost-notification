@@ -2,9 +2,9 @@ import { IntegTest } from "@aws-cdk/integ-tests-alpha";
 import * as cdk from "aws-cdk-lib";
 import { AwsSolutionsChecks } from "cdk-nag";
 import * as dotenv from "dotenv";
-import { ApplyDestroyPolicyAspect } from "../lib/helpers/ApplyDestroyPolicyAspect";
-import { AwsCostNotificationStack } from "../lib/stacks/aws-cost-notification-stack";
-import { AwsCostNotificationTestStack } from "../lib/stacks/aws-cost-notification-test-stack";
+import { ApplyDestroyPolicyAspect } from "../src/aspects/ApplyDestroyPolicyAspect";
+import { AwsCostNotificationStack } from "../src/stacks/AwsCostNotificationStack";
+import { AwsCostNotificationTestStack } from "../src/stacks/AwsCostNotificationTestStack";
 
 // .env.test から環境変数を読み込む
 dotenv.config({ path: ".env.test" });

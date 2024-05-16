@@ -2,23 +2,18 @@ import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import * as path from "path";
-import { BUDGET_LAMBDA_LAMBDA_ENV } from "../lambda-handlers/budget-alart-lambda";
+import { POST_LINE_LAMBDA_ENV } from "../handlers/LineNotificationHandler";
 
-export interface BudgetAlartConstructProps {
-  notificationTopic: cdk.aws_sns.Topic;
-}
+export class NotificationConstruct extends Construct {
+  readonly notificationTopic: cdk.aws_sns.Topic;
+  readonly topicSseKey: cdk.aws_kms.Key;
 
-export class BudgetAlartConstruct extends Construct {
-  public readonly monthlyCostBudget: cdk.aws_budgets.CfnBudget;
-
-  constructor(scope: Construct, id: string, props: BudgetAlartConstructProps) {
+  constructor(scope: Construct, id: string) {
     super(scope, id);
-
-    const { notificationTopic } = props;
 
     const { region, accountId } = new cdk.ScopedAws(this);
 
-    const topicLoggingRole = new cdk.aws_iam.Role(this, "BudgetAlartTopicLoggingRole", {
+    const topicLoggingRole = new cdk.aws_iam.Role(this, "NotificationTopicLoggingRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
       inlinePolicies: {
         CloudWatchWritePolicy: new cdk.aws_iam.PolicyDocument({
@@ -39,9 +34,9 @@ export class BudgetAlartConstruct extends Construct {
       },
     });
 
-    const topic = new cdk.aws_sns.Topic(this, "BudgetAlartTopic", {
-      topicName: `${cdk.Stack.of(this).stackName}-BudgetAlartTopic`,
-      displayName: `${cdk.Stack.of(this).stackName}-BudgetAlartTopic`,
+    const topic = new cdk.aws_sns.Topic(this, "NotificationTopic", {
+      topicName: `${cdk.Stack.of(this).stackName}-NotificationTopic`,
+      displayName: `${cdk.Stack.of(this).stackName}-NotificationTopic`,
       enforceSSL: true,
       loggingConfigs: [
         {
@@ -77,24 +72,15 @@ export class BudgetAlartConstruct extends Construct {
         },
       }),
     );
-    // Budgets から SNS トピックに Publish するためのアクセスポリシーを設定
-    topic.addToResourcePolicy(
-      new cdk.aws_iam.PolicyStatement({
-        actions: ["SNS:Publish"],
-        effect: cdk.aws_iam.Effect.ALLOW,
-        principals: [new cdk.aws_iam.ServicePrincipal("budgets.amazonaws.com")],
-        resources: [topic.topicArn],
-      }),
-    );
 
-    const lambdaRole = new cdk.aws_iam.Role(this, "BudgetAlartLambdaRole", {
+    const lambdaRole = new cdk.aws_iam.Role(this, "PostLineLambdaRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
     });
 
-    const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "BudgetAlartLambda", {
+    const lambda = new cdk.aws_lambda_nodejs.NodejsFunction(this, "PostLineLambda", {
       role: lambdaRole,
-      entry: path.join(__dirname, "../lambda-handlers/budget-alart-lambda.ts"),
-      functionName: `${cdk.Stack.of(this).stackName}-budget-alart-lambda`,
+      entry: path.join(__dirname, "../handlers/LineNotificationHandler.ts"),
+      functionName: `${cdk.Stack.of(this).stackName}-post-line-lambda`,
       bundling: {
         externalModules: ["@aws-sdk/*"],
         tsconfig: path.join(__dirname, "../../tsconfig.json"),
@@ -104,16 +90,14 @@ export class BudgetAlartConstruct extends Construct {
       timeout: cdk.Duration.seconds(10),
       environment: {
         TZ: "Asia/Tokyo",
-        [BUDGET_LAMBDA_LAMBDA_ENV.EXCHANGE_RATE_API_KEY]:
-          process.env[BUDGET_LAMBDA_LAMBDA_ENV.EXCHANGE_RATE_API_KEY] || "",
+        [POST_LINE_LAMBDA_ENV.LINE_NOTIFY_URL]: process.env[POST_LINE_LAMBDA_ENV.LINE_NOTIFY_URL] || "",
+        [POST_LINE_LAMBDA_ENV.LINE_NOTIFY_TOKEN]: process.env[POST_LINE_LAMBDA_ENV.LINE_NOTIFY_TOKEN] || "",
       },
-      logGroup: new cdk.aws_logs.LogGroup(this, "BudgetAlartLambdaLogGroup", {
+      logGroup: new cdk.aws_logs.LogGroup(this, "PostLineLambdaLogGroup", {
         removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
         retention: cdk.aws_logs.RetentionDays.INFINITE,
       }),
       events: [new cdk.aws_lambda_event_sources.SnsEventSource(topic)],
-      onSuccess: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
-      onFailure: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
     });
 
     lambdaRole.addToPolicy(
@@ -124,58 +108,7 @@ export class BudgetAlartConstruct extends Construct {
       }),
     );
 
-    this.monthlyCostBudget = new cdk.aws_budgets.CfnBudget(this, "MonthlyCostBudget", {
-      budget: {
-        budgetName: `${cdk.Stack.of(this).stackName}-MonthlyCostBudget`,
-        budgetType: "COST",
-        timeUnit: "MONTHLY",
-        // 4 USD 以上の場合に通知
-        budgetLimit: {
-          amount: 4,
-          unit: "USD",
-        },
-        // // 自動調整予算を有効化
-        // autoAdjustData: {
-        //   autoAdjustType: "HISTORICAL",
-        //   historicalOptions: {
-        //     budgetAdjustmentPeriod: 12,
-        //   },
-        // },
-      },
-      notificationsWithSubscribers: [
-        {
-          // 実際のコストが 50% 以上の場合に通知
-          notification: {
-            notificationType: "ACTUAL",
-            comparisonOperator: "GREATER_THAN",
-            threshold: 50,
-            thresholdType: "PERCENTAGE",
-          },
-          subscribers: [
-            {
-              // SNS か　email　のみ設定可能
-              subscriptionType: "SNS",
-              address: topic.topicArn,
-            },
-          ],
-        },
-        {
-          // 予算の 80% 以上の場合に通知
-          notification: {
-            notificationType: "FORECASTED",
-            comparisonOperator: "GREATER_THAN",
-            threshold: 80,
-            thresholdType: "PERCENTAGE",
-          },
-          subscribers: [
-            {
-              subscriptionType: "SNS",
-              address: topic.topicArn,
-            },
-          ],
-        },
-      ],
-    });
+    this.notificationTopic = topic;
 
     /**
      * cdk-nag のセキュリティ抑制設定

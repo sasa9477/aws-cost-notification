@@ -1,5 +1,5 @@
 import * as lambda from "aws-lambda";
-import { LambdaSnsContext } from "../types/lambda-sns-context";
+import { LambdaSnsContext } from "../types/LambdaSnsContext";
 
 export const POST_LINE_LAMBDA_ENV = {
   LINE_NOTIFY_URL: "LINE_NOTIFY_URL",

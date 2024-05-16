@@ -1,9 +1,9 @@
 import * as cdk from "aws-cdk-lib";
 import { Annotations, Capture, Match, Template } from "aws-cdk-lib/assertions";
-import * as AwsCostNotification from "../lib/stacks/aws-cost-notification-stack";
+import * as AwsCostNotification from "../src/stacks/AwsCostNotificationStack";
 import * as dotenv from "dotenv";
 import { AwsSolutionsChecks } from "cdk-nag";
-import { formatCdkNagErrorMessage } from "./utils/formatCdkNagErrorMessage";
+import { formatCdkNagErrorMessage } from "../src/utils/formatCdkNagErrorMessage";
 
 dotenv.config();
 

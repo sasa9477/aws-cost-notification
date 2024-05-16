@@ -1,4 +1,4 @@
-import { roundDigit } from "./round-disit";
+import { roundDigit } from "./roundDigit";
 
 export interface ExchangeRateLatestResponse {
   success: boolean;
