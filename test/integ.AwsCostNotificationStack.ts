@@ -1,4 +1,4 @@
-import { ExpectedResult, IntegTest } from "@aws-cdk/integ-tests-alpha";
+import { AwsApiCall, ExpectedResult, IntegTest } from "@aws-cdk/integ-tests-alpha";
 import * as cdk from "aws-cdk-lib";
 import { AwsSolutionsChecks } from "cdk-nag";
 import * as dotenv from "dotenv";
@@ -6,6 +6,7 @@ import { ApplyDestroyPolicyAspect } from "../src/aspects/ApplyDestroyPolicyAspec
 import { Config } from "../src/config/config";
 import { AwsCostNotificationStack } from "../src/stacks/AwsCostNotificationStack";
 import { AwsCostNotificationTestStack } from "../src/stacks/AwsCostNotificationTestStack";
+import { IConstruct } from "constructs";
 
 dotenv.config();
 
@@ -86,12 +87,12 @@ const listBucketAssertion = integ.assertions
   .awsApiCall("s3", "ListObjectsV2", {
     Bucket: bucket.bucketName,
   })
-  .expect(ExpectedResult.objectLike({ KeyCount: 0 }));
-// .waitForAssertions({
-//   totalTimeout: cdk.Duration.minutes(10),
-//   interval: cdk.Duration.seconds(30),
-//   backoffRate: 3,
-// });
+  .expect(ExpectedResult.objectLike({ KeyCount: 2 }))
+  .waitForAssertions({
+    totalTimeout: cdk.Duration.minutes(10),
+    interval: cdk.Duration.seconds(30),
+    backoffRate: 3,
+  });
 
 updateBudgetAssersion.provider.addToRolePolicy({
   Effect: "Allow",
@@ -103,6 +104,20 @@ listBucketAssertion.provider.addToRolePolicy({
   Effect: "Allow",
   Action: ["s3:GetObject*", "s3:List*"],
   Resource: [bucket.bucketArn, bucket.arnForObjects("*")],
+});
+
+// 自動的に AssertionsProvider.addPolicyStatementFromSdkCall で "Action": ["s3:ListObjectsV2"] が追加される
+// そのため、以下のように明示的に waiterProvider に ListObjectsV2 用の権限許可を設定する
+cdk.Aspects.of(listBucketAssertion).add({
+  visit(node: IConstruct) {
+    if (node instanceof AwsApiCall && node.waiterProvider) {
+      node.waiterProvider.addToRolePolicy({
+        Effect: "Allow",
+        Action: ["s3:GetObject*", "s3:List*"],
+        Resource: [bucket.bucketArn, bucket.arnForObjects("*")],
+      });
+    }
+  },
 });
 
 updateBudgetAssersion.next(listBucketAssertion);
