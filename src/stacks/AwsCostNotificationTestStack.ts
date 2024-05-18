@@ -43,6 +43,24 @@ export class AwsCostNotificationTestStack extends cdk.Stack {
      * cdk-nag
      */
 
+    NagSuppressions.addResourceSuppressions(lambda, [
+      {
+        id: "AwsSolutions-L1",
+        reason: "Lambda で Nodejs 18x を使用するため、抑制する。",
+      },
+    ]);
+
+    NagSuppressions.addResourceSuppressions(
+      lambda.role,
+      [
+        {
+          id: "AwsSolutions-IAM4",
+          reason: "Lambda で AWSLambdaBasicExecutionRole Managed Policy を使用するため、抑制する。",
+        },
+      ],
+      true,
+    );
+
     NagSuppressions.addResourceSuppressions(
       this,
       [
