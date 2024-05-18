@@ -1,27 +1,14 @@
 import { ExpectedResult, IntegTest } from "@aws-cdk/integ-tests-alpha";
 import * as cdk from "aws-cdk-lib";
 import { ApplyDestroyPolicyAspect } from "../src/aspects/ApplyDestroyPolicyAspect";
+import { AwsCostNotificationTestStack } from "../src/stacks/AwsCostNotificationTestStack";
 
 const app = new cdk.App();
-const stack = new cdk.Stack(app, "S3TestStack");
-
-const bucket = new cdk.aws_s3.Bucket(stack, "S3TestBucket", {
-  bucketName: `${cdk.Stack.of(stack).stackName.toLocaleLowerCase()}-test-bucket`,
-  removalPolicy: cdk.RemovalPolicy.DESTROY,
-  autoDeleteObjects: true,
-});
-bucket.addToResourcePolicy(
-  new cdk.aws_iam.PolicyStatement({
-    effect: cdk.aws_iam.Effect.ALLOW,
-    actions: ["s3:DeleteObject*", "s3:GetBucket*", "s3:List*", "s3:PutBucketPolicy"],
-    principals: [new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com")],
-    resources: [bucket.bucketArn, bucket.arnForObjects("*")],
-  }),
-);
-
-new cdk.aws_s3_deployment.BucketDeployment(stack, `S3TestBucketDeployment`, {
-  sources: [cdk.aws_s3_deployment.Source.asset("./fixtures/assets")],
-  destinationBucket: bucket,
+const stack = new AwsCostNotificationTestStack(app, "S3TestStack", {
+  env: {
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+    region: "ap-northeast-1",
+  },
 });
 
 const integ = new IntegTest(app, "S3TestStackDataFlow", {
@@ -35,6 +22,8 @@ const integ = new IntegTest(app, "S3TestStackDataFlow", {
   },
   regions: [stack.region],
 });
+
+const bucket = stack.bucket;
 
 /**
  * Assertions
