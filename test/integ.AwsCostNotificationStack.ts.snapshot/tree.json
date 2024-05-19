@@ -1256,6 +1256,7 @@
                     "flexibleTimeWindow": {
                       "mode": "OFF"
                     },
+                    "name": "IntegTestStackCostNotificationSchedule",
                     "scheduleExpression": "cron(0 10 ? * 2 *)",
                     "scheduleExpressionTimezone": "Asia/Tokyo",
                     "target": {
@@ -1986,6 +1987,52 @@
                     "constructInfo": {
                       "fqn": "constructs.Construct",
                       "version": "10.3.0"
+                    }
+                  },
+                  "AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e": {
+                    "id": "AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e",
+                    "path": "DataFlowTest/DefaultTest/DeployAssert/AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e",
+                    "children": {
+                      "SdkProvider": {
+                        "id": "SdkProvider",
+                        "path": "DataFlowTest/DefaultTest/DeployAssert/AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e/SdkProvider",
+                        "children": {
+                          "AssertionsProvider": {
+                            "id": "AssertionsProvider",
+                            "path": "DataFlowTest/DefaultTest/DeployAssert/AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e/SdkProvider/AssertionsProvider",
+                            "constructInfo": {
+                              "fqn": "constructs.Construct",
+                              "version": "10.3.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/integ-tests-alpha.AssertionsProvider",
+                          "version": "2.138.0-alpha.0"
+                        }
+                      },
+                      "Default": {
+                        "id": "Default",
+                        "path": "DataFlowTest/DefaultTest/DeployAssert/AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e/Default",
+                        "children": {
+                          "Default": {
+                            "id": "Default",
+                            "path": "DataFlowTest/DefaultTest/DeployAssert/AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e/Default/Default",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.CfnResource",
+                              "version": "2.138.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CustomResource",
+                          "version": "2.138.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/integ-tests-alpha.AwsApiCall",
+                      "version": "2.138.0-alpha.0"
                     }
                   },
                   "AwsApiCalls3ListObjectsV2e7525cb82a4b0844c6f0994fc7bc31d2": {

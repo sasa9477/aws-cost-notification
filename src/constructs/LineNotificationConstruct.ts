@@ -11,8 +11,8 @@ export type LineNotificationConstructProps = {
 };
 
 export class LineNotificationConstruct extends Construct {
-  readonly notificationTopic: cdk.aws_sns.Topic;
-  readonly topicSseKey: cdk.aws_kms.Key;
+  public readonly notificationTopic: cdk.aws_sns.Topic;
+  public readonly topicSseKey: cdk.aws_kms.Key;
 
   constructor(scope: Construct, id: string, props: LineNotificationConstructProps) {
     super(scope, id);

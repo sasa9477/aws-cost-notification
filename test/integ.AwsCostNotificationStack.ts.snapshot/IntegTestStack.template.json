@@ -529,6 +529,7 @@
     "FlexibleTimeWindow": {
      "Mode": "OFF"
     },
+    "Name": "IntegTestStackCostNotificationSchedule",
     "ScheduleExpression": "cron(0 10 ? * 2 *)",
     "ScheduleExpressionTimezone": "Asia/Tokyo",
     "Target": {

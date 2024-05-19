@@ -1,12 +1,12 @@
 import { AwsApiCall, ExpectedResult, IntegTest } from "@aws-cdk/integ-tests-alpha";
 import * as cdk from "aws-cdk-lib";
 import { AwsSolutionsChecks } from "cdk-nag";
+import { IConstruct } from "constructs";
 import * as dotenv from "dotenv";
 import { ApplyDestroyPolicyAspect } from "../src/aspects/ApplyDestroyPolicyAspect";
 import { Config } from "../src/config/config";
 import { AwsCostNotificationStack } from "../src/stacks/AwsCostNotificationStack";
 import { AwsCostNotificationTestStack } from "../src/stacks/AwsCostNotificationTestStack";
-import { IConstruct } from "constructs";
 
 dotenv.config();
 
@@ -61,8 +61,8 @@ const integ = new IntegTest(app, "DataFlowTest", {
 /**
  * Assertions
  */
+
 const budget = stack.monthlyCostBudget.budget as cdk.aws_budgets.CfnBudget.BudgetDataProperty;
-const bucket = mockStack.bucket;
 
 const updateBudgetAssersion = integ.assertions.awsApiCall("budgets", "UpdateBudget", {
   AccountId: stack.account,
@@ -83,22 +83,41 @@ const updateBudgetAssersion = integ.assertions.awsApiCall("budgets", "UpdateBudg
   RetentionDays: cdk.aws_logs.RetentionDays.ONE_DAY,
 });
 
-const listBucketAssertion = integ.assertions
-  .awsApiCall("s3", "ListObjectsV2", {
-    Bucket: bucket.bucketName,
-  })
-  .expect(ExpectedResult.objectLike({ KeyCount: 2 }))
-  .waitForAssertions({
-    totalTimeout: cdk.Duration.minutes(10),
-    interval: cdk.Duration.seconds(30),
-    backoffRate: 3,
-  });
-
 updateBudgetAssersion.provider.addToRolePolicy({
   Effect: "Allow",
   Action: ["budgets:*"],
   Resource: ["*"],
 });
+
+const costNotifacationHandler = stack.costNotifacationHandler;
+
+const invokeCostNotificationHandler = integ.assertions.awsApiCall("lambda", "Invoke", {
+  FunctionName: costNotifacationHandler.functionName,
+  // onSuccess を呼び出すために 非同期で実行
+  InvocationType: "Event",
+});
+
+invokeCostNotificationHandler.provider.addPolicyStatementFromSdkCall("Lambda", "invokeFunction", [
+  stack.formatArn({
+    service: "lambda",
+    resource: "function",
+    arnFormat: cdk.ArnFormat.COLON_RESOURCE_NAME,
+    resourceName: costNotifacationHandler.functionName,
+  }),
+]);
+
+const bucket = mockStack.bucket;
+
+const listBucketAssertion = integ.assertions
+  .awsApiCall("s3", "ListObjectsV2", {
+    Bucket: bucket.bucketName,
+  })
+  .expect(ExpectedResult.objectLike({ KeyCount: 3 }))
+  .waitForAssertions({
+    totalTimeout: cdk.Duration.minutes(10),
+    interval: cdk.Duration.minutes(1),
+    backoffRate: 3,
+  });
 
 listBucketAssertion.provider.addToRolePolicy({
   Effect: "Allow",
@@ -120,4 +139,4 @@ cdk.Aspects.of(listBucketAssertion).add({
   },
 });
 
-updateBudgetAssersion.next(listBucketAssertion);
+updateBudgetAssersion.next(invokeCostNotificationHandler).next(listBucketAssertion);

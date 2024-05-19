@@ -4,14 +4,16 @@ import { BudgetAlartConstruct } from "../constructs/BudgetAlartConstruct";
 import { CostNotifacationConstruct } from "../constructs/CostNotificationConstruct";
 import { LineNotificationConstruct } from "../constructs/LineNotificationConstruct";
 import { Config } from "../config/config";
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 
 export type AwsCostNotificationStackProps = cdk.StackProps & {
   config: Config;
 };
 
 export class AwsCostNotificationStack extends cdk.Stack {
-  readonly costAlarmTopic: cdk.aws_sns.Topic;
-  readonly monthlyCostBudget: cdk.aws_budgets.CfnBudget;
+  public readonly costAlarmTopic: cdk.aws_sns.Topic;
+  public readonly costNotifacationHandler: NodejsFunction;
+  public readonly monthlyCostBudget: cdk.aws_budgets.CfnBudget;
 
   constructor(scope: Construct, id: string, props: AwsCostNotificationStackProps) {
     super(scope, id, props);
@@ -22,7 +24,7 @@ export class AwsCostNotificationStack extends cdk.Stack {
       config,
     });
 
-    new CostNotifacationConstruct(this, "CostNotificationConstruct", {
+    const { costNotifacationHandler } = new CostNotifacationConstruct(this, "CostNotificationConstruct", {
       config,
       notificationTopic,
     });
@@ -32,6 +34,7 @@ export class AwsCostNotificationStack extends cdk.Stack {
       notificationTopic,
     });
 
+    this.costNotifacationHandler = costNotifacationHandler;
     this.monthlyCostBudget = monthlyCostBudget;
 
     // // 外部から参照するために保持

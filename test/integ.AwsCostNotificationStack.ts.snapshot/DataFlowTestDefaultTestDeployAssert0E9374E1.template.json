@@ -17,7 +17,7 @@
      "RetentionDays": "1"
     },
     "flattenResponse": "false",
-    "salt": "1716053272618"
+    "salt": "1716082757433"
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
@@ -58,6 +58,33 @@
          ]
         },
         {
+         "Effect": "Allow",
+         "Action": [
+          "budgets:*"
+         ],
+         "Resource": [
+          "*"
+         ]
+        },
+        {
+         "Action": [
+          "lambda:Invoke"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          "*"
+         ]
+        },
+        {
+         "Action": [
+          "lambda:InvokeFunction"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          "arn:aws:lambda:ap-northeast-1:643202082981:function:IntegTestStackCostNotificationHandler"
+         ]
+        },
+        {
          "Action": [
           "s3:ListObjectsV2"
          ],
@@ -71,15 +98,6 @@
           "states:StartExecution"
          ],
          "Effect": "Allow",
-         "Resource": [
-          "*"
-         ]
-        },
-        {
-         "Effect": "Allow",
-         "Action": [
-          "budgets:*"
-         ],
          "Resource": [
           "*"
          ]
@@ -164,6 +182,30 @@
     }
    }
   },
+  "AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e": {
+   "Type": "Custom::DeployAssert@SdkCalllambdaInvoke",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "SingletonFunction1488541a7b23466481b69b4408076b81HandlerCD40AE9F",
+      "Arn"
+     ]
+    },
+    "service": "lambda",
+    "api": "Invoke",
+    "parameters": {
+     "FunctionName": "\"IntegTestStackCostNotificationHandler\"",
+     "InvocationType": "\"Event\""
+    },
+    "flattenResponse": "false",
+    "salt": "1716082757433"
+   },
+   "DependsOn": [
+    "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
   "AwsApiCalls3ListObjectsV2e7525cb82a4b0844c6f0994fc7bc31d2": {
    "Type": "Custom::DeployAssert@SdkCalls3ListObjectsV2",
    "Properties": {
@@ -175,7 +217,7 @@
     },
     "service": "s3",
     "api": "ListObjectsV2",
-    "expected": "{\"$ObjectLike\":{\"KeyCount\":2}}",
+    "expected": "{\"$ObjectLike\":{\"KeyCount\":3}}",
     "stateMachineArn": {
      "Ref": "AwsApiCalls3ListObjectsV2e7525cb82a4b0844c6f0994fc7bc31d2WaitFor6DE93A92"
     },
@@ -183,10 +225,10 @@
      "Bucket": "\"integtestmockstack-test-bucket\""
     },
     "flattenResponse": "false",
-    "salt": "1716053272619"
+    "salt": "1716082757434"
    },
    "DependsOn": [
-    "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
+    "AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e"
    ],
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
@@ -209,7 +251,7 @@
     }
    },
    "DependsOn": [
-    "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
+    "AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e"
    ]
   },
   "AwsApiCalls3ListObjectsV2e7525cb82a4b0844c6f0994fc7bc31d2WaitForTimeoutProviderInvoke2280C196": {
@@ -230,7 +272,7 @@
     }
    },
    "DependsOn": [
-    "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
+    "AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e"
    ]
   },
   "AwsApiCalls3ListObjectsV2e7525cb82a4b0844c6f0994fc7bc31d2WaitForRole7426A7C0": {
@@ -278,7 +320,7 @@
     ]
    },
    "DependsOn": [
-    "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
+    "AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e"
    ]
   },
   "AwsApiCalls3ListObjectsV2e7525cb82a4b0844c6f0994fc7bc31d2WaitFor6DE93A92": {
@@ -288,7 +330,7 @@
      "Fn::Join": [
       "",
       [
-       "{\"StartAt\":\"framework-isComplete-task\",\"States\":{\"framework-isComplete-task\":{\"End\":true,\"Retry\":[{\"ErrorEquals\":[\"States.ALL\"],\"IntervalSeconds\":30,\"MaxAttempts\":2,\"BackoffRate\":3}],\"Catch\":[{\"ErrorEquals\":[\"States.ALL\"],\"Next\":\"framework-onTimeout-task\"}],\"Type\":\"Task\",\"Resource\":\"",
+       "{\"StartAt\":\"framework-isComplete-task\",\"States\":{\"framework-isComplete-task\":{\"End\":true,\"Retry\":[{\"ErrorEquals\":[\"States.ALL\"],\"IntervalSeconds\":60,\"MaxAttempts\":2,\"BackoffRate\":3}],\"Catch\":[{\"ErrorEquals\":[\"States.ALL\"],\"Next\":\"framework-onTimeout-task\"}],\"Type\":\"Task\",\"Resource\":\"",
        {
         "Fn::GetAtt": [
          "SingletonFunction76b3e830a873425f8453eddd85c86925Handler81461ECE",
@@ -314,7 +356,7 @@
     }
    },
    "DependsOn": [
-    "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862",
+    "AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e",
     "AwsApiCalls3ListObjectsV2e7525cb82a4b0844c6f0994fc7bc31d2WaitForRole7426A7C0"
    ]
   },

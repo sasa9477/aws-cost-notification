@@ -138,7 +138,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-deploy-role-643202082981-ap-northeast-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-cfn-exec-role-643202082981-ap-northeast-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-643202082981-ap-northeast-1/bdcc1e3c324ad74f0fe62869bdc3eb28ba89434e95880b2e79ef719d855dcea7.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-643202082981-ap-northeast-1/b31c6cb20787221c93ad8600c9b23dd950199b33480e642166eef8b1488987dc.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -254,7 +254,10 @@
         "/IntegTestStack/CostNotificationConstruct/CostNotificationSchedule": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "CostNotificationConstructCostNotificationScheduleEEF3B607"
+            "data": "CostNotificationConstructCostNotificationScheduleEEF3B607",
+            "trace": [
+              "!!DESTRUCTIVE_CHANGES: WILL_REPLACE"
+            ]
           }
         ],
         "/IntegTestStack/BudgetAlartConstruct/BudgetAlartTopicLoggingRole/Resource": [
@@ -361,7 +364,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/efd61dbdb896a5b280b1e5b479b0eda6fd560f99f205d47af0b5343a560e6330.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/2541f5cc93e7e431401cee0ed894d5531974c85f84eaad9e9fc07f29cc4152d0.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -399,6 +402,12 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "SingletonFunction1488541a7b23466481b69b4408076b81HandlerCD40AE9F"
+          }
+        ],
+        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AwsApiCalllambdaInvoke5e46e93a2b0f6abd32f8e2018d17b25e"
           }
         ],
         "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV2e7525cb82a4b0844c6f0994fc7bc31d2/Default/Default": [

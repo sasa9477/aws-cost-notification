@@ -11,6 +11,8 @@ export type CostNotifacationConstructProps = {
 };
 
 export class CostNotifacationConstruct extends Construct {
+  public readonly costNotifacationHandler: NodeJsLambdaFunction;
+
   constructor(scope: Construct, id: string, props: CostNotifacationConstructProps) {
     super(scope, id);
 
@@ -50,6 +52,7 @@ export class CostNotifacationConstruct extends Construct {
     );
 
     new cdk.aws_scheduler.CfnSchedule(this, "CostNotificationSchedule", {
+      name: `${cdk.Stack.of(this).stackName}CostNotificationSchedule`,
       scheduleExpression: config.constNotificationScheduleConfig.scheduleExpression,
       scheduleExpressionTimezone: "Asia/Tokyo",
       flexibleTimeWindow: {
@@ -60,6 +63,8 @@ export class CostNotifacationConstruct extends Construct {
         roleArn: schedulerRole.roleArn,
       },
     });
+
+    this.costNotifacationHandler = lambda;
 
     /**
      * cdk-nag のセキュリティ抑制設定
