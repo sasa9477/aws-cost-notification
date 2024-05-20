@@ -531,12 +531,12 @@
                           "aws:cdk:cloudformation:props": {
                             "code": {
                               "s3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-                              "s3Key": "57eef694fb1dcc4fa7f655bfdc7753ffcb7341bfc5399cedebbbb3463405891b.zip"
+                              "s3Key": "73139c9f3b2f7905a66c82078ac72dd203f28caea2f99306cc9c88a564da3ac8.zip"
                             },
                             "environment": {
                               "variables": {
-                                "LINE_NOTIFY_URL": "https://notify-api.line.me/api/notify",
-                                "LINE_NOTIFY_TOKEN": "uYx1hi15rGUia9pLuLeLM3ZxAVkxqqNAAPL5eoqi2np",
+                                "LINE_NOTIFY_URL": "",
+                                "LINE_NOTIFY_TOKEN": "",
                                 "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
                               }
                             },

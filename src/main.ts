@@ -18,8 +18,8 @@ dotenv.config();
       account: process.env.CDK_DEFAULT_ACCOUNT,
       region: "ap-northeast-1",
     },
-    config,
     crossRegionReferences: true,
+    config,
   });
 
   // MonitorDimension が Serive のモニターは、AWS アカウント に 1つしか作成できないので、コンフィグで有効になっている場合のみ作成する
@@ -33,8 +33,8 @@ dotenv.config();
           account: process.env.CDK_DEFAULT_ACCOUNT,
           region: "us-east-1",
         },
-        config,
         crossRegionReferences: true,
+        config,
         notificationTopic: awsCostNotificationStack.notificationTopic,
       },
     );

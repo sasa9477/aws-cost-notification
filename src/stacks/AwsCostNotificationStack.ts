@@ -8,6 +8,7 @@ import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 
 export type AwsCostNotificationStackProps = cdk.StackProps & {
   config: Config;
+  lineNotifyUrl?: string;
 };
 
 export class AwsCostNotificationStack extends cdk.Stack {
@@ -18,10 +19,11 @@ export class AwsCostNotificationStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: AwsCostNotificationStackProps) {
     super(scope, id, props);
 
-    const { config } = props;
+    const { config, lineNotifyUrl } = props;
 
     const { notificationTopic } = new LineNotificationConstruct(this, "NotificationConstruct", {
       config,
+      lineNotifyUrl,
     });
 
     if (config.costNotificationScheduleConfig.enabled) {

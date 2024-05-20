@@ -16,7 +16,10 @@ export const handler: lambda.SNSHandler = async (event) => {
       ? requestContext.responsePayload
       : requestContext.responsePayload.errorMessage;
 
-  const json = await /* global fetch */ fetch(process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_URL] || "", {
+  // テスト用に url を置き換えられるようにする
+  const url = process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_URL] || "https://notify-api.line.me/api/notify";
+
+  const json = await /* global fetch */ fetch(url, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN]}`,

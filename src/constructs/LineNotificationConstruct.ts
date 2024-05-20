@@ -2,12 +2,12 @@ import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
-import { LINE_NOTIFICATION_HANDLER_ENV } from "../handlers/LineNotificationHandler";
-import { lambda } from "cdk-nag/lib/rules";
 import { Config } from "../config/config";
+import { LINE_NOTIFICATION_HANDLER_ENV } from "../handlers/LineNotificationHandler";
 
 export type LineNotificationConstructProps = {
   readonly config: Config;
+  readonly lineNotifyUrl?: string;
 };
 
 export class LineNotificationConstruct extends Construct {
@@ -16,6 +16,8 @@ export class LineNotificationConstruct extends Construct {
 
   constructor(scope: Construct, id: string, props: LineNotificationConstructProps) {
     super(scope, id);
+
+    const { lineNotifyUrl } = props;
 
     const topicLoggingRole = new cdk.aws_iam.Role(this, "NotificationTopicLoggingRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
@@ -70,8 +72,7 @@ export class LineNotificationConstruct extends Construct {
     const lambda = new NodeJsLambdaFunction(this, "LineNotificationHandler", {
       entryFileName: "LineNotificationHandler",
       environment: {
-        [LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_URL]:
-          process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_URL] || "",
+        [LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_URL]: lineNotifyUrl || "",
         [LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN]:
           process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN] || "",
       },

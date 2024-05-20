@@ -4,9 +4,9 @@ import { AwsSolutionsChecks } from "cdk-nag";
 import { IConstruct } from "constructs";
 import * as dotenv from "dotenv";
 import { ApplyDestroyPolicyAspect } from "../src/aspects/ApplyDestroyPolicyAspect";
-import { Config } from "../src/config/config";
 import { AwsCostNotificationStack } from "../src/stacks/AwsCostNotificationStack";
 import { AwsCostNotificationTestStack } from "../src/stacks/AwsCostNotificationTestStack";
+import { testConfig } from "./fixtures/testConfig";
 
 dotenv.config();
 
@@ -20,32 +20,14 @@ const mockStack = new AwsCostNotificationTestStack(app, "IntegTestMockStack", {
   crossRegionReferences: true,
 });
 
-process.env.LINE_NOTIFY_URL = mockStack.functionUrl.url;
-
-const testConfig: Config = {
-  costNotificationScheduleConfig: {
-    enabled: true,
-    scheduleExpression: "cron(0 10 ? * 2 *)",
-  },
-  budgetAlartConfig: {
-    enabled: true,
-    budgetAmount: 100,
-    actualAmountCostAlertThreshold: 50,
-    forecastedAmountCostAlertThreshold: 50,
-  },
-  costAnomalyNotificationConfig: {
-    enebled: false,
-    forecastedAmountCostAlertThreshold: 1,
-  },
-};
-
 const stack = new AwsCostNotificationStack(app, "IntegTestStack", {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: "ap-northeast-1",
   },
-  config: testConfig,
   crossRegionReferences: true,
+  config: testConfig,
+  lineNotifyUrl: mockStack.functionUrl.url,
 });
 
 cdk.Aspects.of(stack).add(new AwsSolutionsChecks({ verbose: true }));
