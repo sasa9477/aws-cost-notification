@@ -25,6 +25,15 @@ export type Config = {
      */
     forecastedAmountCostAlertThreshold: number;
   };
+  /**
+   * コスト異常通知の設定
+   */
+  costAnomalyNotificationConfig: {
+    // 有効にするかどうか
+    enebled: boolean;
+    // 予想支出の異常通知アラートの閾値 (USD)
+    forecastedAmountCostAlertThreshold: number;
+  };
 };
 
 export const config: Config = {
@@ -39,5 +48,9 @@ export const config: Config = {
     actualAmountCostAlertThreshold: 50,
     // 予想額の 80% 以上の場合に通知
     forecastedAmountCostAlertThreshold: 80,
+  },
+  costAnomalyNotificationConfig: {
+    enebled: true,
+    forecastedAmountCostAlertThreshold: 1,
   },
 };

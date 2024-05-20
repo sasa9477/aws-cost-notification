@@ -12,6 +12,7 @@
     "prepare": "husky install",
     "synth": "cdk synth",
     "diff": "cdk diff",
+    "bootstrap": "cdk bootstrap --all",
     "deploy": "cdk deploy --all",
     "destroy": "cdk destroy --all"
   },

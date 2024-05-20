@@ -9,16 +9,16 @@ dotenv.config();
 
 const testConfig = {
   constNotificationScheduleConfig: {
-    // 毎週月曜日の 10:00 に実行
     scheduleExpression: "cron(0 10 ? * 2 *)",
   },
   budgetAlartConfig: {
-    // 予算額は 4 USD
-    budgetAmount: 4,
-    // 実際のコストが 50% 以上の場合に通知
+    budgetAmount: 100,
     actualAmountCostAlertThreshold: 50,
-    // 予想額の 80% 以上の場合に通知
-    forecastedAmountCostAlertThreshold: 80,
+    forecastedAmountCostAlertThreshold: 50,
+  },
+  costAnomalyNotificationConfig: {
+    enebled: false,
+    forecastedAmountCostAlertThreshold: 1,
   },
 };
 

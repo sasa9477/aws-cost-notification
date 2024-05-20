@@ -1,32 +1,17 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
+import { Config } from "../config/config";
 
 export interface AwsCostAnomalyNotificationStackProps extends cdk.StackProps {
-  costAlarmTopicArn: string;
+  config: Config;
+  notificationTopic: cdk.aws_sns.Topic;
 }
 
 export class AwsCostAnomalyNotificationStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: AwsCostAnomalyNotificationStackProps) {
     super(scope, id, props);
 
-    const { costAlarmTopicArn } = props;
-
-    // monitorDimension: Serive のモニターは AWS アカウント に 1つしか作成できないので、既存の異常検知モニターを取得する
-    // const resource = new cdk.custom_resources.AwsCustomResource(this, "GetParameterCustomResource", {
-    //   onUpdate: {
-    //     service: "CostExplorer",
-    //     action: "getAnomalyMonitors",
-    //     physicalResourceId: cdk.custom_resources.PhysicalResourceId.of(`${this.stackName}-GetAnomalyMonitors`),
-    //     parameters: {
-    //       monitorType: "DIMENSIONAL",
-    //       monitorDimension: "SERVICE",
-    //     },
-    //   },
-    //   policy: cdk.custom_resources.AwsCustomResourcePolicy.fromSdkCalls({
-    //     resources: cdk.custom_resources.AwsCustomResourcePolicy.ANY_RESOURCE,
-    //   }),
-    // });
-    // const anomalyMonitorArn = resource.getResponseField("AnomalyMonitors.0.MonitorArn");
+    const { config, notificationTopic } = props;
 
     // 異常検知モニターを作成する
     const monitor = new cdk.aws_ce.CfnAnomalyMonitor(this, "AnomalyServicesMonitor", {
@@ -43,11 +28,21 @@ export class AwsCostAnomalyNotificationStack extends cdk.Stack {
       subscribers: [
         {
           type: "SNS",
-          address: costAlarmTopicArn,
+          address: notificationTopic.topicArn,
           status: "CONFIRMED",
         },
       ],
-      threshold: 1,
+      threshold: config.costAnomalyNotificationConfig.forecastedAmountCostAlertThreshold,
     });
+
+    // 異常検知をトピックに通知を送信するためにポリシーを追加
+    notificationTopic.addToResourcePolicy(
+      new cdk.aws_iam.PolicyStatement({
+        effect: cdk.aws_iam.Effect.ALLOW,
+        actions: ["SNS:Publish"],
+        principals: [new cdk.aws_iam.ServicePrincipal("costalerts.amazonaws.com")],
+        resources: [notificationTopic.topicArn],
+      }),
+    );
   }
 }

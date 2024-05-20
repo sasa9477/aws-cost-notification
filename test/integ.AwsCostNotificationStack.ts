@@ -31,6 +31,10 @@ const testConfig: Config = {
     actualAmountCostAlertThreshold: 50,
     forecastedAmountCostAlertThreshold: 50,
   },
+  costAnomalyNotificationConfig: {
+    enebled: false,
+    forecastedAmountCostAlertThreshold: 1,
+  },
 };
 
 const stack = new AwsCostNotificationStack(app, "IntegTestStack", {
@@ -126,7 +130,7 @@ listBucketAssertion.provider.addToRolePolicy({
 });
 
 // 自動的に AssertionsProvider.addPolicyStatementFromSdkCall で "Action": ["s3:ListObjectsV2"] が追加される
-// そのため、以下のように明示的に waiterProvider に ListObjectsV2 用の権限許可を設定する
+// そのため、ここで明示的に waiterProvider に ListObjectsV2 用の権限許可を設定する
 cdk.Aspects.of(listBucketAssertion).add({
   visit(node: IConstruct) {
     if (node instanceof AwsApiCall && node.waiterProvider) {

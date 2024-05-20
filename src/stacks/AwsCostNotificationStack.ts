@@ -11,7 +11,7 @@ export type AwsCostNotificationStackProps = cdk.StackProps & {
 };
 
 export class AwsCostNotificationStack extends cdk.Stack {
-  public readonly costAlarmTopic: cdk.aws_sns.Topic;
+  public readonly notificationTopic: cdk.aws_sns.Topic;
   public readonly costNotifacationHandler: NodejsFunction;
   public readonly monthlyCostBudget: cdk.aws_budgets.CfnBudget;
 
@@ -34,10 +34,8 @@ export class AwsCostNotificationStack extends cdk.Stack {
       notificationTopic,
     });
 
+    this.notificationTopic = notificationTopic;
     this.costNotifacationHandler = costNotifacationHandler;
     this.monthlyCostBudget = monthlyCostBudget;
-
-    // // 外部から参照するために保持
-    // this.costAlarmTopic = topic;
   }
 }
