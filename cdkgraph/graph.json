@@ -1,0 +1,2820 @@
+{
+  "version": "0.0.0",
+  "tree": {
+    "uuid": "Root",
+    "flags": [
+      "GRAPH_CONTAINER",
+      "CLUSTER"
+    ],
+    "nodeType": "ROOT",
+    "id": "Root",
+    "path": "",
+    "children": {
+      "App": {
+        "uuid": "App",
+        "flags": [
+          "GRAPH_CONTAINER",
+          "CLUSTER"
+        ],
+        "nodeType": "APP",
+        "parent": "Root",
+        "id": "App",
+        "path": "/",
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.App",
+          "version": "2.138.0"
+        },
+        "children": {
+          "AwsCostNotificationStack": {
+            "uuid": "AwsCostNotificationStack",
+            "flags": [
+              "CLUSTER"
+            ],
+            "nodeType": "STACK",
+            "stack": "AwsCostNotificationStack",
+            "parent": "App",
+            "id": "AwsCostNotificationStack",
+            "path": "AwsCostNotificationStack",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Stack",
+              "version": "2.138.0"
+            },
+            "children": {
+              "NotificationConstruct": {
+                "uuid": "AwsCostNotificationStackNotificationConstruct3D6549EA",
+                "nodeType": "DEFAULT",
+                "stack": "AwsCostNotificationStack",
+                "parent": "AwsCostNotificationStack",
+                "id": "NotificationConstruct",
+                "path": "AwsCostNotificationStack/NotificationConstruct",
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.3.0"
+                },
+                "children": {
+                  "NotificationTopicLoggingRole": {
+                    "uuid": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleE70471CE",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackNotificationConstruct3D6549EA",
+                    "id": "NotificationTopicLoggingRole",
+                    "path": "AwsCostNotificationStack/NotificationConstruct/NotificationTopicLoggingRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::IAM::Role",
+                    "children": {
+                      "ImportNotificationTopicLoggingRole": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleImportNotificationTopicLoggingRoleFA8CACC7",
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleE70471CE",
+                        "id": "ImportNotificationTopicLoggingRole",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/NotificationTopicLoggingRole/ImportNotificationTopicLoggingRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.138.0"
+                        }
+                      },
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleB9DB98B1",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "sns.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleE70471CE",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/NotificationTopicLoggingRole/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "NotificationConstructNotificationTopicLoggingRole52DEBAA0",
+                        "cfnType": "AWS::IAM::Role"
+                      },
+                      "DefaultPolicy": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleDefaultPolicy44DAA0BE",
+                        "flags": [
+                          "CDK_OWNED"
+                        ],
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleE70471CE",
+                        "id": "DefaultPolicy",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/NotificationTopicLoggingRole/DefaultPolicy",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.138.0"
+                        },
+                        "cfnType": "AWS::IAM::Policy",
+                        "children": {
+                          "Resource": {
+                            "uuid": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleDefaultPolicy558E778B",
+                            "attributes": {
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "logs:CreateLogGroup",
+                                        "logs:CreateLogStream",
+                                        "logs:PutLogEvents"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "NotificationConstructNotificationTopicLoggingRoleDefaultPolicyBB4B831B",
+                                "roles": [
+                                  {
+                                    "Ref": "NotificationConstructNotificationTopicLoggingRole52DEBAA0"
+                                  }
+                                ]
+                              }
+                            },
+                            "flags": [
+                              "CFN_FQN"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleDefaultPolicy44DAA0BE",
+                            "id": "Resource",
+                            "path": "AwsCostNotificationStack/NotificationConstruct/NotificationTopicLoggingRole/DefaultPolicy/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.138.0"
+                            },
+                            "logicalId": "NotificationConstructNotificationTopicLoggingRoleDefaultPolicyBB4B831B",
+                            "cfnType": "AWS::IAM::Policy",
+                            "edges": [
+                              "REF:15eedC"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "NotificationTopic": {
+                    "uuid": "AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackNotificationConstruct3D6549EA",
+                    "id": "NotificationTopic",
+                    "path": "AwsCostNotificationStack/NotificationConstruct/NotificationTopic",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sns.Topic",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::SNS::Topic",
+                    "children": {
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructNotificationTopicEC8E76BE",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "deliveryStatusLogging": [
+                              {
+                                "protocol": "lambda",
+                                "failureFeedbackRoleArn": {
+                                  "Fn::GetAtt": [
+                                    "NotificationConstructNotificationTopicLoggingRole52DEBAA0",
+                                    "Arn"
+                                  ]
+                                },
+                                "successFeedbackRoleArn": {
+                                  "Fn::GetAtt": [
+                                    "NotificationConstructNotificationTopicLoggingRole52DEBAA0",
+                                    "Arn"
+                                  ]
+                                },
+                                "successFeedbackSampleRate": "100"
+                              }
+                            ],
+                            "displayName": "AwsCostNotificationStackNotificationTopic",
+                            "topicName": "AwsCostNotificationStackNotificationTopic"
+                          }
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/NotificationTopic/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_sns.CfnTopic",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "NotificationConstructNotificationTopic211862B9",
+                        "cfnType": "AWS::SNS::Topic",
+                        "edges": [
+                          "ATT:Z1dUlku"
+                        ]
+                      },
+                      "Policy": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructNotificationTopicPolicy0089501B",
+                        "flags": [
+                          "CDK_OWNED"
+                        ],
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A",
+                        "id": "Policy",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/NotificationTopic/Policy",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_sns.TopicPolicy",
+                          "version": "2.138.0"
+                        },
+                        "cfnType": "AWS::SNS::TopicPolicy",
+                        "children": {
+                          "Resource": {
+                            "uuid": "AwsCostNotificationStackNotificationConstructNotificationTopicPolicyCAB069E7",
+                            "attributes": {
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "SNS:AddPermission",
+                                        "SNS:DeleteTopic",
+                                        "SNS:GetTopicAttributes",
+                                        "SNS:ListSubscriptionsByTopic",
+                                        "SNS:Publish",
+                                        "SNS:Receive",
+                                        "SNS:RemovePermission",
+                                        "SNS:SetTopicAttributes",
+                                        "SNS:Subscribe"
+                                      ],
+                                      "Condition": {
+                                        "StringEquals": {
+                                          "AWS:SourceOwner": {
+                                            "Ref": "AWS::AccountId"
+                                          }
+                                        }
+                                      },
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "AWS": "*"
+                                      },
+                                      "Resource": {
+                                        "Ref": "NotificationConstructNotificationTopic211862B9"
+                                      },
+                                      "Sid": "0"
+                                    },
+                                    {
+                                      "Action": "sns:Publish",
+                                      "Condition": {
+                                        "Bool": {
+                                          "aws:SecureTransport": "false"
+                                        }
+                                      },
+                                      "Effect": "Deny",
+                                      "Principal": "*",
+                                      "Resource": {
+                                        "Ref": "NotificationConstructNotificationTopic211862B9"
+                                      },
+                                      "Sid": "AllowPublishThroughSSLOnly"
+                                    },
+                                    {
+                                      "Action": "SNS:Publish",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "costalerts.amazonaws.com"
+                                      },
+                                      "Resource": {
+                                        "Ref": "NotificationConstructNotificationTopic211862B9"
+                                      },
+                                      "Sid": "2"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "topics": [
+                                  {
+                                    "Ref": "NotificationConstructNotificationTopic211862B9"
+                                  }
+                                ]
+                              }
+                            },
+                            "flags": [
+                              "CFN_FQN"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackNotificationConstructNotificationTopicPolicy0089501B",
+                            "id": "Resource",
+                            "path": "AwsCostNotificationStack/NotificationConstruct/NotificationTopic/Policy/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_sns.CfnTopicPolicy",
+                              "version": "2.138.0"
+                            },
+                            "logicalId": "NotificationConstructNotificationTopicPolicy085A78FC",
+                            "cfnType": "AWS::SNS::TopicPolicy",
+                            "edges": [
+                              "REF:t3wen"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "LineNotificationHandlerRole": {
+                    "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerRoleAF71638A",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackNotificationConstruct3D6549EA",
+                    "id": "LineNotificationHandlerRole",
+                    "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandlerRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::IAM::Role",
+                    "children": {
+                      "ImportLineNotificationHandlerRole": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerRoleImportLineNotificationHandlerRole8C0B31F5",
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerRoleAF71638A",
+                        "id": "ImportLineNotificationHandlerRole",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandlerRole/ImportLineNotificationHandlerRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.138.0"
+                        }
+                      },
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerRole4B4C0DA5",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerRoleAF71638A",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandlerRole/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "NotificationConstructLineNotificationHandlerRole5ACCE202",
+                        "cfnType": "AWS::IAM::Role"
+                      }
+                    }
+                  },
+                  "LineNotificationHandlerLogGroup": {
+                    "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerLogGroup0A87DE9D",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackNotificationConstruct3D6549EA",
+                    "id": "LineNotificationHandlerLogGroup",
+                    "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandlerLogGroup",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::Logs::LogGroup",
+                    "children": {
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerLogGroup98C07F95",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {}
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerLogGroup0A87DE9D",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandlerLogGroup/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "NotificationConstructLineNotificationHandlerLogGroup50DCD10E",
+                        "cfnType": "AWS::Logs::LogGroup"
+                      }
+                    }
+                  },
+                  "LineNotificationHandler": {
+                    "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandler057FEE0C",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackNotificationConstruct3D6549EA",
+                    "id": "LineNotificationHandler",
+                    "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandler",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda_nodejs.NodejsFunction",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::Lambda::Function",
+                    "children": {
+                      "Code": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerCodeBD7B3C41",
+                        "flags": [
+                          "EXTRANEOUS",
+                          "ASSET"
+                        ],
+                        "nodeType": "DEFAULT",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructLineNotificationHandler057FEE0C",
+                        "id": "Code",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandler/Code",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.138.0"
+                        },
+                        "children": {
+                          "Stage": {
+                            "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerCodeStageC45656EF",
+                            "flags": [
+                              "EXTRANEOUS"
+                            ],
+                            "nodeType": "DEFAULT",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerCodeBD7B3C41",
+                            "id": "Stage",
+                            "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandler/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.138.0"
+                            }
+                          },
+                          "AssetBucket": {
+                            "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerCodeAssetBucketA5410E8C",
+                            "attributes": {
+                              "graph:cfn-resource:import-arn-token": "ImportArn-Z1Hbg8U"
+                            },
+                            "flags": [
+                              "IMPORT"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerCodeBD7B3C41",
+                            "id": "AssetBucket",
+                            "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandler/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.138.0"
+                            },
+                            "cfnType": "AWS::S3::Bucket"
+                          }
+                        }
+                      },
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerA40EC933",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": {
+                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
+                              },
+                              "s3Key": "57eef694fb1dcc4fa7f655bfdc7753ffcb7341bfc5399cedebbbb3463405891b.zip"
+                            },
+                            "environment": {
+                              "variables": {
+                                "LINE_NOTIFY_URL": "https://notify-api.line.me/api/notify",
+                                "LINE_NOTIFY_TOKEN": "uYx1hi15rGUia9pLuLeLM3ZxAVkxqqNAAPL5eoqi2np",
+                                "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+                              }
+                            },
+                            "functionName": "AwsCostNotificationStackLineNotificationHandler",
+                            "handler": "index.handler",
+                            "loggingConfig": {
+                              "logGroup": {
+                                "Ref": "NotificationConstructLineNotificationHandlerLogGroup50DCD10E"
+                              }
+                            },
+                            "memorySize": 128,
+                            "role": {
+                              "Fn::GetAtt": [
+                                "NotificationConstructLineNotificationHandlerRole5ACCE202",
+                                "Arn"
+                              ]
+                            },
+                            "runtime": "nodejs18.x",
+                            "timeout": 10
+                          }
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructLineNotificationHandler057FEE0C",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandler/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "NotificationConstructLineNotificationHandlerDE43E93A",
+                        "cfnType": "AWS::Lambda::Function",
+                        "edges": [
+                          "REF:PMKBu",
+                          "ATT:U46O4",
+                          "DEP:ZpV8RE"
+                        ]
+                      },
+                      "AllowInvoke:AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerAllowInvokeAwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A0C17E083",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "NotificationConstructLineNotificationHandlerDE43E93A",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "sns.amazonaws.com",
+                            "sourceArn": {
+                              "Ref": "NotificationConstructNotificationTopic211862B9"
+                            }
+                          }
+                        },
+                        "flags": [
+                          "EXTRANEOUS",
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructLineNotificationHandler057FEE0C",
+                        "id": "AllowInvoke:AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandler/AllowInvoke:AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "NotificationConstructLineNotificationHandlerAllowInvokeAwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40ABCAF8F68",
+                        "cfnType": "AWS::Lambda::Permission",
+                        "edges": [
+                          "ATT:ZnyjpP",
+                          "REF:1PcaTv"
+                        ]
+                      },
+                      "NotificationTopic": {
+                        "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerNotificationTopicDD70F785",
+                        "flags": [
+                          "CDK_OWNED"
+                        ],
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackNotificationConstructLineNotificationHandler057FEE0C",
+                        "id": "NotificationTopic",
+                        "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandler/NotificationTopic",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_sns.Subscription",
+                          "version": "2.138.0"
+                        },
+                        "cfnType": "AWS::SNS::Subscription",
+                        "children": {
+                          "Resource": {
+                            "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerNotificationTopic5CB7C8E7",
+                            "attributes": {
+                              "aws:cdk:cloudformation:props": {
+                                "endpoint": {
+                                  "Fn::GetAtt": [
+                                    "NotificationConstructLineNotificationHandlerDE43E93A",
+                                    "Arn"
+                                  ]
+                                },
+                                "protocol": "lambda",
+                                "topicArn": {
+                                  "Ref": "NotificationConstructNotificationTopic211862B9"
+                                }
+                              }
+                            },
+                            "flags": [
+                              "CFN_FQN"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerNotificationTopicDD70F785",
+                            "id": "Resource",
+                            "path": "AwsCostNotificationStack/NotificationConstruct/LineNotificationHandler/NotificationTopic/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_sns.CfnSubscription",
+                              "version": "2.138.0"
+                            },
+                            "logicalId": "NotificationConstructLineNotificationHandlerNotificationTopic5175975F",
+                            "cfnType": "AWS::SNS::Subscription",
+                            "edges": [
+                              "ATT:p52mP",
+                              "REF:1sK84I"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "CostNotificationConstruct": {
+                "uuid": "AwsCostNotificationStackCostNotificationConstruct747E3D73",
+                "nodeType": "DEFAULT",
+                "stack": "AwsCostNotificationStack",
+                "parent": "AwsCostNotificationStack",
+                "id": "CostNotificationConstruct",
+                "path": "AwsCostNotificationStack/CostNotificationConstruct",
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.3.0"
+                },
+                "children": {
+                  "CostNotificationHandlerRole": {
+                    "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRole35776100",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackCostNotificationConstruct747E3D73",
+                    "id": "CostNotificationHandlerRole",
+                    "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandlerRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::IAM::Role",
+                    "children": {
+                      "ImportCostNotificationHandlerRole": {
+                        "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRoleImportCostNotificationHandlerRole30418F0B",
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRole35776100",
+                        "id": "ImportCostNotificationHandlerRole",
+                        "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandlerRole/ImportCostNotificationHandlerRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.138.0"
+                        }
+                      },
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRole4D580FC9",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRole35776100",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandlerRole/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "CostNotificationConstructCostNotificationHandlerRole20AF0D04",
+                        "cfnType": "AWS::IAM::Role"
+                      },
+                      "DefaultPolicy": {
+                        "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRoleDefaultPolicy5A9E7BF5",
+                        "flags": [
+                          "CDK_OWNED"
+                        ],
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRole35776100",
+                        "id": "DefaultPolicy",
+                        "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandlerRole/DefaultPolicy",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.138.0"
+                        },
+                        "cfnType": "AWS::IAM::Policy",
+                        "children": {
+                          "Resource": {
+                            "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRoleDefaultPolicyC34DB51B",
+                            "attributes": {
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "ce:GetCostAndUsage",
+                                        "ce:GetCostForecast"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              "arn:aws:ce:us-east-1:",
+                                              {
+                                                "Ref": "AWS::AccountId"
+                                              },
+                                              ":/GetCostAndUsage"
+                                            ]
+                                          ]
+                                        },
+                                        {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              "arn:aws:ce:us-east-1:",
+                                              {
+                                                "Ref": "AWS::AccountId"
+                                              },
+                                              ":/GetCostForecast"
+                                            ]
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "Action": "sns:Publish",
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Ref": "NotificationConstructNotificationTopic211862B9"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "CostNotificationConstructCostNotificationHandlerRoleDefaultPolicyA88B4198",
+                                "roles": [
+                                  {
+                                    "Ref": "CostNotificationConstructCostNotificationHandlerRole20AF0D04"
+                                  }
+                                ]
+                              }
+                            },
+                            "flags": [
+                              "CFN_FQN"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRoleDefaultPolicy5A9E7BF5",
+                            "id": "Resource",
+                            "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandlerRole/DefaultPolicy/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.138.0"
+                            },
+                            "logicalId": "CostNotificationConstructCostNotificationHandlerRoleDefaultPolicyA88B4198",
+                            "cfnType": "AWS::IAM::Policy",
+                            "edges": [
+                              "REF:N0HoW",
+                              "REF:Zw9K8A"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "CostNotificationHandlerLogGroup": {
+                    "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerLogGroup8D0DBA56",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackCostNotificationConstruct747E3D73",
+                    "id": "CostNotificationHandlerLogGroup",
+                    "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandlerLogGroup",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::Logs::LogGroup",
+                    "children": {
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerLogGroup7A3E9E4D",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {}
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerLogGroup8D0DBA56",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandlerLogGroup/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "CostNotificationConstructCostNotificationHandlerLogGroupB282C170",
+                        "cfnType": "AWS::Logs::LogGroup"
+                      }
+                    }
+                  },
+                  "CostNotificationHandler": {
+                    "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandler27FC24C8",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackCostNotificationConstruct747E3D73",
+                    "id": "CostNotificationHandler",
+                    "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandler",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda_nodejs.NodejsFunction",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::Lambda::Function",
+                    "children": {
+                      "Code": {
+                        "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerCodeCBC90CC3",
+                        "flags": [
+                          "EXTRANEOUS",
+                          "ASSET"
+                        ],
+                        "nodeType": "DEFAULT",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandler27FC24C8",
+                        "id": "Code",
+                        "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandler/Code",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.138.0"
+                        },
+                        "children": {
+                          "Stage": {
+                            "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerCodeStageF20D8244",
+                            "flags": [
+                              "EXTRANEOUS"
+                            ],
+                            "nodeType": "DEFAULT",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerCodeCBC90CC3",
+                            "id": "Stage",
+                            "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandler/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.138.0"
+                            }
+                          },
+                          "AssetBucket": {
+                            "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerCodeAssetBucketB09DB8A9",
+                            "attributes": {
+                              "graph:cfn-resource:import-arn-token": "ImportArn-Z1Hbg8U"
+                            },
+                            "flags": [
+                              "IMPORT"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerCodeCBC90CC3",
+                            "id": "AssetBucket",
+                            "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandler/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.138.0"
+                            },
+                            "cfnType": "AWS::S3::Bucket"
+                          }
+                        }
+                      },
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerF3229760",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": {
+                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
+                              },
+                              "s3Key": "634daa8a9f11dcb1739f7a367cca2300cb7e029d57844de77400ede1a5a3f1d3.zip"
+                            },
+                            "environment": {
+                              "variables": {
+                                "TZ": "Asia/Tokyo",
+                                "EXCHANGE_RATE_API_KEY": "668799ba00d2a9602bced8935180f246",
+                                "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+                              }
+                            },
+                            "functionName": "AwsCostNotificationStackCostNotificationHandler",
+                            "handler": "index.handler",
+                            "loggingConfig": {
+                              "logGroup": {
+                                "Ref": "CostNotificationConstructCostNotificationHandlerLogGroupB282C170"
+                              }
+                            },
+                            "memorySize": 128,
+                            "role": {
+                              "Fn::GetAtt": [
+                                "CostNotificationConstructCostNotificationHandlerRole20AF0D04",
+                                "Arn"
+                              ]
+                            },
+                            "runtime": "nodejs18.x",
+                            "timeout": 10
+                          }
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandler27FC24C8",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandler/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "CostNotificationConstructCostNotificationHandlerCCAF5D00",
+                        "cfnType": "AWS::Lambda::Function",
+                        "edges": [
+                          "REF:Z2649uh",
+                          "ATT:Zyynvp",
+                          "DEP:E3ugD",
+                          "DEP:23pD5S"
+                        ]
+                      },
+                      "EventInvokeConfig": {
+                        "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerEventInvokeConfig902E4C47",
+                        "flags": [
+                          "CDK_OWNED"
+                        ],
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandler27FC24C8",
+                        "id": "EventInvokeConfig",
+                        "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandler/EventInvokeConfig",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                          "version": "2.138.0"
+                        },
+                        "cfnType": "AWS::Lambda::EventInvokeConfig",
+                        "children": {
+                          "Resource": {
+                            "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerEventInvokeConfig98B7312E",
+                            "attributes": {
+                              "aws:cdk:cloudformation:props": {
+                                "destinationConfig": {
+                                  "onFailure": {
+                                    "destination": {
+                                      "Ref": "NotificationConstructNotificationTopic211862B9"
+                                    }
+                                  },
+                                  "onSuccess": {
+                                    "destination": {
+                                      "Ref": "NotificationConstructNotificationTopic211862B9"
+                                    }
+                                  }
+                                },
+                                "functionName": {
+                                  "Ref": "CostNotificationConstructCostNotificationHandlerCCAF5D00"
+                                },
+                                "qualifier": "$LATEST"
+                              }
+                            },
+                            "flags": [
+                              "CFN_FQN"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerEventInvokeConfig902E4C47",
+                            "id": "Resource",
+                            "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationHandler/EventInvokeConfig/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                              "version": "2.138.0"
+                            },
+                            "logicalId": "CostNotificationConstructCostNotificationHandlerEventInvokeConfig6045F766",
+                            "cfnType": "AWS::Lambda::EventInvokeConfig",
+                            "edges": [
+                              "REF:Z21XBO9",
+                              "REF:2eFv7J"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "CostNotificationSchedulerRole": {
+                    "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRole841D1ACA",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackCostNotificationConstruct747E3D73",
+                    "id": "CostNotificationSchedulerRole",
+                    "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationSchedulerRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::IAM::Role",
+                    "children": {
+                      "ImportCostNotificationSchedulerRole": {
+                        "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRoleImportCostNotificationSchedulerRole59D529B9",
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRole841D1ACA",
+                        "id": "ImportCostNotificationSchedulerRole",
+                        "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationSchedulerRole/ImportCostNotificationSchedulerRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.138.0"
+                        }
+                      },
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRole02014023",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "scheduler.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRole841D1ACA",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationSchedulerRole/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "CostNotificationConstructCostNotificationSchedulerRoleE682387F",
+                        "cfnType": "AWS::IAM::Role"
+                      },
+                      "DefaultPolicy": {
+                        "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRoleDefaultPolicy588F6D16",
+                        "flags": [
+                          "CDK_OWNED"
+                        ],
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRole841D1ACA",
+                        "id": "DefaultPolicy",
+                        "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationSchedulerRole/DefaultPolicy",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.138.0"
+                        },
+                        "cfnType": "AWS::IAM::Policy",
+                        "children": {
+                          "Resource": {
+                            "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRoleDefaultPolicy72E78BFB",
+                            "attributes": {
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "lambda:InvokeFunction",
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Fn::GetAtt": [
+                                          "CostNotificationConstructCostNotificationHandlerCCAF5D00",
+                                          "Arn"
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "CostNotificationConstructCostNotificationSchedulerRoleDefaultPolicy00FB7A8E",
+                                "roles": [
+                                  {
+                                    "Ref": "CostNotificationConstructCostNotificationSchedulerRoleE682387F"
+                                  }
+                                ]
+                              }
+                            },
+                            "flags": [
+                              "CFN_FQN"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRoleDefaultPolicy588F6D16",
+                            "id": "Resource",
+                            "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationSchedulerRole/DefaultPolicy/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.138.0"
+                            },
+                            "logicalId": "CostNotificationConstructCostNotificationSchedulerRoleDefaultPolicy00FB7A8E",
+                            "cfnType": "AWS::IAM::Policy",
+                            "edges": [
+                              "ATT:ZKkxEf",
+                              "REF:ZpxhoB"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "CostNotificationSchedule": {
+                    "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedule180EBB03",
+                    "attributes": {
+                      "aws:cdk:cloudformation:props": {
+                        "flexibleTimeWindow": {
+                          "mode": "OFF"
+                        },
+                        "name": "AwsCostNotificationStackCostNotificationSchedule",
+                        "scheduleExpression": "cron(0 10 ? * 2 *)",
+                        "scheduleExpressionTimezone": "Asia/Tokyo",
+                        "target": {
+                          "arn": {
+                            "Fn::GetAtt": [
+                              "CostNotificationConstructCostNotificationHandlerCCAF5D00",
+                              "Arn"
+                            ]
+                          },
+                          "roleArn": {
+                            "Fn::GetAtt": [
+                              "CostNotificationConstructCostNotificationSchedulerRoleE682387F",
+                              "Arn"
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "flags": [
+                      "CFN_FQN"
+                    ],
+                    "nodeType": "CFN_RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackCostNotificationConstruct747E3D73",
+                    "id": "CostNotificationSchedule",
+                    "path": "AwsCostNotificationStack/CostNotificationConstruct/CostNotificationSchedule",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_scheduler.CfnSchedule",
+                      "version": "2.138.0"
+                    },
+                    "logicalId": "CostNotificationConstructCostNotificationScheduleEEF3B607",
+                    "cfnType": "AWS::Scheduler::Schedule",
+                    "edges": [
+                      "ATT:1men67",
+                      "ATT:Ltg5K"
+                    ]
+                  }
+                }
+              },
+              "BudgetAlartConstruct": {
+                "uuid": "AwsCostNotificationStackBudgetAlartConstruct52BECA83",
+                "nodeType": "DEFAULT",
+                "stack": "AwsCostNotificationStack",
+                "parent": "AwsCostNotificationStack",
+                "id": "BudgetAlartConstruct",
+                "path": "AwsCostNotificationStack/BudgetAlartConstruct",
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.3.0"
+                },
+                "children": {
+                  "BudgetAlartTopicLoggingRole": {
+                    "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleA0C64335",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackBudgetAlartConstruct52BECA83",
+                    "id": "BudgetAlartTopicLoggingRole",
+                    "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartTopicLoggingRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::IAM::Role",
+                    "children": {
+                      "ImportBudgetAlartTopicLoggingRole": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleImportBudgetAlartTopicLoggingRole5929A578",
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleA0C64335",
+                        "id": "ImportBudgetAlartTopicLoggingRole",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartTopicLoggingRole/ImportBudgetAlartTopicLoggingRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.138.0"
+                        }
+                      },
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleF52C9DAA",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "sns.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleA0C64335",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartTopicLoggingRole/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "BudgetAlartConstructBudgetAlartTopicLoggingRole870C03D2",
+                        "cfnType": "AWS::IAM::Role"
+                      },
+                      "DefaultPolicy": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleDefaultPolicyE615FC04",
+                        "flags": [
+                          "CDK_OWNED"
+                        ],
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleA0C64335",
+                        "id": "DefaultPolicy",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartTopicLoggingRole/DefaultPolicy",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.138.0"
+                        },
+                        "cfnType": "AWS::IAM::Policy",
+                        "children": {
+                          "Resource": {
+                            "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleDefaultPolicy5322BE5B",
+                            "attributes": {
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "logs:CreateLogGroup",
+                                        "logs:CreateLogStream",
+                                        "logs:PutLogEvents",
+                                        "logs:PutMetricFilter",
+                                        "logs:PutRetentionPolicy"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "BudgetAlartConstructBudgetAlartTopicLoggingRoleDefaultPolicyB0F4D9E5",
+                                "roles": [
+                                  {
+                                    "Ref": "BudgetAlartConstructBudgetAlartTopicLoggingRole870C03D2"
+                                  }
+                                ]
+                              }
+                            },
+                            "flags": [
+                              "CFN_FQN"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleDefaultPolicyE615FC04",
+                            "id": "Resource",
+                            "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartTopicLoggingRole/DefaultPolicy/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.138.0"
+                            },
+                            "logicalId": "BudgetAlartConstructBudgetAlartTopicLoggingRoleDefaultPolicyB0F4D9E5",
+                            "cfnType": "AWS::IAM::Policy",
+                            "edges": [
+                              "REF:ZINCQM"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "BudgetAlartTopic": {
+                    "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF1",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackBudgetAlartConstruct52BECA83",
+                    "id": "BudgetAlartTopic",
+                    "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartTopic",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_sns.Topic",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::SNS::Topic",
+                    "children": {
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicE9C970B6",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "deliveryStatusLogging": [
+                              {
+                                "protocol": "lambda",
+                                "failureFeedbackRoleArn": {
+                                  "Fn::GetAtt": [
+                                    "BudgetAlartConstructBudgetAlartTopicLoggingRole870C03D2",
+                                    "Arn"
+                                  ]
+                                },
+                                "successFeedbackRoleArn": {
+                                  "Fn::GetAtt": [
+                                    "BudgetAlartConstructBudgetAlartTopicLoggingRole870C03D2",
+                                    "Arn"
+                                  ]
+                                },
+                                "successFeedbackSampleRate": "100"
+                              }
+                            ],
+                            "displayName": "AwsCostNotificationStackBudgetAlartTopic",
+                            "topicName": "AwsCostNotificationStackBudgetAlartTopic"
+                          }
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF1",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartTopic/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_sns.CfnTopic",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "BudgetAlartConstructBudgetAlartTopicCDCEEA28",
+                        "cfnType": "AWS::SNS::Topic",
+                        "edges": [
+                          "ATT:ZaVeYL"
+                        ]
+                      },
+                      "Policy": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicPolicy90594DFA",
+                        "flags": [
+                          "CDK_OWNED"
+                        ],
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF1",
+                        "id": "Policy",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartTopic/Policy",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_sns.TopicPolicy",
+                          "version": "2.138.0"
+                        },
+                        "cfnType": "AWS::SNS::TopicPolicy",
+                        "children": {
+                          "Resource": {
+                            "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicPolicy3DCBD3F4",
+                            "attributes": {
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "SNS:AddPermission",
+                                        "SNS:DeleteTopic",
+                                        "SNS:GetTopicAttributes",
+                                        "SNS:ListSubscriptionsByTopic",
+                                        "SNS:Publish",
+                                        "SNS:Receive",
+                                        "SNS:RemovePermission",
+                                        "SNS:SetTopicAttributes",
+                                        "SNS:Subscribe"
+                                      ],
+                                      "Condition": {
+                                        "StringEquals": {
+                                          "AWS:SourceOwner": {
+                                            "Ref": "AWS::AccountId"
+                                          }
+                                        }
+                                      },
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "AWS": "*"
+                                      },
+                                      "Resource": {
+                                        "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+                                      },
+                                      "Sid": "0"
+                                    },
+                                    {
+                                      "Action": "sns:Publish",
+                                      "Condition": {
+                                        "Bool": {
+                                          "aws:SecureTransport": "false"
+                                        }
+                                      },
+                                      "Effect": "Deny",
+                                      "Principal": "*",
+                                      "Resource": {
+                                        "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+                                      },
+                                      "Sid": "AllowPublishThroughSSLOnly"
+                                    },
+                                    {
+                                      "Action": "SNS:Publish",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "budgets.amazonaws.com"
+                                      },
+                                      "Resource": {
+                                        "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+                                      },
+                                      "Sid": "2"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "topics": [
+                                  {
+                                    "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+                                  }
+                                ]
+                              }
+                            },
+                            "flags": [
+                              "CFN_FQN"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicPolicy90594DFA",
+                            "id": "Resource",
+                            "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartTopic/Policy/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_sns.CfnTopicPolicy",
+                              "version": "2.138.0"
+                            },
+                            "logicalId": "BudgetAlartConstructBudgetAlartTopicPolicyB18977E7",
+                            "cfnType": "AWS::SNS::TopicPolicy",
+                            "edges": [
+                              "REF:Z26inbD"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "BudgetAlartHandlerRole": {
+                    "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRole4F4FB8A4",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackBudgetAlartConstruct52BECA83",
+                    "id": "BudgetAlartHandlerRole",
+                    "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandlerRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::IAM::Role",
+                    "children": {
+                      "ImportBudgetAlartHandlerRole": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRoleImportBudgetAlartHandlerRole4938C2CA",
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRole4F4FB8A4",
+                        "id": "ImportBudgetAlartHandlerRole",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandlerRole/ImportBudgetAlartHandlerRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.138.0"
+                        }
+                      },
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRoleD3789E67",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRole4F4FB8A4",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandlerRole/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "BudgetAlartConstructBudgetAlartHandlerRole3AD4F998",
+                        "cfnType": "AWS::IAM::Role"
+                      },
+                      "DefaultPolicy": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRoleDefaultPolicy8449EC65",
+                        "flags": [
+                          "CDK_OWNED"
+                        ],
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRole4F4FB8A4",
+                        "id": "DefaultPolicy",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandlerRole/DefaultPolicy",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.138.0"
+                        },
+                        "cfnType": "AWS::IAM::Policy",
+                        "children": {
+                          "Resource": {
+                            "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRoleDefaultPolicy8C12DA4E",
+                            "attributes": {
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sns:Publish",
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Ref": "NotificationConstructNotificationTopic211862B9"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "BudgetAlartConstructBudgetAlartHandlerRoleDefaultPolicy8C8EB4A8",
+                                "roles": [
+                                  {
+                                    "Ref": "BudgetAlartConstructBudgetAlartHandlerRole3AD4F998"
+                                  }
+                                ]
+                              }
+                            },
+                            "flags": [
+                              "CFN_FQN"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRoleDefaultPolicy8449EC65",
+                            "id": "Resource",
+                            "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandlerRole/DefaultPolicy/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.138.0"
+                            },
+                            "logicalId": "BudgetAlartConstructBudgetAlartHandlerRoleDefaultPolicy8C8EB4A8",
+                            "cfnType": "AWS::IAM::Policy",
+                            "edges": [
+                              "REF:ZgY8HV",
+                              "REF:ZMSrUz"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "BudgetAlartHandlerLogGroup": {
+                    "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerLogGroup2329B984",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackBudgetAlartConstruct52BECA83",
+                    "id": "BudgetAlartHandlerLogGroup",
+                    "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandlerLogGroup",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_logs.LogGroup",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::Logs::LogGroup",
+                    "children": {
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerLogGroupE56C2A9D",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {}
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerLogGroup2329B984",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandlerLogGroup/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.CfnLogGroup",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "BudgetAlartConstructBudgetAlartHandlerLogGroup7D1272DB",
+                        "cfnType": "AWS::Logs::LogGroup"
+                      }
+                    }
+                  },
+                  "BudgetAlartHandler": {
+                    "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerB8203F26",
+                    "flags": [
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackBudgetAlartConstruct52BECA83",
+                    "id": "BudgetAlartHandler",
+                    "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandler",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda_nodejs.NodejsFunction",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::Lambda::Function",
+                    "children": {
+                      "Code": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerCodeB06D25EC",
+                        "flags": [
+                          "EXTRANEOUS",
+                          "ASSET"
+                        ],
+                        "nodeType": "DEFAULT",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerB8203F26",
+                        "id": "Code",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandler/Code",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.138.0"
+                        },
+                        "children": {
+                          "Stage": {
+                            "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerCodeStage242DF008",
+                            "flags": [
+                              "EXTRANEOUS"
+                            ],
+                            "nodeType": "DEFAULT",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerCodeB06D25EC",
+                            "id": "Stage",
+                            "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandler/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.138.0"
+                            }
+                          },
+                          "AssetBucket": {
+                            "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerCodeAssetBucket08F72333",
+                            "attributes": {
+                              "graph:cfn-resource:import-arn-token": "ImportArn-Z1Hbg8U"
+                            },
+                            "flags": [
+                              "IMPORT"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerCodeB06D25EC",
+                            "id": "AssetBucket",
+                            "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandler/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.138.0"
+                            },
+                            "cfnType": "AWS::S3::Bucket"
+                          }
+                        }
+                      },
+                      "Resource": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEBE75595",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": {
+                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
+                              },
+                              "s3Key": "191583fecd6d58ae07bdc48cb29f34770556ac3e1ef0e486b472fbcd5ddc85d7.zip"
+                            },
+                            "environment": {
+                              "variables": {
+                                "TZ": "Asia/Tokyo",
+                                "EXCHANGE_RATE_API_KEY": "668799ba00d2a9602bced8935180f246",
+                                "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+                              }
+                            },
+                            "functionName": "AwsCostNotificationStackBudgetAlartHandler",
+                            "handler": "index.handler",
+                            "loggingConfig": {
+                              "logGroup": {
+                                "Ref": "BudgetAlartConstructBudgetAlartHandlerLogGroup7D1272DB"
+                              }
+                            },
+                            "memorySize": 128,
+                            "role": {
+                              "Fn::GetAtt": [
+                                "BudgetAlartConstructBudgetAlartHandlerRole3AD4F998",
+                                "Arn"
+                              ]
+                            },
+                            "runtime": "nodejs18.x",
+                            "timeout": 10
+                          }
+                        },
+                        "flags": [
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerB8203F26",
+                        "id": "Resource",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandler/Resource",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "BudgetAlartConstructBudgetAlartHandlerC771814E",
+                        "cfnType": "AWS::Lambda::Function",
+                        "edges": [
+                          "REF:gpvem",
+                          "ATT:1uFQbJ",
+                          "DEP:Z2f14E2",
+                          "DEP:ZnkM8N"
+                        ]
+                      },
+                      "AllowInvoke:AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF1": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerAllowInvokeAwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF11DA2E0E2",
+                        "attributes": {
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "BudgetAlartConstructBudgetAlartHandlerC771814E",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "sns.amazonaws.com",
+                            "sourceArn": {
+                              "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+                            }
+                          }
+                        },
+                        "flags": [
+                          "EXTRANEOUS",
+                          "CFN_FQN"
+                        ],
+                        "nodeType": "CFN_RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerB8203F26",
+                        "id": "AllowInvoke:AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF1",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandler/AllowInvoke:AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF1",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "BudgetAlartConstructBudgetAlartHandlerAllowInvokeAwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF1518FFB11",
+                        "cfnType": "AWS::Lambda::Permission",
+                        "edges": [
+                          "ATT:SVzIR",
+                          "REF:cNB8J"
+                        ]
+                      },
+                      "BudgetAlartTopic": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerBudgetAlartTopic2E35F39E",
+                        "flags": [
+                          "CDK_OWNED"
+                        ],
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerB8203F26",
+                        "id": "BudgetAlartTopic",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandler/BudgetAlartTopic",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_sns.Subscription",
+                          "version": "2.138.0"
+                        },
+                        "cfnType": "AWS::SNS::Subscription",
+                        "children": {
+                          "Resource": {
+                            "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerBudgetAlartTopicFF0CAE1B",
+                            "attributes": {
+                              "aws:cdk:cloudformation:props": {
+                                "endpoint": {
+                                  "Fn::GetAtt": [
+                                    "BudgetAlartConstructBudgetAlartHandlerC771814E",
+                                    "Arn"
+                                  ]
+                                },
+                                "protocol": "lambda",
+                                "topicArn": {
+                                  "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+                                }
+                              }
+                            },
+                            "flags": [
+                              "CFN_FQN"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerBudgetAlartTopic2E35F39E",
+                            "id": "Resource",
+                            "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandler/BudgetAlartTopic/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_sns.CfnSubscription",
+                              "version": "2.138.0"
+                            },
+                            "logicalId": "BudgetAlartConstructBudgetAlartHandlerBudgetAlartTopic7F21034C",
+                            "cfnType": "AWS::SNS::Subscription",
+                            "edges": [
+                              "ATT:Z1kRTQO",
+                              "REF:Ze6s4P"
+                            ]
+                          }
+                        }
+                      },
+                      "EventInvokeConfig": {
+                        "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEventInvokeConfigB251D299",
+                        "flags": [
+                          "CDK_OWNED"
+                        ],
+                        "nodeType": "RESOURCE",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerB8203F26",
+                        "id": "EventInvokeConfig",
+                        "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandler/EventInvokeConfig",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.EventInvokeConfig",
+                          "version": "2.138.0"
+                        },
+                        "cfnType": "AWS::Lambda::EventInvokeConfig",
+                        "children": {
+                          "Resource": {
+                            "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEventInvokeConfig8B29DA02",
+                            "attributes": {
+                              "aws:cdk:cloudformation:props": {
+                                "destinationConfig": {
+                                  "onFailure": {
+                                    "destination": {
+                                      "Ref": "NotificationConstructNotificationTopic211862B9"
+                                    }
+                                  },
+                                  "onSuccess": {
+                                    "destination": {
+                                      "Ref": "NotificationConstructNotificationTopic211862B9"
+                                    }
+                                  }
+                                },
+                                "functionName": {
+                                  "Ref": "BudgetAlartConstructBudgetAlartHandlerC771814E"
+                                },
+                                "qualifier": "$LATEST"
+                              }
+                            },
+                            "flags": [
+                              "CFN_FQN"
+                            ],
+                            "nodeType": "CFN_RESOURCE",
+                            "stack": "AwsCostNotificationStack",
+                            "parent": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEventInvokeConfigB251D299",
+                            "id": "Resource",
+                            "path": "AwsCostNotificationStack/BudgetAlartConstruct/BudgetAlartHandler/EventInvokeConfig/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnEventInvokeConfig",
+                              "version": "2.138.0"
+                            },
+                            "logicalId": "BudgetAlartConstructBudgetAlartHandlerEventInvokeConfig1EC94A04",
+                            "cfnType": "AWS::Lambda::EventInvokeConfig",
+                            "edges": [
+                              "REF:ZtdAWH",
+                              "REF:UECHu"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "MonthlyCostBudget": {
+                    "uuid": "AwsCostNotificationStackBudgetAlartConstructMonthlyCostBudgetBEA9CF61",
+                    "attributes": {
+                      "aws:cdk:cloudformation:props": {
+                        "budget": {
+                          "budgetName": "AwsCostNotificationStack-MonthlyCostBudget",
+                          "budgetType": "COST",
+                          "timeUnit": "MONTHLY",
+                          "budgetLimit": {
+                            "amount": 4,
+                            "unit": "USD"
+                          }
+                        },
+                        "notificationsWithSubscribers": [
+                          {
+                            "notification": {
+                              "notificationType": "ACTUAL",
+                              "comparisonOperator": "GREATER_THAN",
+                              "threshold": 50,
+                              "thresholdType": "PERCENTAGE"
+                            },
+                            "subscribers": [
+                              {
+                                "subscriptionType": "SNS",
+                                "address": {
+                                  "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "notification": {
+                              "notificationType": "FORECASTED",
+                              "comparisonOperator": "GREATER_THAN",
+                              "threshold": 80,
+                              "thresholdType": "PERCENTAGE"
+                            },
+                            "subscribers": [
+                              {
+                                "subscriptionType": "SNS",
+                                "address": {
+                                  "Ref": "BudgetAlartConstructBudgetAlartTopicCDCEEA28"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "flags": [
+                      "CFN_FQN"
+                    ],
+                    "nodeType": "CFN_RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackBudgetAlartConstruct52BECA83",
+                    "id": "MonthlyCostBudget",
+                    "path": "AwsCostNotificationStack/BudgetAlartConstruct/MonthlyCostBudget",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_budgets.CfnBudget",
+                      "version": "2.138.0"
+                    },
+                    "logicalId": "BudgetAlartConstructMonthlyCostBudgetDA307CF9",
+                    "cfnType": "AWS::Budgets::Budget",
+                    "edges": [
+                      "REF:ZUpkKh"
+                    ]
+                  }
+                }
+              },
+              "ExportsWriteruseast10F67B507": {
+                "uuid": "AwsCostNotificationStackExportsWriteruseast10F67B5071EC7A56B",
+                "nodeType": "DEFAULT",
+                "stack": "AwsCostNotificationStack",
+                "parent": "AwsCostNotificationStack",
+                "id": "ExportsWriteruseast10F67B507",
+                "path": "AwsCostNotificationStack/ExportsWriteruseast10F67B507",
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.3.0"
+                },
+                "children": {
+                  "Resource": {
+                    "uuid": "AwsCostNotificationStackExportsWriteruseast10F67B50758E72D2E",
+                    "flags": [
+                      "CUSTOM_RESOURCE",
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackExportsWriteruseast10F67B5071EC7A56B",
+                    "id": "Resource",
+                    "path": "AwsCostNotificationStack/ExportsWriteruseast10F67B507/Resource",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CustomResource",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::CloudFormation::CustomResource",
+                    "children": {
+                      "Default": {
+                        "uuid": "AwsCostNotificationStackExportsWriteruseast10F67B50758E72D2E",
+                        "nodeType": "DEFAULT",
+                        "stack": "AwsCostNotificationStack",
+                        "parent": "AwsCostNotificationStackExportsWriteruseast10F67B50758E72D2E",
+                        "id": "Default",
+                        "path": "AwsCostNotificationStack/ExportsWriteruseast10F67B507/Resource/Default",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CfnResource",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "ExportsWriteruseast10F67B507DDE2E818"
+                      }
+                    }
+                  }
+                }
+              },
+              "Custom::CrossRegionExportWriterCustomResourceProvider": {
+                "uuid": "AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderC091448B",
+                "nodeType": "DEFAULT",
+                "stack": "AwsCostNotificationStack",
+                "parent": "AwsCostNotificationStack",
+                "id": "Custom::CrossRegionExportWriterCustomResourceProvider",
+                "path": "AwsCostNotificationStack/Custom::CrossRegionExportWriterCustomResourceProvider",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResourceProviderBase",
+                  "version": "2.138.0"
+                },
+                "children": {
+                  "Staging": {
+                    "uuid": "AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderStagingDEC4AA2E",
+                    "flags": [
+                      "EXTRANEOUS"
+                    ],
+                    "nodeType": "DEFAULT",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderC091448B",
+                    "id": "Staging",
+                    "path": "AwsCostNotificationStack/Custom::CrossRegionExportWriterCustomResourceProvider/Staging",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.138.0"
+                    }
+                  },
+                  "Role": {
+                    "uuid": "AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderRole910A6ECD",
+                    "nodeType": "DEFAULT",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderC091448B",
+                    "id": "Role",
+                    "path": "AwsCostNotificationStack/Custom::CrossRegionExportWriterCustomResourceProvider/Role",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.138.0"
+                    },
+                    "logicalId": "CustomCrossRegionExportWriterCustomResourceProviderRoleC951B1E1"
+                  },
+                  "Handler": {
+                    "uuid": "AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderHandler9DDB6460",
+                    "nodeType": "DEFAULT",
+                    "stack": "AwsCostNotificationStack",
+                    "parent": "AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderC091448B",
+                    "id": "Handler",
+                    "path": "AwsCostNotificationStack/Custom::CrossRegionExportWriterCustomResourceProvider/Handler",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.138.0"
+                    },
+                    "logicalId": "CustomCrossRegionExportWriterCustomResourceProviderHandlerD8786E8A",
+                    "edges": [
+                      "DEP:KHpgK"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "AwsCostAnomalyNotificationStack": {
+            "uuid": "AwsCostAnomalyNotificationStack",
+            "flags": [
+              "CLUSTER"
+            ],
+            "nodeType": "STACK",
+            "stack": "AwsCostAnomalyNotificationStack",
+            "parent": "App",
+            "id": "AwsCostAnomalyNotificationStack",
+            "path": "AwsCostAnomalyNotificationStack",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Stack",
+              "version": "2.138.0"
+            },
+            "children": {
+              "AnomalyServicesMonitor": {
+                "uuid": "AwsCostAnomalyNotificationStackAnomalyServicesMonitorB7ABB81E",
+                "attributes": {
+                  "aws:cdk:cloudformation:props": {
+                    "monitorDimension": "SERVICE",
+                    "monitorName": "AnomalyServicesMonitor",
+                    "monitorType": "DIMENSIONAL"
+                  }
+                },
+                "flags": [
+                  "CFN_FQN"
+                ],
+                "nodeType": "CFN_RESOURCE",
+                "stack": "AwsCostAnomalyNotificationStack",
+                "parent": "AwsCostAnomalyNotificationStack",
+                "id": "AnomalyServicesMonitor",
+                "path": "AwsCostAnomalyNotificationStack/AnomalyServicesMonitor",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ce.CfnAnomalyMonitor",
+                  "version": "2.138.0"
+                },
+                "logicalId": "AnomalyServicesMonitor",
+                "cfnType": "AWS::CE::AnomalyMonitor"
+              },
+              "ServicesAnomalySubscription": {
+                "uuid": "AwsCostAnomalyNotificationStackServicesAnomalySubscription3DE2000C",
+                "attributes": {
+                  "aws:cdk:cloudformation:props": {
+                    "frequency": "IMMEDIATE",
+                    "monitorArnList": [
+                      {
+                        "Ref": "AnomalyServicesMonitor"
+                      }
+                    ],
+                    "subscribers": [
+                      {
+                        "type": "SNS",
+                        "address": {
+                          "Fn::GetAtt": [
+                            "ExportsReader8B249524",
+                            "/cdk/exports/AwsCostAnomalyNotificationStack/AwsCostNotificationStackapnortheast1RefNotificationConstructNotificationTopic211862B908A7AB56"
+                          ]
+                        },
+                        "status": "CONFIRMED"
+                      }
+                    ],
+                    "subscriptionName": "ServicesAnomalySubscription",
+                    "threshold": 1
+                  }
+                },
+                "flags": [
+                  "CFN_FQN"
+                ],
+                "nodeType": "CFN_RESOURCE",
+                "stack": "AwsCostAnomalyNotificationStack",
+                "parent": "AwsCostAnomalyNotificationStack",
+                "id": "ServicesAnomalySubscription",
+                "path": "AwsCostAnomalyNotificationStack/ServicesAnomalySubscription",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ce.CfnAnomalySubscription",
+                  "version": "2.138.0"
+                },
+                "logicalId": "ServicesAnomalySubscription",
+                "cfnType": "AWS::CE::AnomalySubscription",
+                "edges": [
+                  "REF:TH8zB",
+                  "ATT:1ffBsK"
+                ]
+              },
+              "ExportsReader": {
+                "uuid": "AwsCostAnomalyNotificationStackExportsReader2C9E177C",
+                "nodeType": "DEFAULT",
+                "stack": "AwsCostAnomalyNotificationStack",
+                "parent": "AwsCostAnomalyNotificationStack",
+                "id": "ExportsReader",
+                "path": "AwsCostAnomalyNotificationStack/ExportsReader",
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.3.0"
+                },
+                "children": {
+                  "Resource": {
+                    "uuid": "AwsCostAnomalyNotificationStackExportsReaderC69D869D",
+                    "flags": [
+                      "CUSTOM_RESOURCE",
+                      "CDK_OWNED"
+                    ],
+                    "nodeType": "RESOURCE",
+                    "stack": "AwsCostAnomalyNotificationStack",
+                    "parent": "AwsCostAnomalyNotificationStackExportsReader2C9E177C",
+                    "id": "Resource",
+                    "path": "AwsCostAnomalyNotificationStack/ExportsReader/Resource",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CustomResource",
+                      "version": "2.138.0"
+                    },
+                    "cfnType": "AWS::CloudFormation::CustomResource",
+                    "children": {
+                      "Default": {
+                        "uuid": "AwsCostAnomalyNotificationStackExportsReaderC69D869D",
+                        "nodeType": "DEFAULT",
+                        "stack": "AwsCostAnomalyNotificationStack",
+                        "parent": "AwsCostAnomalyNotificationStackExportsReaderC69D869D",
+                        "id": "Default",
+                        "path": "AwsCostAnomalyNotificationStack/ExportsReader/Resource/Default",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.CfnResource",
+                          "version": "2.138.0"
+                        },
+                        "logicalId": "ExportsReader8B249524"
+                      }
+                    }
+                  }
+                }
+              },
+              "Custom::CrossRegionExportReaderCustomResourceProvider": {
+                "uuid": "AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProvider8E76D8D9",
+                "nodeType": "DEFAULT",
+                "stack": "AwsCostAnomalyNotificationStack",
+                "parent": "AwsCostAnomalyNotificationStack",
+                "id": "Custom::CrossRegionExportReaderCustomResourceProvider",
+                "path": "AwsCostAnomalyNotificationStack/Custom::CrossRegionExportReaderCustomResourceProvider",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResourceProviderBase",
+                  "version": "2.138.0"
+                },
+                "children": {
+                  "Staging": {
+                    "uuid": "AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProviderStaging095E8002",
+                    "flags": [
+                      "EXTRANEOUS"
+                    ],
+                    "nodeType": "DEFAULT",
+                    "stack": "AwsCostAnomalyNotificationStack",
+                    "parent": "AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProvider8E76D8D9",
+                    "id": "Staging",
+                    "path": "AwsCostAnomalyNotificationStack/Custom::CrossRegionExportReaderCustomResourceProvider/Staging",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.138.0"
+                    }
+                  },
+                  "Role": {
+                    "uuid": "AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProviderRole91B8A6E1",
+                    "nodeType": "DEFAULT",
+                    "stack": "AwsCostAnomalyNotificationStack",
+                    "parent": "AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProvider8E76D8D9",
+                    "id": "Role",
+                    "path": "AwsCostAnomalyNotificationStack/Custom::CrossRegionExportReaderCustomResourceProvider/Role",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.138.0"
+                    },
+                    "logicalId": "CustomCrossRegionExportReaderCustomResourceProviderRole10531BBD"
+                  },
+                  "Handler": {
+                    "uuid": "AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProviderHandlerF51DACFA",
+                    "nodeType": "DEFAULT",
+                    "stack": "AwsCostAnomalyNotificationStack",
+                    "parent": "AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProvider8E76D8D9",
+                    "id": "Handler",
+                    "path": "AwsCostAnomalyNotificationStack/Custom::CrossRegionExportReaderCustomResourceProvider/Handler",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.138.0"
+                    },
+                    "logicalId": "CustomCrossRegionExportReaderCustomResourceProviderHandler46647B68",
+                    "edges": [
+                      "DEP:Z27bmmi"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "edges": [
+    {
+      "uuid": "REF:15eedC",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleDefaultPolicy558E778B",
+      "target": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleB9DB98B1"
+    },
+    {
+      "uuid": "ATT:Z1dUlku",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackNotificationConstructNotificationTopicEC8E76BE",
+      "target": "AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleB9DB98B1"
+    },
+    {
+      "uuid": "REF:t3wen",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackNotificationConstructNotificationTopicPolicyCAB069E7",
+      "target": "AwsCostNotificationStackNotificationConstructNotificationTopicEC8E76BE"
+    },
+    {
+      "uuid": "REF:PMKBu",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerA40EC933",
+      "target": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerLogGroup98C07F95"
+    },
+    {
+      "uuid": "ATT:U46O4",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerA40EC933",
+      "target": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerRole4B4C0DA5"
+    },
+    {
+      "uuid": "ATT:ZnyjpP",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerAllowInvokeAwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A0C17E083",
+      "target": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerA40EC933"
+    },
+    {
+      "uuid": "REF:1PcaTv",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerAllowInvokeAwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A0C17E083",
+      "target": "AwsCostNotificationStackNotificationConstructNotificationTopicEC8E76BE"
+    },
+    {
+      "uuid": "ATT:p52mP",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerNotificationTopic5CB7C8E7",
+      "target": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerA40EC933"
+    },
+    {
+      "uuid": "REF:1sK84I",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerNotificationTopic5CB7C8E7",
+      "target": "AwsCostNotificationStackNotificationConstructNotificationTopicEC8E76BE"
+    },
+    {
+      "uuid": "REF:N0HoW",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRoleDefaultPolicyC34DB51B",
+      "target": "AwsCostNotificationStackNotificationConstructNotificationTopicEC8E76BE"
+    },
+    {
+      "uuid": "REF:Zw9K8A",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRoleDefaultPolicyC34DB51B",
+      "target": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRole4D580FC9"
+    },
+    {
+      "uuid": "REF:Z2649uh",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerF3229760",
+      "target": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerLogGroup7A3E9E4D"
+    },
+    {
+      "uuid": "ATT:Zyynvp",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerF3229760",
+      "target": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRole4D580FC9"
+    },
+    {
+      "uuid": "REF:Z21XBO9",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerEventInvokeConfig98B7312E",
+      "target": "AwsCostNotificationStackNotificationConstructNotificationTopicEC8E76BE"
+    },
+    {
+      "uuid": "REF:2eFv7J",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerEventInvokeConfig98B7312E",
+      "target": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerF3229760"
+    },
+    {
+      "uuid": "ATT:ZKkxEf",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRoleDefaultPolicy72E78BFB",
+      "target": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerF3229760"
+    },
+    {
+      "uuid": "REF:ZpxhoB",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRoleDefaultPolicy72E78BFB",
+      "target": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRole02014023"
+    },
+    {
+      "uuid": "ATT:1men67",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedule180EBB03",
+      "target": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerF3229760"
+    },
+    {
+      "uuid": "ATT:Ltg5K",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedule180EBB03",
+      "target": "AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRole02014023"
+    },
+    {
+      "uuid": "REF:ZINCQM",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleDefaultPolicy5322BE5B",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleF52C9DAA"
+    },
+    {
+      "uuid": "ATT:ZaVeYL",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicE9C970B6",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleF52C9DAA"
+    },
+    {
+      "uuid": "REF:Z26inbD",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicPolicy3DCBD3F4",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicE9C970B6"
+    },
+    {
+      "uuid": "REF:ZgY8HV",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRoleDefaultPolicy8C12DA4E",
+      "target": "AwsCostNotificationStackNotificationConstructNotificationTopicEC8E76BE"
+    },
+    {
+      "uuid": "REF:ZMSrUz",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRoleDefaultPolicy8C12DA4E",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRoleD3789E67"
+    },
+    {
+      "uuid": "REF:gpvem",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEBE75595",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerLogGroupE56C2A9D"
+    },
+    {
+      "uuid": "ATT:1uFQbJ",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEBE75595",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRoleD3789E67"
+    },
+    {
+      "uuid": "ATT:SVzIR",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerAllowInvokeAwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF11DA2E0E2",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEBE75595"
+    },
+    {
+      "uuid": "REF:cNB8J",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerAllowInvokeAwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF11DA2E0E2",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicE9C970B6"
+    },
+    {
+      "uuid": "ATT:Z1kRTQO",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "Arn"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerBudgetAlartTopicFF0CAE1B",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEBE75595"
+    },
+    {
+      "uuid": "REF:Ze6s4P",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerBudgetAlartTopicFF0CAE1B",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicE9C970B6"
+    },
+    {
+      "uuid": "REF:ZtdAWH",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEventInvokeConfig8B29DA02",
+      "target": "AwsCostNotificationStackNotificationConstructNotificationTopicEC8E76BE"
+    },
+    {
+      "uuid": "REF:UECHu",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEventInvokeConfig8B29DA02",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEBE75595"
+    },
+    {
+      "uuid": "REF:ZUpkKh",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructMonthlyCostBudgetBEA9CF61",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicE9C970B6"
+    },
+    {
+      "uuid": "REF:TH8zB",
+      "attributes": {
+        "graph:reference:type": "Ref"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostAnomalyNotificationStackServicesAnomalySubscription3DE2000C",
+      "target": "AwsCostAnomalyNotificationStackAnomalyServicesMonitorB7ABB81E"
+    },
+    {
+      "uuid": "ATT:1ffBsK",
+      "attributes": {
+        "graph:reference:type": "Fn::GetAtt",
+        "graph:reference:attribute:value": "/cdk/exports/AwsCostAnomalyNotificationStack/AwsCostNotificationStackapnortheast1RefNotificationConstructNotificationTopic211862B908A7AB56"
+      },
+      "edgeType": "REFERENCE",
+      "direction": "forward",
+      "source": "AwsCostAnomalyNotificationStackServicesAnomalySubscription3DE2000C",
+      "target": "AwsCostAnomalyNotificationStackExportsReaderC69D869D"
+    },
+    {
+      "uuid": "DEP:ZpV8RE",
+      "flags": [
+        "EXTRANEOUS"
+      ],
+      "edgeType": "DEPENDENCY",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerA40EC933",
+      "target": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerRole4B4C0DA5"
+    },
+    {
+      "uuid": "DEP:E3ugD",
+      "flags": [
+        "EXTRANEOUS"
+      ],
+      "edgeType": "DEPENDENCY",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerF3229760",
+      "target": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRole4D580FC9"
+    },
+    {
+      "uuid": "DEP:23pD5S",
+      "flags": [
+        "EXTRANEOUS"
+      ],
+      "edgeType": "DEPENDENCY",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerF3229760",
+      "target": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRoleDefaultPolicyC34DB51B"
+    },
+    {
+      "uuid": "DEP:Z2f14E2",
+      "flags": [
+        "EXTRANEOUS"
+      ],
+      "edgeType": "DEPENDENCY",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEBE75595",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRoleD3789E67"
+    },
+    {
+      "uuid": "DEP:ZnkM8N",
+      "flags": [
+        "EXTRANEOUS"
+      ],
+      "edgeType": "DEPENDENCY",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerEBE75595",
+      "target": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRoleDefaultPolicy8C12DA4E"
+    },
+    {
+      "uuid": "DEP:KHpgK",
+      "flags": [
+        "EXTRANEOUS"
+      ],
+      "edgeType": "DEPENDENCY",
+      "direction": "forward",
+      "source": "AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderHandler9DDB6460",
+      "target": "AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderRole910A6ECD"
+    },
+    {
+      "uuid": "DEP:Z27bmmi",
+      "flags": [
+        "EXTRANEOUS"
+      ],
+      "edgeType": "DEPENDENCY",
+      "direction": "forward",
+      "source": "AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProviderHandlerF51DACFA",
+      "target": "AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProviderRole91B8A6E1"
+    }
+  ]
+}

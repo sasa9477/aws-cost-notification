@@ -1,0 +1,669 @@
+digraph "ROOT" {
+  label = "AWS Cost Notification";
+  imagepath = "/home/sasa/repos/aws-cost-notification/node_modules/@aws/pdk/assets/aws-arch";
+  fontname = "Roboto Condensed";
+  class = "font_regular";
+  center = true;
+  compound = true;
+  concentrate = true;
+  dpi = 300;
+  fontcolor = "#000000";
+  fontnames = "ps";
+  fontsize = 14;
+  forcelabels = true;
+  labelloc = "tc";
+  nodesep = 0.8;
+  pad = "%2,%1";
+  rankdir = "TB";
+  ranksep = 0.75;
+  ratio = "compress";
+  remincross = true;
+  size = "%1024,%1024!";
+  splines = "ortho";
+  stylesheet = "https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap";
+  bgcolor = "#FFFFFF";
+  edge [
+    fontname = "Roboto Condensed";
+    class = "font_light_italic";
+    dir = "both";
+    color = "#5A6B861A";
+    penwidth = 0.75;
+    arrowhead = "none";
+    arrowtail = "normal";
+    arrowsize = 0.5;
+    fontsize = 9;
+    style = "solid";
+    fontcolor = "#5A6B861A";
+  ];
+  node [
+    fontname = "Roboto Condensed";
+    class = "font_regular";
+    shape = "box";
+    style = "solid";
+    fixedsize = false;
+    width = 0.25;
+    height = 0.25;
+    labelloc = "c";
+    imagescale = true;
+    fontsize = 10;
+    penwidth = 0;
+    fontcolor = "#232F3E";
+  ];
+  subgraph "cluster_stack_AwsCostNotificationStack" {
+    fontname = "Roboto Condensed";
+    class = "font_light";
+    labelloc = "tc";
+    fontsize = 12;
+    style = "solid,bold,filled";
+    label = "AwsCostNotificationStack";
+    fillcolor = "#5A6B861A";
+    margin = 10;
+    color = "#000000CC";
+    bgcolor = "#5A6B861A";
+    pencolor = "transparent";
+    fontcolor = "#000000CC";
+    subgraph "cluster_AwsCostNotificationStackNotificationConstruct3D6549EA" {
+      fontname = "Roboto Condensed";
+      class = "font_light";
+      labelloc = "tc";
+      fontsize = 12;
+      style = "rounded,dashed";
+      label = "NotificationConstruct";
+      "node_AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleE70471CE" [
+        label = "Notification\nTopicLogging\nRole";
+        comment = "nodeType:RESOURCE(AWS::IAM::Role)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.69;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "security_identity_compliance/iam/role.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A" [
+        label = "Notification\nTopic";
+        comment = "nodeType:RESOURCE(AWS::SNS::Topic)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.46;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "application_integration/sns/topic.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackNotificationConstructLineNotificationHandlerRoleAF71638A" [
+        label = "Line\nNotification\nHandlerRole";
+        comment = "nodeType:RESOURCE(AWS::IAM::Role)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.69;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "security_identity_compliance/iam/role.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackNotificationConstructLineNotificationHandlerLogGroup0A87DE9D" [
+        label = "Line\nNotification\nHandlerLog\nGroup";
+        comment = "nodeType:RESOURCE(AWS::Logs::LogGroup)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.92;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "management_governance/cloudwatch/service_icon.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackNotificationConstructLineNotificationHandler057FEE0C" [
+        label = "Line\nNotification\nHandler";
+        comment = "nodeType:RESOURCE(AWS::Lambda::Function)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.69;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "compute/lambda/lambda_function.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+    }
+    subgraph "cluster_AwsCostNotificationStackCostNotificationConstruct747E3D73" {
+      fontname = "Roboto Condensed";
+      class = "font_light";
+      labelloc = "tc";
+      fontsize = 12;
+      style = "rounded,dashed";
+      label = "CostNotificationConstruct";
+      "node_AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRole35776100" [
+        label = "Cost\nNotification\nHandlerRole";
+        comment = "nodeType:RESOURCE(AWS::IAM::Role)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.69;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "security_identity_compliance/iam/role.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerLogGroup8D0DBA56" [
+        label = "Cost\nNotification\nHandlerLog\nGroup";
+        comment = "nodeType:RESOURCE(AWS::Logs::LogGroup)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.92;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "management_governance/cloudwatch/service_icon.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackCostNotificationConstructCostNotificationHandler27FC24C8" [
+        label = "Cost\nNotification\nHandler";
+        comment = "nodeType:RESOURCE(AWS::Lambda::Function)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.69;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "compute/lambda/lambda_function.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRole841D1ACA" [
+        label = "Cost\nNotification\nSchedulerRole";
+        comment = "nodeType:RESOURCE(AWS::IAM::Role)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.69;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "security_identity_compliance/iam/role.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackCostNotificationConstructCostNotificationSchedule180EBB03" [
+        label = "Cost\nNotification\nSchedule";
+        comment = "nodeType:CFN_RESOURCE(AWS::Scheduler::Schedule)";
+        width = 1;
+        height = 1;
+        fixedsize = true;
+        imagescale = true;
+        style = "solid,rounded";
+        color = "#5B9BD5";
+        fontcolor = "#5B9BD5";
+        labelloc = "c";
+        penwidth = 0.25;
+      ];
+    }
+    subgraph "cluster_AwsCostNotificationStackBudgetAlartConstruct52BECA83" {
+      fontname = "Roboto Condensed";
+      class = "font_light";
+      labelloc = "tc";
+      fontsize = 12;
+      style = "rounded,dashed";
+      label = "BudgetAlartConstruct";
+      "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleA0C64335" [
+        label = "BudgetAlart\nTopicLogging\nRole";
+        comment = "nodeType:RESOURCE(AWS::IAM::Role)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.69;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "security_identity_compliance/iam/role.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF1" [
+        label = "BudgetAlart\nTopic";
+        comment = "nodeType:RESOURCE(AWS::SNS::Topic)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.46;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "application_integration/sns/topic.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRole4F4FB8A4" [
+        label = "BudgetAlart\nHandlerRole";
+        comment = "nodeType:RESOURCE(AWS::IAM::Role)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.46;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "security_identity_compliance/iam/role.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerLogGroup2329B984" [
+        label = "BudgetAlart\nHandlerLog\nGroup";
+        comment = "nodeType:RESOURCE(AWS::Logs::LogGroup)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.69;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "management_governance/cloudwatch/service_icon.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerB8203F26" [
+        label = "BudgetAlart\nHandler";
+        comment = "nodeType:RESOURCE(AWS::Lambda::Function)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.46;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "compute/lambda/lambda_function.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+      "node_AwsCostNotificationStackBudgetAlartConstructMonthlyCostBudgetBEA9CF61" [
+        label = "MonthlyCost\nBudget";
+        comment = "nodeType:CFN_RESOURCE(AWS::Budgets::Budget)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.46;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "cloud_financial_management/budgets/service_icon.svg";
+        color = "#5B9BD5";
+        fontcolor = "#5B9BD5";
+      ];
+    }
+    subgraph "cluster_AwsCostNotificationStackExportsWriteruseast10F67B5071EC7A56B" {
+      fontname = "Roboto Condensed";
+      class = "font_light";
+      labelloc = "tc";
+      fontsize = 12;
+      style = "rounded,dashed";
+      label = "ExportsWriteruseast10F67B507";
+      "node_AwsCostNotificationStackExportsWriteruseast10F67B50758E72D2E" [
+        label = "Resource";
+        comment = "nodeType:RESOURCE(AWS::CloudFormation::CustomResource)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.23;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "management_governance/cloudformation/service_icon.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+    }
+    subgraph "cluster_AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderC091448B" {
+      fontname = "Roboto Condensed";
+      class = "font_light";
+      labelloc = "tc";
+      fontsize = 12;
+      style = "rounded,dashed";
+      label = "Custom::CrossRegionExportWriterCustomResourceProvider";
+      "node_AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderRole910A6ECD" [
+        label = "Role";
+        comment = "nodeType:DEFAULT";
+      ];
+      "node_AwsCostNotificationStackCustomCrossRegionExportWriterCustomResourceProviderHandler9DDB6460" [
+        label = "Handler";
+        comment = "nodeType:DEFAULT";
+      ];
+    }
+  }
+  subgraph "cluster_stack_AwsCostAnomalyNotificationStack" {
+    fontname = "Roboto Condensed";
+    class = "font_light";
+    labelloc = "tc";
+    fontsize = 12;
+    style = "solid,bold,filled";
+    label = "AwsCostAnomalyNotificationStack";
+    fillcolor = "#5A6B861A";
+    margin = 10;
+    color = "#000000CC";
+    bgcolor = "#5A6B861A";
+    pencolor = "transparent";
+    fontcolor = "#000000CC";
+    "node_AwsCostAnomalyNotificationStackAnomalyServicesMonitorB7ABB81E" [
+      label = "Anomaly\nServices\nMonitor";
+      comment = "nodeType:CFN_RESOURCE(AWS::CE::AnomalyMonitor)";
+      shape = "box";
+      style = "solid,rounded";
+      fixedsize = true;
+      width = 1;
+      height = 1.69;
+      labelloc = "b";
+      imagescale = true;
+      imagepos = "tc";
+      fillcolor = "transparent";
+      image = "cloud_financial_management/cost_explorer/service_icon.svg";
+      color = "#5B9BD5";
+      fontcolor = "#5B9BD5";
+    ];
+    "node_AwsCostAnomalyNotificationStackServicesAnomalySubscription3DE2000C" [
+      label = "Services\nAnomaly\nSubscription";
+      comment = "nodeType:CFN_RESOURCE(AWS::CE::AnomalySubscription)";
+      shape = "box";
+      style = "solid,rounded";
+      fixedsize = true;
+      width = 1;
+      height = 1.69;
+      labelloc = "b";
+      imagescale = true;
+      imagepos = "tc";
+      fillcolor = "transparent";
+      image = "cloud_financial_management/cost_explorer/service_icon.svg";
+      color = "#5B9BD5";
+      fontcolor = "#5B9BD5";
+    ];
+    subgraph "cluster_AwsCostAnomalyNotificationStackExportsReader2C9E177C" {
+      fontname = "Roboto Condensed";
+      class = "font_light";
+      labelloc = "tc";
+      fontsize = 12;
+      style = "rounded,dashed";
+      label = "ExportsReader";
+      "node_AwsCostAnomalyNotificationStackExportsReaderC69D869D" [
+        label = "Resource";
+        comment = "nodeType:RESOURCE(AWS::CloudFormation::CustomResource)";
+        shape = "box";
+        style = "solid,rounded";
+        fixedsize = true;
+        width = 1;
+        height = 1.23;
+        labelloc = "b";
+        imagescale = true;
+        imagepos = "tc";
+        fillcolor = "transparent";
+        image = "management_governance/cloudformation/service_icon.svg";
+        color = "#232F3E";
+        fontcolor = "#232F3E";
+      ];
+    }
+    subgraph "cluster_AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProvider8E76D8D9" {
+      fontname = "Roboto Condensed";
+      class = "font_light";
+      labelloc = "tc";
+      fontsize = 12;
+      style = "rounded,dashed";
+      label = "Custom::CrossRegionExportReaderCustomResourceProvider";
+      "node_AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProviderRole91B8A6E1" [
+        label = "Role";
+        comment = "nodeType:DEFAULT";
+      ];
+      "node_AwsCostAnomalyNotificationStackCustomCrossRegionExportReaderCustomResourceProviderHandlerF51DACFA" [
+        label = "Handler";
+        comment = "nodeType:DEFAULT";
+      ];
+    }
+  }
+  "node_AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A" -> "node_AwsCostNotificationStackNotificationConstructNotificationTopicLoggingRoleE70471CE" [
+    id = "ATT:Z1dUlku";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackNotificationConstructLineNotificationHandler057FEE0C" -> "node_AwsCostNotificationStackNotificationConstructLineNotificationHandlerLogGroup0A87DE9D" [
+    id = "REF:PMKBu";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackNotificationConstructLineNotificationHandler057FEE0C" -> "node_AwsCostNotificationStackNotificationConstructLineNotificationHandlerRoleAF71638A" [
+    id = "ATT:U46O4";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackNotificationConstructLineNotificationHandler057FEE0C" -> "node_AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A" [
+    id = "REF:1PcaTv";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRole35776100" -> "node_AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A" [
+    id = "REF:N0HoW";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackCostNotificationConstructCostNotificationHandler27FC24C8" -> "node_AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerLogGroup8D0DBA56" [
+    id = "REF:Z2649uh";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackCostNotificationConstructCostNotificationHandler27FC24C8" -> "node_AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerRole35776100" [
+    id = "ATT:Zyynvp";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackCostNotificationConstructCostNotificationHandler27FC24C8" -> "node_AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A" [
+    id = "REF:Z21XBO9";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRole841D1ACA" -> "node_AwsCostNotificationStackCostNotificationConstructCostNotificationHandler27FC24C8" [
+    id = "ATT:ZKkxEf";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackCostNotificationConstructCostNotificationSchedule180EBB03" -> "node_AwsCostNotificationStackCostNotificationConstructCostNotificationHandler27FC24C8" [
+    id = "ATT:1men67";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackCostNotificationConstructCostNotificationSchedule180EBB03" -> "node_AwsCostNotificationStackCostNotificationConstructCostNotificationSchedulerRole841D1ACA" [
+    id = "ATT:Ltg5K";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF1" -> "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicLoggingRoleA0C64335" [
+    id = "ATT:ZaVeYL";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRole4F4FB8A4" -> "node_AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A" [
+    id = "REF:ZgY8HV";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerB8203F26" -> "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerLogGroup2329B984" [
+    id = "REF:gpvem";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerB8203F26" -> "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerRole4F4FB8A4" [
+    id = "ATT:1uFQbJ";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerB8203F26" -> "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF1" [
+    id = "REF:cNB8J";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerB8203F26" -> "node_AwsCostNotificationStackNotificationConstructNotificationTopicEC6CD40A" [
+    id = "REF:ZtdAWH";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostNotificationStackBudgetAlartConstructMonthlyCostBudgetBEA9CF61" -> "node_AwsCostNotificationStackBudgetAlartConstructBudgetAlartTopicEA7CEDF1" [
+    id = "REF:ZUpkKh";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostAnomalyNotificationStackServicesAnomalySubscription3DE2000C" -> "node_AwsCostAnomalyNotificationStackAnomalyServicesMonitorB7ABB81E" [
+    id = "REF:TH8zB";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+  "node_AwsCostAnomalyNotificationStackServicesAnomalySubscription3DE2000C" -> "node_AwsCostAnomalyNotificationStackExportsReaderC69D869D" [
+    id = "ATT:1ffBsK";
+    penwidth = 0.75;
+    arrowhead = "normal";
+    arrowtail = "none";
+    arrowsize = 0.75;
+    style = "solid";
+    color = "#5A6B86";
+    fontcolor = "#5A6B86";
+  ];
+}

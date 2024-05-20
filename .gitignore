@@ -10,3 +10,6 @@ cdk.out
 .history
 
 .env*
+
+# @aws/pdk grapth config file
+!.cdkgraphrc.js
