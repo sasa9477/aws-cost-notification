@@ -71,5 +71,5 @@ https://graphviz.org/download/
 
 ## AWS 構成図
 
-![cdk-diagram-light](cdkgraph/diagram.compact.light.png#gh-light-mode-only)
-![cdk-diagram-dark](cdkgraph/diagram.compact.dark.png#gh-dark-mode-only)
+![cdk-diagram-light](cdkgraph/diagram.compact.light.svg#gh-light-mode-only)
+![cdk-diagram-dark](cdkgraph/diagram.compact.dark.svg#gh-dark-mode-only)
