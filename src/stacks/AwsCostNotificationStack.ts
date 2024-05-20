@@ -12,8 +12,8 @@ export type AwsCostNotificationStackProps = cdk.StackProps & {
 
 export class AwsCostNotificationStack extends cdk.Stack {
   public readonly notificationTopic: cdk.aws_sns.Topic;
-  public readonly costNotifacationHandler: NodejsFunction;
-  public readonly monthlyCostBudget: cdk.aws_budgets.CfnBudget;
+  public readonly costNotifacationHandler?: NodejsFunction;
+  public readonly monthlyCostBudget?: cdk.aws_budgets.CfnBudget;
 
   constructor(scope: Construct, id: string, props: AwsCostNotificationStackProps) {
     super(scope, id, props);
@@ -24,18 +24,24 @@ export class AwsCostNotificationStack extends cdk.Stack {
       config,
     });
 
-    const { costNotifacationHandler } = new CostNotifacationConstruct(this, "CostNotificationConstruct", {
-      config,
-      notificationTopic,
-    });
+    if (config.costNotificationScheduleConfig.enabled) {
+      const { costNotifacationHandler } = new CostNotifacationConstruct(this, "CostNotificationConstruct", {
+        config,
+        notificationTopic,
+      });
 
-    const { monthlyCostBudget } = new BudgetAlartConstruct(this, "BudgetAlartConstruct", {
-      config,
-      notificationTopic,
-    });
+      this.costNotifacationHandler = costNotifacationHandler;
+    }
+
+    if (config.budgetAlartConfig.enabled) {
+      const { monthlyCostBudget } = new BudgetAlartConstruct(this, "BudgetAlartConstruct", {
+        config,
+        notificationTopic,
+      });
+
+      this.monthlyCostBudget = monthlyCostBudget;
+    }
 
     this.notificationTopic = notificationTopic;
-    this.costNotifacationHandler = costNotifacationHandler;
-    this.monthlyCostBudget = monthlyCostBudget;
   }
 }

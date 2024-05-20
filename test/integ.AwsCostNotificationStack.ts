@@ -23,10 +23,12 @@ const mockStack = new AwsCostNotificationTestStack(app, "IntegTestMockStack", {
 process.env.LINE_NOTIFY_URL = mockStack.functionUrl.url;
 
 const testConfig: Config = {
-  constNotificationScheduleConfig: {
+  costNotificationScheduleConfig: {
+    enabled: true,
     scheduleExpression: "cron(0 10 ? * 2 *)",
   },
   budgetAlartConfig: {
+    enabled: true,
     budgetAmount: 100,
     actualAmountCostAlertThreshold: 50,
     forecastedAmountCostAlertThreshold: 50,
@@ -66,7 +68,7 @@ const integ = new IntegTest(app, "DataFlowTest", {
  * Assertions
  */
 
-const budget = stack.monthlyCostBudget.budget as cdk.aws_budgets.CfnBudget.BudgetDataProperty;
+const budget = stack.monthlyCostBudget!.budget as cdk.aws_budgets.CfnBudget.BudgetDataProperty;
 
 const updateBudgetAssersion = integ.assertions.awsApiCall("budgets", "UpdateBudget", {
   AccountId: stack.account,
@@ -93,7 +95,7 @@ updateBudgetAssersion.provider.addToRolePolicy({
   Resource: ["*"],
 });
 
-const costNotifacationHandler = stack.costNotifacationHandler;
+const costNotifacationHandler = stack.costNotifacationHandler!;
 
 const invokeCostNotificationHandler = integ.assertions.awsApiCall("lambda", "Invoke", {
   FunctionName: costNotifacationHandler.functionName,

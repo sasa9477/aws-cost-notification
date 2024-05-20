@@ -273,9 +273,7 @@
                                       ],
                                       "Condition": {
                                         "StringEquals": {
-                                          "AWS:SourceOwner": {
-                                            "Ref": "AWS::AccountId"
-                                          }
+                                          "AWS:SourceOwner": "643202082981"
                                         }
                                       },
                                       "Effect": "Allow",
@@ -509,7 +507,7 @@
                           "AssetBucket": {
                             "uuid": "AwsCostNotificationStackNotificationConstructLineNotificationHandlerCodeAssetBucketA5410E8C",
                             "attributes": {
-                              "graph:cfn-resource:import-arn-token": "ImportArn-Z1Hbg8U"
+                              "graph:cfn-resource:import-arn-token": "ImportArn-2eiDjv"
                             },
                             "flags": [
                               "IMPORT"
@@ -532,9 +530,7 @@
                         "attributes": {
                           "aws:cdk:cloudformation:props": {
                             "code": {
-                              "s3Bucket": {
-                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
-                              },
+                              "s3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
                               "s3Key": "57eef694fb1dcc4fa7f655bfdc7753ffcb7341bfc5399cedebbbb3463405891b.zip"
                             },
                             "environment": {
@@ -792,30 +788,8 @@
                                       ],
                                       "Effect": "Allow",
                                       "Resource": [
-                                        {
-                                          "Fn::Join": [
-                                            "",
-                                            [
-                                              "arn:aws:ce:us-east-1:",
-                                              {
-                                                "Ref": "AWS::AccountId"
-                                              },
-                                              ":/GetCostAndUsage"
-                                            ]
-                                          ]
-                                        },
-                                        {
-                                          "Fn::Join": [
-                                            "",
-                                            [
-                                              "arn:aws:ce:us-east-1:",
-                                              {
-                                                "Ref": "AWS::AccountId"
-                                              },
-                                              ":/GetCostForecast"
-                                            ]
-                                          ]
-                                        }
+                                        "arn:aws:ce:us-east-1:643202082981:/GetCostAndUsage",
+                                        "arn:aws:ce:us-east-1:643202082981:/GetCostForecast"
                                       ]
                                     },
                                     {
@@ -947,7 +921,7 @@
                           "AssetBucket": {
                             "uuid": "AwsCostNotificationStackCostNotificationConstructCostNotificationHandlerCodeAssetBucketB09DB8A9",
                             "attributes": {
-                              "graph:cfn-resource:import-arn-token": "ImportArn-Z1Hbg8U"
+                              "graph:cfn-resource:import-arn-token": "ImportArn-2eiDjv"
                             },
                             "flags": [
                               "IMPORT"
@@ -970,9 +944,7 @@
                         "attributes": {
                           "aws:cdk:cloudformation:props": {
                             "code": {
-                              "s3Bucket": {
-                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
-                              },
+                              "s3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
                               "s3Key": "634daa8a9f11dcb1739f7a367cca2300cb7e029d57844de77400ede1a5a3f1d3.zip"
                             },
                             "environment": {
@@ -1491,9 +1463,7 @@
                                       ],
                                       "Condition": {
                                         "StringEquals": {
-                                          "AWS:SourceOwner": {
-                                            "Ref": "AWS::AccountId"
-                                          }
+                                          "AWS:SourceOwner": "643202082981"
                                         }
                                       },
                                       "Effect": "Allow",
@@ -1788,7 +1758,7 @@
                           "AssetBucket": {
                             "uuid": "AwsCostNotificationStackBudgetAlartConstructBudgetAlartHandlerCodeAssetBucket08F72333",
                             "attributes": {
-                              "graph:cfn-resource:import-arn-token": "ImportArn-Z1Hbg8U"
+                              "graph:cfn-resource:import-arn-token": "ImportArn-2eiDjv"
                             },
                             "flags": [
                               "IMPORT"
@@ -1811,9 +1781,7 @@
                         "attributes": {
                           "aws:cdk:cloudformation:props": {
                             "code": {
-                              "s3Bucket": {
-                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
-                              },
+                              "s3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
                               "s3Key": "191583fecd6d58ae07bdc48cb29f34770556ac3e1ef0e486b472fbcd5ddc85d7.zip"
                             },
                             "environment": {

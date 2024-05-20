@@ -53,7 +53,7 @@ export class CostNotifacationConstruct extends Construct {
 
     new cdk.aws_scheduler.CfnSchedule(this, "CostNotificationSchedule", {
       name: `${cdk.Stack.of(this).stackName}CostNotificationSchedule`,
-      scheduleExpression: config.constNotificationScheduleConfig.scheduleExpression,
+      scheduleExpression: config.costNotificationScheduleConfig.scheduleExpression,
       scheduleExpressionTimezone: "Asia/Tokyo",
       flexibleTimeWindow: {
         mode: "OFF",

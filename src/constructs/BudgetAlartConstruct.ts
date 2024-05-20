@@ -105,13 +105,6 @@ export class BudgetAlartConstruct extends Construct {
           amount: config.budgetAlartConfig.budgetAmount,
           unit: "USD",
         },
-        // // 自動調整予算を有効化
-        // autoAdjustData: {
-        //   autoAdjustType: "HISTORICAL",
-        //   historicalOptions: {
-        //     budgetAdjustmentPeriod: 12,
-        //   },
-        // },
       },
       notificationsWithSubscribers: [
         {

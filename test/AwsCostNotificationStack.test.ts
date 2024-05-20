@@ -4,14 +4,17 @@ import { AwsSolutionsChecks } from "cdk-nag";
 import * as dotenv from "dotenv";
 import * as AwsCostNotification from "../src/stacks/AwsCostNotificationStack";
 import { formatCdkNagErrorMessage } from "../src/utils/formatCdkNagErrorMessage";
+import { Config } from "../src/config/config";
 
 dotenv.config();
 
-const testConfig = {
-  constNotificationScheduleConfig: {
+const testConfig: Config = {
+  costNotificationScheduleConfig: {
+    enabled: true,
     scheduleExpression: "cron(0 10 ? * 2 *)",
   },
   budgetAlartConfig: {
+    enabled: true,
     budgetAmount: 100,
     actualAmountCostAlertThreshold: 50,
     forecastedAmountCostAlertThreshold: 50,

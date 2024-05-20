@@ -51,43 +51,23 @@ https://graphviz.org/download/
 
 ### 構成値
 
-```
-/**
-  * コスト通知スケジュールの設定
-  */
-constNotificationScheduleConfig: {
-  /**
-    * 通知スケジュール
-    */
-  scheduleExpression: string;
-};
-/**
-  * 予算通知の設定
-  */
-budgetAlartConfig: {
-  /**
-    * 予算額 (USD)
-    */
-  budgetAmount: number;
-  /**
-    * 実績金額のアラート閾値 (%)
-    */
-  actualAmountCostAlertThreshold: number;
-  /**
-    * 予測金額のアラート閾値 (%)
-    */
-  forecastedAmountCostAlertThreshold: number;
-};
-/**
-  * コスト異常通知の設定
-  */
-costAnomalyNotificationConfig: {
-  // 有効にするかどうか
-  enebled: boolean;
-  // 予想支出の異常通知アラートの閾値 (USD)
-  forecastedAmountCostAlertThreshold: number;
-};
-```
+#### コストのスケジュール通知の設定
+
+- `enabled`: コストのスケジュール通知の有効 / 無効を設定します。 (`boolean`)
+- `scheduleExpression`: スケジュール実行の定義式を設定します。 (`string`)  
+  詳細は [AWS CloudFormation Schedule Expression](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-scheduler-schedule.html#cfn-scheduler-schedule-scheduleexpression) を参照してください。
+
+#### 予算通知設定
+
+- `enabled`: 予算通知の有効 / 無効を設定します。 (`boolean`)
+- `budgetAmount`: 予算額を設定します。 (`number`, 単位: USD)
+- `actualAmountCostAlertThreshold`: 実績金額のアラート閾値を設定します。 (`number`, 単位: %)
+- `forecastedAmountCostAlertThreshold`: 予測金額のアラート閾値を設定します。 (`number`, 単位: %)
+
+#### コスト異常通知設定
+
+- `enabled`: コスト異常通知の有効 / 無効を設定します。 (`boolean`)
+- `forecastedAmountCostAlertThreshold`: 予想支出の異常通知アラートの閾値を設定します。 (`number`, 単位: USD)
 
 ## AWS 構成図
 
