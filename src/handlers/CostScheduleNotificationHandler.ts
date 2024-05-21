@@ -20,9 +20,9 @@ export const handler: lambda.EventBridgeHandler<"Scheduled Event", any, string> 
   );
 
   const message = `
-${dayjs(startDate).format("MM/DD")} - ${dayjs(endDate).subtract(1, "day").format("MM/DD")} の請求額は ${roundDigit(totalBilling)} USD ${exchangeRate ? `${roundDigit(totalBilling * exchangeRate)} JPY ` : ""}です。
-${forecastBilling ? `今月の予想請求額は ${roundDigit(forecastBilling)} USD ${exchangeRate ? `${roundDigit(forecastBilling * exchangeRate)} JPY ` : ""}です。\n` : ""}
-${serviceBillings?.map((service) => ` ・${service.serviceName}: ${roundDigit(service.billing)} USD ${exchangeRate ? `${roundDigit(service.billing * exchangeRate)} JPY` : ""}`).join("\n")}
+${dayjs(startDate).format("MM/DD")} - ${dayjs(endDate).subtract(1, "day").format("MM/DD")} の請求額は \$${roundDigit(totalBilling)}${exchangeRate ? ` (¥${roundDigit(totalBilling * exchangeRate)})` : ""} です。
+${forecastBilling ? `今月の予想請求額は \$${roundDigit(forecastBilling)}${exchangeRate ? ` (¥${roundDigit(forecastBilling * exchangeRate)})` : ""} です。\n` : ""}
+${serviceBillings?.map((service) => `・${service.serviceName}: \$${roundDigit(service.billing)}${exchangeRate ? ` (¥${roundDigit(service.billing * exchangeRate)})` : ""}`).join("\n")}
 `.trim();
 
   return message;

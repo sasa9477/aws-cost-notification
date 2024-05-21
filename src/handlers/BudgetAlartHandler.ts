@@ -28,17 +28,15 @@ export const handler: lambda.Handler<lambda.SNSEvent, string> = async (event) =>
   switch (alertType) {
     case "FORECASTED": {
       return `⚠️ AWS の予測コストが予算額を超えそうです。
-予算額 : ${budgetedAmount} USD${exchangeRate ? ` (${roundDigit(budgetedAmount * exchangeRate)} JPY)` : ""}
-閾値 : ${alertThreshold} USD${exchangeRate ? ` (${roundDigit(alertThreshold * exchangeRate)} JPY)` : ""}
-予想額 : ${forecastAmount} USD${exchangeRate ? ` (${roundDigit(forecastAmount * exchangeRate)} JPY)` : ""}`;
-      break;
+予算額 : \$${budgetedAmount}${exchangeRate ? ` (¥${roundDigit(budgetedAmount * exchangeRate)})` : ""}
+閾値 : \$${alertThreshold}${exchangeRate ? ` (¥${roundDigit(alertThreshold * exchangeRate)})` : ""}
+予想額 : \$${forecastAmount}${exchangeRate ? ` (¥${roundDigit(forecastAmount * exchangeRate)})` : ""}`;
     }
     case "ACTUAL": {
       return `🔥 AWS の実際のコストが予算額を超えそうです。
-予算額 : ${budgetedAmount} USD${exchangeRate ? ` (${roundDigit(budgetedAmount * exchangeRate)} JPY)` : ""}
-閾値 : ${alertThreshold} USD${exchangeRate ? ` (${roundDigit(alertThreshold * exchangeRate)} JPY)` : ""}
-実際のコスト : ${actualAmount} USD${exchangeRate ? ` (${roundDigit(actualAmount * exchangeRate)} JPY)` : ""}`;
-      break;
+予算額 : \$${budgetedAmount}${exchangeRate ? ` (¥${roundDigit(budgetedAmount * exchangeRate)})` : ""}
+閾値 : \$${alertThreshold}${exchangeRate ? ` (¥${roundDigit(alertThreshold * exchangeRate)})` : ""}
+実際のコスト : \$${actualAmount}${exchangeRate ? ` (¥${roundDigit(actualAmount * exchangeRate)})` : ""}`;
     }
     default:
       // 予期しないメッセージ

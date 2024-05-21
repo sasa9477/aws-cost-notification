@@ -142,16 +142,16 @@ describe("CostScheduleNotificationHandler", () => {
   test("請求額の出力が正しい", async () => {
     const result = await handler(commonEvent, commonLambdaHandlerContext, () => {});
     expect(result).toMatch(
-      `05/01 - 05/13 の請求額は 0.65 USD 101.67 JPY です。
-今月の予想請求額は 1.12 USD 175.18 JPY です。
+      `05/01 - 05/13 の請求額は $0.65 (¥101.67) です。
+今月の予想請求額は $1.12 (¥175.18) です。
 
- ・Amazon Route 53: 0.51 USD 79.77 JPY
- ・AWS Cost Explorer: 0.06 USD 9.38 JPY
- ・Tax: 0.06 USD 9.38 JPY
- ・Amazon Simple Storage Service: 0.03 USD 4.69 JPY
- ・AWS Amplify: 0.01 USD 1.56 JPY
- ・AWS Lambda: 0.01 USD 1.56 JPY
- ・AWS Systems Manager: 0.01 USD 1.56 JPY`,
+・Amazon Route 53: $0.51 (¥79.77)
+・AWS Cost Explorer: $0.06 (¥9.38)
+・Tax: $0.06 (¥9.38)
+・Amazon Simple Storage Service: $0.03 (¥4.69)
+・AWS Amplify: $0.01 (¥1.56)
+・AWS Lambda: $0.01 (¥1.56)
+・AWS Systems Manager: $0.01 (¥1.56)`,
     );
   });
 });
