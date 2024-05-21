@@ -48,6 +48,12 @@ const integ = new IntegTest(app, "DataFlowTest", {
 
 /**
  * Assertions
+ *
+ * 1. UpdateBudget でコスト予算を更新しアラートを発生させる
+ * 2. コスト通知の Lambda 関数を呼び出す
+ * 3. S3 バケットに 3 つのオブジェクトが存在することを確認する
+ * 　- コスト予算のアラートによって予算額と実際のコストの 2つのオブジェクトが作成される
+ * 　- コスト通知の Lambda 関数が実行されると、3つ目のオブジェクトが作成される
  */
 
 const budget = stack.monthlyCostBudget!.budget as cdk.aws_budgets.CfnBudget.BudgetDataProperty;
@@ -113,8 +119,8 @@ listBucketAssertion.provider.addToRolePolicy({
   Resource: [bucket.bucketArn, bucket.arnForObjects("*")],
 });
 
-// 自動的に AssertionsProvider.addPolicyStatementFromSdkCall で "Action": ["s3:ListObjectsV2"] が追加される
-// そのため、ここで明示的に waiterProvider に ListObjectsV2 用の権限許可を設定する
+// 自動的に AssertionsProvider.addPolicyStatementFromSdkCall によって "Action": ["s3:ListObjectsV2"] が追加される
+// 権限が足りないため、ここで明示的に waiterProvider に ListObjectsV2 用の権限許可を設定する
 cdk.Aspects.of(listBucketAssertion).add({
   visit(node: IConstruct) {
     if (node instanceof AwsApiCall && node.waiterProvider) {

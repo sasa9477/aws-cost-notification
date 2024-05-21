@@ -22,8 +22,7 @@ dotenv.config();
     config,
   });
 
-  // MonitorDimension が Serive のモニターは、AWS アカウント に 1つしか作成できないので、コンフィグで有効になっている場合のみ作成する
-  // また、異常検知の通知は us-east-1 でのみサポートされているため、スタックを分ける
+  // 異常検知の通知は us-east-1 でのみサポートされているため、スタックを分ける
   if (config.costAnomalyNotificationConfig.enebled) {
     const awsCostAnomalyNotificationStack = new AwsCostAnomalyNotificationStack(
       app,
