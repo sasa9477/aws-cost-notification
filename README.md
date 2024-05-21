@@ -1,75 +1,85 @@
-# aws-cost-notification
+# AWSコスト通知アプリ
 
-AWS の使用コストを LINE に通知する aws cdk のレポジトリです。
+このアプリは、AWS の予算額と予想額を LINE に通知します。
 
 ## 機能
 
-- 通知スケジュールを設定し、使用しているコストを LINE に通知します。
-- 予算を設定し、コストが閾値を超えた場合に LINE に通知します。
-- コスト異常検出を設定し、異常を検出した場合に LINE に通知します。
-- Exchange Rates API を使用して為替レートを取得し、日本円の予想額を表示します。
+- **自動通知**: AWSの予算額と予想額について設定したスケジュールで通知を受け取れます。
+- **LINE統合**: LINE Notify を使用してアカウントに直接通知を送れます。
+- **カスタマイズ可能な閾値**: アラートをトリガーする予算閾値を設定できます。
 
-## 事前設定
+## インストール
 
-### 環境変数の設定
+1. リポジトリをクローン：
 
-`.env` ファイルを作成してアクセストークンを設定します。
+   ```bash
+   git clone https://github.com/sasa9477/aws-cost-notification.git
+   cd aws-cost-notification
+   ```
 
-```bash
-# LINE Notify のアクセストークン
-LINE_NOTIFY_TOKEN=
-# Exchange Rates API のアクセストークン
-EXCHANGE_RATE_API_KEY=
-```
+2. 依存関係をインストール：
 
-#### LINE Notify の設定
+   ```bash
+   npm install
+   ```
 
-LINE Notify に登録してアクセストークンを発行し、環境変数に設定してください。（必須）  
-https://notify-bot.line.me/
+3. graphviz のインストール：
 
-#### Exchange Rates API の設定
+   ```bash
+   brew install graphviz
+   ```
 
-exchangerates に登録してアクセストークンを発行し、環境変数に設定してください。  
-トークンが無い場合は USD と JPY の為替変換は行いません。  
-https://exchangeratesapi.io/
+   cdk 構成図の作成に graphviz を使用します。構成図の作成は、エラーにならないため必須ではありません。  
+   [こちら](https://graphviz.org/download/)からバイナリファイルをダウンロードすることもできます。
 
-### graphviz のインストール
+4. 環境変数を設定：
 
-cdk 構成図を作成するため graphviz をインストールしてください。  
-構成図の作成は、エラーにならないため必須ではありません。
+   - ルートディレクトリに `.env` ファイルを作成します。
+   - 次の変数を追加します
+     ```env
+     LINE_NOTIFY_TOKEN=your_line_notify_access_token
+     EXCHANGE_RATE_API_KEY=your_exchange_rate_api_key
+     ```
+     - `LINE_NOTIFY_TOKEN`: [LINE Notify](https://notify-bot.line.me/) のアクセストークン（必須）
+     - `EXCHANGE_RATE_API_KEY`: [exchangerates](https://exchangeratesapi.io/) の API KEY (トークンが無い場合は 日本円 の為替変換は行いません)
 
-```
-brew install graphviz
-```
+5. アプリケーションをデプロイ：
+   ```bash
+   npm run deploy
+   ```
 
-Homebrew を使用してインストールできますが、バイナリファイルをダウンロードすることもできます。  
-https://graphviz.org/download/
+## テスト
 
-## 構成の変更
+- Jestを使用してテストを実行：
+  ```bash
+  npm test
+  ```
 
-`src/config/config.ts` を編集して構成を変更できます。
+## 設定
 
-### 構成値
+`config.ts` ファイルを編集して設定を変更できます。
 
-#### コストのスケジュール通知の設定
+#### コストのスケジュール通知の設定 (costScheduleNotificationConfig)
 
 - `enabled`: コストのスケジュール通知の有効 / 無効を設定します。 (`boolean`)
 - `scheduleExpression`: スケジュール実行の定義式を設定します。 (`string`)  
   詳細は [AWS CloudFormation Schedule Expression](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-scheduler-schedule.html#cfn-scheduler-schedule-scheduleexpression) を参照してください。
 
-#### 予算通知設定
+#### 予算通知設定 (budgetAlartConfig)
 
 - `enabled`: 予算通知の有効 / 無効を設定します。 (`boolean`)
 - `budgetAmount`: 予算額を設定します。 (`number`, 単位: USD)
 - `actualAmountCostAlertThreshold`: 実績金額のアラート閾値を設定します。 (`number`, 単位: %)
 - `forecastedAmountCostAlertThreshold`: 予測金額のアラート閾値を設定します。 (`number`, 単位: %)
 
-#### コスト異常通知設定
+#### コスト異常通知設定 (costAnomalyNotificationConfig)
 
 - `enabled`: コスト異常通知の有効 / 無効を設定します。 (`boolean`)
 - `forecastedAmountCostAlertThreshold`: 予想支出の異常通知アラートの閾値を設定します。 (`number`, 単位: USD)
 
 ## AWS 構成図
+
+以下の AWS サービスによって構成されています。
 
 ### サービス概要図
 
