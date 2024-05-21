@@ -18,6 +18,10 @@ export class LineNotificationConstruct extends Construct {
 
     const { lineNotifyUrl } = props;
 
+    if (!process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN]) {
+      cdk.Annotations.of(this).addError(`LINE Notify のアクセストークンが設定されていません。`);
+    }
+
     const topicLoggingRole = new cdk.aws_iam.Role(this, "NotificationTopicLoggingRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
     });

@@ -125,23 +125,6 @@ describe("AWS Cost Notification Stack", () => {
     });
   });
 
-  describe("LineNotificationConstruct", () => {
-    test("LINE 通知用ラムダ関数に LINE Notify のアクセストークンが設定されている", () => {
-      const lineNotifyTokenCapture = new Capture();
-
-      template.hasResourceProperties("AWS::Lambda::Function", {
-        FunctionName: Match.stringLikeRegexp("LineNotificationHandler"),
-        Environment: {
-          Variables: {
-            LINE_NOTIFY_TOKEN: lineNotifyTokenCapture,
-          },
-        },
-      });
-
-      expect(lineNotifyTokenCapture.asString()).not.toEqual("");
-    });
-  });
-
   describe("cdk-nag check", () => {
     test("cdk-nag のチェックで Error が無い", () => {
       const errors = Annotations.fromStack(stack).findError("*", Match.stringLikeRegexp("AwsSolutions-.*"));
