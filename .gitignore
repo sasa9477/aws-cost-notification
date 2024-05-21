@@ -12,4 +12,9 @@ cdk.out
 .env*
 
 # @aws/pdk grapth config file
+**/graph-metadata.json
+**/graph.json
 !.cdkgraphrc.js
+
+# graphviz file
+**/*.dot

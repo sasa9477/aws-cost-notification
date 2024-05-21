@@ -1,5 +1,5 @@
 import { CdkGraph, FilterPreset } from "@aws/pdk/cdk-graph";
-import { CdkGraphDiagramPlugin } from "@aws/pdk/cdk-graph-plugin-diagram";
+import { CdkGraphDiagramPlugin, DiagramFormat } from "@aws/pdk/cdk-graph-plugin-diagram";
 import * as cdk from "aws-cdk-lib";
 import { AwsSolutionsChecks } from "cdk-nag";
 import * as dotenv from "dotenv";
@@ -50,6 +50,9 @@ dotenv.config();
   const graph = new CdkGraph(app, {
     plugins: [
       new CdkGraphDiagramPlugin({
+        defaults: {
+          format: [DiagramFormat.SVG],
+        },
         diagrams: [
           {
             name: "compact.light",
