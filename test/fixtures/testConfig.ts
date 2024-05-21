@@ -1,7 +1,7 @@
 import { Config } from "../../src/config/config";
 
 export const testConfig: Config = {
-  costNotificationScheduleConfig: {
+  costScheduleNotificationConfig: {
     enabled: true,
     scheduleExpression: "cron(0 10 ? * 2 *)",
   },

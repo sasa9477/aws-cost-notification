@@ -2,28 +2,28 @@ import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
-import { COST_NOTIFICATION_HANDLER_ENV } from "../handlers/CostNotificationHandler";
+import { COST_SCHEDULE_NOTIFICATION_HANDLER_ENV } from "../handlers/CostScheduleNotificationHandler";
 import { Config } from "../config/config";
 
-export type CostNotifacationConstructProps = {
+export type CostScheduleNotifacationConstructProps = {
   readonly config: Config;
   readonly notificationTopic: cdk.aws_sns.Topic;
 };
 
-export class CostNotifacationConstruct extends Construct {
+export class CostScheduleNotifacationConstruct extends Construct {
   public readonly costNotifacationHandler: NodeJsLambdaFunction;
 
-  constructor(scope: Construct, id: string, props: CostNotifacationConstructProps) {
+  constructor(scope: Construct, id: string, props: CostScheduleNotifacationConstructProps) {
     super(scope, id);
 
     const { config, notificationTopic } = props;
 
-    const lambda = new NodeJsLambdaFunction(this, "CostNotificationHandler", {
-      entryFileName: "CostNotificationHandler",
+    const lambda = new NodeJsLambdaFunction(this, "CostScheduleNotificationHandler", {
+      entryFileName: "CostScheduleNotificationHandler",
       environment: {
         TZ: "Asia/Tokyo",
-        [COST_NOTIFICATION_HANDLER_ENV.EXCHANGE_RATE_API_KEY]:
-          process.env[COST_NOTIFICATION_HANDLER_ENV.EXCHANGE_RATE_API_KEY] || "",
+        [COST_SCHEDULE_NOTIFICATION_HANDLER_ENV.EXCHANGE_RATE_API_KEY]:
+          process.env[COST_SCHEDULE_NOTIFICATION_HANDLER_ENV.EXCHANGE_RATE_API_KEY] || "",
       },
       onSuccess: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
       onFailure: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
@@ -53,7 +53,7 @@ export class CostNotifacationConstruct extends Construct {
 
     new cdk.aws_scheduler.CfnSchedule(this, "CostNotificationSchedule", {
       name: `${cdk.Stack.of(this).stackName}CostNotificationSchedule`,
-      scheduleExpression: config.costNotificationScheduleConfig.scheduleExpression,
+      scheduleExpression: config.costScheduleNotificationConfig.scheduleExpression,
       scheduleExpressionTimezone: "Asia/Tokyo",
       flexibleTimeWindow: {
         mode: "OFF",

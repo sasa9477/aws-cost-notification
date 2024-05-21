@@ -1,7 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { BudgetAlartConstruct } from "../constructs/BudgetAlartConstruct";
-import { CostNotifacationConstruct } from "../constructs/CostNotificationConstruct";
+import { CostScheduleNotifacationConstruct } from "../constructs/CostScheduleNotificationConstruct";
 import { LineNotificationConstruct } from "../constructs/LineNotificationConstruct";
 import { Config } from "../config/config";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
@@ -21,16 +21,20 @@ export class AwsCostNotificationStack extends cdk.Stack {
 
     const { config, lineNotifyUrl } = props;
 
-    const { notificationTopic } = new LineNotificationConstruct(this, "NotificationConstruct", {
+    const { notificationTopic } = new LineNotificationConstruct(this, "LineNotificationConstruct", {
       config,
       lineNotifyUrl,
     });
 
-    if (config.costNotificationScheduleConfig.enabled) {
-      const { costNotifacationHandler } = new CostNotifacationConstruct(this, "CostNotificationConstruct", {
-        config,
-        notificationTopic,
-      });
+    if (config.costScheduleNotificationConfig.enabled) {
+      const { costNotifacationHandler } = new CostScheduleNotifacationConstruct(
+        this,
+        "CostScheduleNotificationConstruct",
+        {
+          config,
+          notificationTopic,
+        },
+      );
 
       this.costNotifacationHandler = costNotifacationHandler;
     }

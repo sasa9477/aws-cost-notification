@@ -2,7 +2,7 @@ import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } fr
 import * as lambda from "aws-lambda";
 import MockDate from "mockdate";
 import { commonLambdaHandlerContext } from "../fixtures/commonLambdaHandlerContext";
-import { handler } from "../../src/handlers/CostNotificationHandler";
+import { handler } from "../../src/handlers/CostScheduleNotificationHandler";
 import { mockClient } from "aws-sdk-client-mock";
 
 const commonEvent: lambda.EventBridgeEvent<"Scheduled Event", any> = {
@@ -19,7 +19,7 @@ const commonEvent: lambda.EventBridgeEvent<"Scheduled Event", any> = {
 
 const costEcplorerMock = mockClient(CostExplorerClient);
 
-describe("cost-notification-lambda", () => {
+describe("CostScheduleNotificationHandler", () => {
   beforeAll(() => {
     // dayjs の日付を固定する
     MockDate.set("2024-05-14");
@@ -142,8 +142,8 @@ describe("cost-notification-lambda", () => {
   test("請求額の出力が正しい", async () => {
     const result = await handler(commonEvent, commonLambdaHandlerContext, () => {});
     expect(result).toMatch(
-      `05/01 - 05/13 の請求額は 0.65 USD です。
-今月の予想請求額は 1.12 USD です。
+      `05/01 - 05/13 の請求額は 0.65 USD 101.67 JPY です。
+今月の予想請求額は 1.12 USD 175.18 JPY です。
 
  ・Amazon Route 53: 0.51 USD 79.77 JPY
  ・AWS Cost Explorer: 0.06 USD 9.38 JPY

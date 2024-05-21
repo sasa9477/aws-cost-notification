@@ -2,7 +2,7 @@ export type Config = {
   /**
    * コストのスケジュール通知の設定
    */
-  costNotificationScheduleConfig: {
+  costScheduleNotificationConfig: {
     /**
      * コストのスケジュール通知の有効 / 無効
      */
@@ -45,7 +45,7 @@ export type Config = {
 };
 
 export const config: Config = {
-  costNotificationScheduleConfig: {
+  costScheduleNotificationConfig: {
     enabled: true,
     // 毎週月曜日の 10:00 に実行
     scheduleExpression: "cron(0 10 ? * 2 *)",

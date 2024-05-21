@@ -1,7 +1,7 @@
 import { commonLambdaHandlerContext } from "../fixtures/commonLambdaHandlerContext";
 import { handler } from "../../src/handlers/BudgetAlartHandler";
 
-describe("budget-alart-lambda", () => {
+describe("BudgetAlartHandler", () => {
   beforeAll(() => {
     const mockExchangeRateLatestResponse = {
       success: true,

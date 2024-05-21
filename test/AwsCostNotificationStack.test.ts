@@ -116,7 +116,7 @@ describe("AWS Cost Notification Stack", () => {
 
       template.hasResource("AWS::Lambda::Function", {
         Properties: {
-          FunctionName: Match.stringLikeRegexp("CostNotificationHandler"),
+          FunctionName: Match.stringLikeRegexp("CostScheduleNotificationHandler"),
         },
         DependsOn: dependsOnCapture,
       });
