@@ -57,8 +57,8 @@ describe("BudgetAlartHandler", () => {
     const result = await handler(event, commonLambdaHandlerContext, () => {});
     expect(result).toMatch(
       `⚠️ AWS の予測コストが予算額を超えそうです。
-予算額 : $0.01 (¥1.5)
-閾値 : $0.01 (¥1.5)
+予算額 : $0.01 (¥2)
+閾値 : $0.01 (¥2)
 予想額 : $0.5 (¥75)`,
     );
   });
@@ -95,8 +95,8 @@ describe("BudgetAlartHandler", () => {
     const result = await handler(event, commonLambdaHandlerContext, () => {});
     expect(result).toMatch(
       `🔥 AWS の実際のコストが予算額を超えそうです。
-予算額 : $0.01 (¥1.5)
-閾値 : $0.01 (¥1.5)
+予算額 : $0.01 (¥2)
+閾値 : $0.01 (¥2)
 実際のコスト : $0.5 (¥75)`,
     );
   });
