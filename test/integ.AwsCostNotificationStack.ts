@@ -8,7 +8,7 @@ import { AwsCostNotificationStack } from "../src/stacks/AwsCostNotificationStack
 import { AwsCostNotificationTestStack } from "../src/stacks/AwsCostNotificationTestStack";
 import { testConfig } from "./fixtures/testConfig";
 
-dotenv.config();
+dotenv.config({ path: "../.env" });
 
 const app = new cdk.App();
 
