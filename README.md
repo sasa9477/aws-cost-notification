@@ -75,23 +75,7 @@ https://graphviz.org/download/
 
 ![cdk-diagram-drawio](cdkgraph/cdk-diagram.svg)
 
-### 構成図
+### リソース構成図
 
 ![cdk-diagram-light](cdkgraph/diagram.compact.light.svg#gh-light-mode-only)
 ![cdk-diagram-dark](cdkgraph/diagram.compact.dark.svg#gh-dark-mode-only)
-
-color test
-
-  <h2>On White Background</h2>
-  <div class="color-sample white-background" style="color: #B0B0B0;">#B0B0B0 (Light Gray)</div>
-  <div class="color-sample white-background" style="color: #808080;">#808080 (Gray)</div>
-  <div class="color-sample white-background" style="color: #A9A9A9;">#A9A9A9 (Dark Gray)</div>
-  <div class="color-sample white-background" style="color: #696969;">#696969 (Dim Gray)</div>
-  <div class="color-sample white-background" style="color: #D3D3D3;">#D3D3D3 (Light Gray)</div>
-
-  <h2>On Dark Background</h2>
-  <div class="color-sample dark-background" style="color: #B0B0B0;">#B0B0B0 (Light Gray)</div>
-  <div class="color-sample dark-background" style="color: #808080;">#808080 (Gray)</div>
-  <div class="color-sample dark-background" style="color: #A9A9A9;">#A9A9A9 (Dark Gray)</div>
-  <div class="color-sample dark-background" style="color: #696969;">#696969 (Dim Gray)</div>
-  <div class="color-sample dark-background" style="color: #D3D3D3;">#D3D3D3 (Light Gray)</div>
