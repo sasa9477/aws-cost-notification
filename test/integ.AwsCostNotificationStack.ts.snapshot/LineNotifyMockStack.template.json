@@ -1,9 +1,9 @@
 {
  "Resources": {
-  "TestBucket560B80BC": {
+  "LineNotifyMockBucket2EC71B4E": {
    "Type": "AWS::S3::Bucket",
    "Properties": {
-    "BucketName": "integtestmockstack-test-bucket",
+    "BucketName": "linenotifymockstack-line-notify-mock-bucket",
     "Tags": [
      {
       "Key": "aws-cdk:auto-delete-objects",
@@ -35,11 +35,11 @@
     }
    }
   },
-  "TestBucketPolicyBA12ED38": {
+  "LineNotifyMockBucketPolicy5421192E": {
    "Type": "AWS::S3::BucketPolicy",
    "Properties": {
     "Bucket": {
-     "Ref": "TestBucket560B80BC"
+     "Ref": "LineNotifyMockBucket2EC71B4E"
     },
     "PolicyDocument": {
      "Statement": [
@@ -63,7 +63,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "TestBucket560B80BC",
+          "LineNotifyMockBucket2EC71B4E",
           "Arn"
          ]
         },
@@ -73,7 +73,7 @@
           [
            {
             "Fn::GetAtt": [
-             "TestBucket560B80BC",
+             "LineNotifyMockBucket2EC71B4E",
              "Arn"
             ]
            },
@@ -111,7 +111,7 @@
     }
    }
   },
-  "TestBucketAutoDeleteObjectsCustomResource8FEAABD5": {
+  "LineNotifyMockBucketAutoDeleteObjectsCustomResourceDC870076": {
    "Type": "Custom::S3AutoDeleteObjects",
    "Properties": {
     "ServiceToken": {
@@ -121,11 +121,11 @@
      ]
     },
     "BucketName": {
-     "Ref": "TestBucket560B80BC"
+     "Ref": "LineNotifyMockBucket2EC71B4E"
     }
    },
    "DependsOn": [
-    "TestBucketPolicyBA12ED38"
+    "LineNotifyMockBucketPolicy5421192E"
    ],
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
@@ -209,7 +209,7 @@
       [
        "Lambda function for auto-deleting objects in ",
        {
-        "Ref": "TestBucket560B80BC"
+        "Ref": "LineNotifyMockBucket2EC71B4E"
        },
        " S3 bucket."
       ]
@@ -233,7 +233,7 @@
     }
    }
   },
-  "S3SaveTestHandlerRole0DC4568B": {
+  "LineNotifyMockHandlerRoleA98D6D4C": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -282,7 +282,7 @@
     }
    }
   },
-  "S3SaveTestHandlerRoleDefaultPolicy52376941": {
+  "LineNotifyMockHandlerRoleDefaultPolicy9CF11EBB": {
    "Type": "AWS::IAM::Policy",
    "Properties": {
     "PolicyDocument": {
@@ -304,7 +304,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "TestBucket560B80BC",
+          "LineNotifyMockBucket2EC71B4E",
           "Arn"
          ]
         },
@@ -314,7 +314,7 @@
           [
            {
             "Fn::GetAtt": [
-             "TestBucket560B80BC",
+             "LineNotifyMockBucket2EC71B4E",
              "Arn"
             ]
            },
@@ -327,10 +327,10 @@
      ],
      "Version": "2012-10-17"
     },
-    "PolicyName": "S3SaveTestHandlerRoleDefaultPolicy52376941",
+    "PolicyName": "LineNotifyMockHandlerRoleDefaultPolicy9CF11EBB",
     "Roles": [
      {
-      "Ref": "S3SaveTestHandlerRole0DC4568B"
+      "Ref": "LineNotifyMockHandlerRoleA98D6D4C"
      }
     ]
    },
@@ -353,7 +353,7 @@
     }
    }
   },
-  "S3SaveTestHandlerLogGroup9236BD7E": {
+  "LineNotifyMockHandlerLogGroup978401BC": {
    "Type": "AWS::Logs::LogGroup",
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
@@ -369,32 +369,32 @@
     }
    }
   },
-  "S3SaveTestHandlerBEE1BB08": {
+  "LineNotifyMockHandler4336C8BA": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-     "S3Key": "d24b5c036e6ec2ff6e24d5677c0eb4c00d67d472d6b173b68541f59116a1337c.zip"
+     "S3Key": "07bd4c95da31709c19120ffe238893842e2670ea21266f21ca3f4d0170efa350.zip"
     },
     "Environment": {
      "Variables": {
       "BUCKET_NAME": {
-       "Ref": "TestBucket560B80BC"
+       "Ref": "LineNotifyMockBucket2EC71B4E"
       },
       "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
      }
     },
-    "FunctionName": "IntegTestMockStackS3SaveTestHandler",
+    "FunctionName": "LineNotifyMockStackLineNotifyMockHandler",
     "Handler": "index.handler",
     "LoggingConfig": {
      "LogGroup": {
-      "Ref": "S3SaveTestHandlerLogGroup9236BD7E"
+      "Ref": "LineNotifyMockHandlerLogGroup978401BC"
      }
     },
     "MemorySize": 128,
     "Role": {
      "Fn::GetAtt": [
-      "S3SaveTestHandlerRole0DC4568B",
+      "LineNotifyMockHandlerRoleA98D6D4C",
       "Arn"
      ]
     },
@@ -402,8 +402,8 @@
     "Timeout": 10
    },
    "DependsOn": [
-    "S3SaveTestHandlerRoleDefaultPolicy52376941",
-    "S3SaveTestHandlerRole0DC4568B"
+    "LineNotifyMockHandlerRoleDefaultPolicy9CF11EBB",
+    "LineNotifyMockHandlerRoleA98D6D4C"
    ],
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
@@ -424,13 +424,13 @@
     }
    }
   },
-  "S3SaveTestHandlerFunctionUrlF491F81E": {
+  "LineNotifyMockHandlerFunctionUrl65B94A2F": {
    "Type": "AWS::Lambda::Url",
    "Properties": {
     "AuthType": "NONE",
     "TargetFunctionArn": {
      "Fn::GetAtt": [
-      "S3SaveTestHandlerBEE1BB08",
+      "LineNotifyMockHandler4336C8BA",
       "Arn"
      ]
     }
@@ -449,13 +449,13 @@
     }
    }
   },
-  "S3SaveTestHandlerinvokefunctionurlABC7E262": {
+  "LineNotifyMockHandlerinvokefunctionurlE2F9BCCB": {
    "Type": "AWS::Lambda::Permission",
    "Properties": {
     "Action": "lambda:InvokeFunctionUrl",
     "FunctionName": {
      "Fn::GetAtt": [
-      "S3SaveTestHandlerBEE1BB08",
+      "LineNotifyMockHandler4336C8BA",
       "Arn"
      ]
     },
@@ -478,15 +478,15 @@
   }
  },
  "Outputs": {
-  "ExportsOutputFnGetAttS3SaveTestHandlerFunctionUrlF491F81EFunctionUrlE66A38D5": {
+  "ExportsOutputFnGetAttLineNotifyMockHandlerFunctionUrl65B94A2FFunctionUrl1247CBCD": {
    "Value": {
     "Fn::GetAtt": [
-     "S3SaveTestHandlerFunctionUrlF491F81E",
+     "LineNotifyMockHandlerFunctionUrl65B94A2F",
      "FunctionUrl"
     ]
    },
    "Export": {
-    "Name": "IntegTestMockStack:ExportsOutputFnGetAttS3SaveTestHandlerFunctionUrlF491F81EFunctionUrlE66A38D5"
+    "Name": "LineNotifyMockStack:ExportsOutputFnGetAttLineNotifyMockHandlerFunctionUrl65B94A2FFunctionUrl1247CBCD"
    }
   }
  },

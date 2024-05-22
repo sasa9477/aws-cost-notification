@@ -2,17 +2,17 @@ import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
-import { S3_SAVE_TEST_HANDLER_ENV } from "../handlers/S3SaveTestHandler";
+import { LINE_NOTIFY_MOCK_HANDLER_ENV } from "../handlers/LineNotifyMockHandler";
 
-export class AwsCostNotificationTestStack extends cdk.Stack {
+export class LineNotifyMockStack extends cdk.Stack {
   readonly bucket: cdk.aws_s3.Bucket;
   readonly functionUrl: cdk.aws_lambda.FunctionUrl;
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const bucket = new cdk.aws_s3.Bucket(this, "TestBucket", {
-      bucketName: `${cdk.Stack.of(this).stackName.toLocaleLowerCase()}-test-bucket`,
+    const bucket = new cdk.aws_s3.Bucket(this, "LineNotifyMockBucket", {
+      bucketName: `${cdk.Stack.of(this).stackName.toLocaleLowerCase()}-line-notify-mock-bucket`,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
@@ -25,10 +25,10 @@ export class AwsCostNotificationTestStack extends cdk.Stack {
       }),
     );
 
-    const lambda = new NodeJsLambdaFunction(this, "S3SaveTestHandler", {
-      entryFileName: "S3SaveTestHandler",
+    const lambda = new NodeJsLambdaFunction(this, "LineNotifyMockHandler", {
+      entryFileName: "LineNotifyMockHandler",
       environment: {
-        [S3_SAVE_TEST_HANDLER_ENV.BUCKET_NAME]: bucket.bucketName,
+        [LINE_NOTIFY_MOCK_HANDLER_ENV.BUCKET_NAME]: bucket.bucketName,
       },
     });
 

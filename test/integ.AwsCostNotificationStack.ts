@@ -5,14 +5,19 @@ import { IConstruct } from "constructs";
 import * as dotenv from "dotenv";
 import { ApplyDestroyPolicyAspect } from "../src/aspects/ApplyDestroyPolicyAspect";
 import { AwsCostNotificationStack } from "../src/stacks/AwsCostNotificationStack";
-import { AwsCostNotificationTestStack } from "../src/stacks/AwsCostNotificationTestStack";
+import { LineNotifyMockStack } from "../src/stacks/LineNotifyMockStack";
 import { testConfig } from "./fixtures/testConfig";
 
 dotenv.config({ path: "../.env" });
 
 const app = new cdk.App();
 
-const mockStack = new AwsCostNotificationTestStack(app, "IntegTestMockStack", {
+/**
+ * LineNotify への通知を lambda と s3 を使用してモックする
+ * lambda の functionUrl を AwsCostNotificationStack に渡し、LineNotify への通知を lambda で受けとり s3 に保存する
+ */
+
+const mockStack = new LineNotifyMockStack(app, "LineNotifyMockStack", {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: "ap-northeast-1",
@@ -119,8 +124,8 @@ listBucketAssertion.provider.addToRolePolicy({
   Resource: [bucket.bucketArn, bucket.arnForObjects("*")],
 });
 
-// 自動的に AssertionsProvider.addPolicyStatementFromSdkCall によって "Action": ["s3:ListObjectsV2"] が追加される
-// 権限が足りないため、ここで明示的に waiterProvider に ListObjectsV2 用の権限許可を設定する
+// 暗黙的に AssertionsProvider.addPolicyStatementFromSdkCall が呼ばれ "Action": ["s3:ListObjectsV2"] の権限が追加される
+// 権限が足りないため、ここで明示的に waiterProvider に ListObjectsV2 を呼び出すための権限許可を追加する
 cdk.Aspects.of(listBucketAssertion).add({
   visit(node: IConstruct) {
     if (node instanceof AwsApiCall && node.waiterProvider) {
