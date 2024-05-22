@@ -1,12 +1,15 @@
 diff --git a/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js b/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js
-index 480116c..9336873 100644
+index 480116c..4e6859c 100644
 --- a/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js
 +++ b/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js
-@@ -8,6 +8,11 @@ const path = require("path");
+@@ -8,6 +8,14 @@ const path = require("path");
  const core_1 = require("aws-cdk-lib/core");
  const constructs_1 = require("constructs");
  const helpers_internal_1 = require("aws-cdk-lib/custom-resources/lib/helpers-internal");
 +
++/**
++ * スタックのインスタンスの ID の一部を返します。
++ */
 +function uniqueStackIdPart() {
 +    return core_1.Fn.select(0, core_1.Fn.split("-", core_1.Fn.select(2, core_1.Fn.split("/", `${core_1.Aws.STACK_ID}`))));
 +}
@@ -14,11 +17,17 @@ index 480116c..9336873 100644
  /**
   * integ-tests can only depend on '@aws-cdk/core' so
   * this construct creates a lambda function provider using
-@@ -66,7 +71,7 @@ class LambdaFunctionProvider extends constructs_1.Construct {
+@@ -66,7 +74,13 @@ class LambdaFunctionProvider extends constructs_1.Construct {
              const logGroup = new core_1.CfnResource(this, 'LogGroup', {
                  type: 'AWS::Logs::LogGroup',
                  properties: {
 -                    LogGroupName: `/aws/lambda/${id}`,
++                    /**
++                     * integ-test を一度実行し、再度実行すると、AwsSdkCall を呼び出す lambda が出力する ロググループが存在するためエラーとなってしまう。
++                     * スタックのインスタンスの ID をロググループに含めることで、integ-test の実行毎にロググループの名前を一意にすることができ、名前衝突のエラーを回避できる。
++                     *
++                     * https://github.com/aws/aws-cdk/discussions/25257
++                     */
 +                    LogGroupName: `/aws/lambda/${uniqueStackIdPart()}/${id}`,
                      RetentionInDays: props.logRetention,
                  },
