@@ -10,7 +10,7 @@ AWS の予想額と実際のコストを LINE に通知します。
 - LINE統合
 - 為替変換
 
-## インストール
+## インストール手順
 
 1. リポジトリをクローン：
 
@@ -37,12 +37,12 @@ AWS の予想額と実際のコストを LINE に通知します。
 4. 環境変数を設定：
 
    ルートディレクトリに `.env` ファイルを作成し、次の変数を追加します。
-  ```env
-  LINE_NOTIFY_TOKEN=your_line_notify_access_token
-  EXCHANGE_RATE_API_KEY=your_exchange_rate_api_key
-  ```
-  - `LINE_NOTIFY_TOKEN`: [LINE Notify](https://notify-bot.line.me/) のアクセストークン（必須）
-  - `EXCHANGE_RATE_API_KEY`: [exchangerates](https://exchangeratesapi.io/) の API KEY (トークンが無い場合は 日本円 の為替変換は行いません)
+     ```env
+     LINE_NOTIFY_TOKEN=your_line_notify_access_token
+     EXCHANGE_RATE_API_KEY=your_exchange_rate_api_key
+     ```
+     - `LINE_NOTIFY_TOKEN`: [LINE Notify](https://notify-bot.line.me/) のアクセストークン（必須）
+     - `EXCHANGE_RATE_API_KEY`: [exchangerates](https://exchangeratesapi.io/) の API KEY (トークンが無い場合は 日本円 の為替変換は行いません)
 
 5. アプリケーションをデプロイ：
    ```bash
