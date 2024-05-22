@@ -24,7 +24,7 @@ describe("CostScheduleNotificationHandler", () => {
     // dayjs の日付を固定する
     MockDate.set("2024-05-14");
 
-    // api.exchangeratesapi.io の API をモック化する
+    // exchangerates API のモック
     jest.spyOn(global, "fetch").mockImplementation(() =>
       Promise.resolve({
         ok: true,
@@ -43,26 +43,31 @@ describe("CostScheduleNotificationHandler", () => {
       } as Response),
     );
 
-    // AWS SDK の CostExplorerClient をモック化する
-    costEcplorerMock
-      .on(GetCostAndUsageCommand)
-      .resolves({
-        $metadata: {
-          httpStatusCode: 200,
-          requestId: "",
-          attempts: 1,
-          totalRetryDelay: 0,
+    /**
+     *  AWS SDK の CostExplorerClient をモック化する
+     */
+
+    // 合計請求額の取得のモック
+    costEcplorerMock.on(GetCostAndUsageCommand).resolves({
+      $metadata: {
+        httpStatusCode: 200,
+        requestId: "",
+        attempts: 1,
+        totalRetryDelay: 0,
+      },
+      DimensionValueAttributes: [],
+      ResultsByTime: [
+        {
+          Estimated: true,
+          Groups: [],
+          TimePeriod: { End: "2024-05-14", Start: "2024-05-01" },
+          Total: { AmortizedCost: { Amount: "0.6459625819", Unit: "USD" } },
         },
-        DimensionValueAttributes: [],
-        ResultsByTime: [
-          {
-            Estimated: true,
-            Groups: [],
-            TimePeriod: { End: "2024-05-14", Start: "2024-05-01" },
-            Total: { AmortizedCost: { Amount: "0.6459625819", Unit: "USD" } },
-          },
-        ],
-      })
+      ],
+    });
+
+    // サービスごとの請求額の取得のモック
+    costEcplorerMock
       .on(GetCostAndUsageCommand, {
         GroupBy: [
           {
@@ -117,20 +122,21 @@ describe("CostScheduleNotificationHandler", () => {
             Total: {},
           },
         ],
-      })
-      .on(GetCostForecastCommand)
-      .resolves({
-        $metadata: {
-          httpStatusCode: 200,
-          requestId: "",
-          attempts: 1,
-          totalRetryDelay: 0,
-        },
-        ForecastResultsByTime: [
-          { MeanValue: "1.11254067343557", TimePeriod: { End: "2024-06-01", Start: "2024-05-01" } },
-        ],
-        Total: { Amount: "1.11254067343557", Unit: "USD" },
       });
+
+    // 予想請求額の取得のモック
+    costEcplorerMock.on(GetCostForecastCommand).resolves({
+      $metadata: {
+        httpStatusCode: 200,
+        requestId: "",
+        attempts: 1,
+        totalRetryDelay: 0,
+      },
+      ForecastResultsByTime: [
+        { MeanValue: "1.11254067343557", TimePeriod: { End: "2024-06-01", Start: "2024-05-01" } },
+      ],
+      Total: { Amount: "1.11254067343557", Unit: "USD" },
+    });
   });
 
   afterAll(() => {

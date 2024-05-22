@@ -11,7 +11,7 @@ describe("BudgetAlartHandler", () => {
       rates: { USD: 1.123456, JPY: 168.5184 },
     };
 
-    // api.exchangeratesapi.io の API をモック化する
+    // exchangerates API のモック
     jest.spyOn(global, "fetch").mockImplementation(() =>
       Promise.resolve({
         ok: true,
