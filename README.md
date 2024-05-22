@@ -1,11 +1,14 @@
 # AWSコスト通知アプリ
 
-AWS の予算額と予想額を LINE に通知します。
+AWS の予想額と実際のコストを LINE に通知します。
 
 ## 機能
 
-- **自動通知**: AWSの予算額と予想額について設定したスケジュールで通知を受け取れます。
-- **LINE統合**: LINE Notify を使用してアカウントに直接通知を送れます。
+- コストのスケジュール通知
+- 予算のアラート通知設定
+- コスト異常通知
+- LINE統合
+- 為替変換
 
 ## インストール
 
@@ -33,26 +36,18 @@ AWS の予算額と予想額を LINE に通知します。
 
 4. 環境変数を設定：
 
-   - ルートディレクトリに `.env` ファイルを作成します。
-   - 次の変数を追加します
-     ```env
-     LINE_NOTIFY_TOKEN=your_line_notify_access_token
-     EXCHANGE_RATE_API_KEY=your_exchange_rate_api_key
-     ```
-     - `LINE_NOTIFY_TOKEN`: [LINE Notify](https://notify-bot.line.me/) のアクセストークン（必須）
-     - `EXCHANGE_RATE_API_KEY`: [exchangerates](https://exchangeratesapi.io/) の API KEY (トークンが無い場合は 日本円 の為替変換は行いません)
+   ルートディレクトリに `.env` ファイルを作成し、次の変数を追加します。
+  ```env
+  LINE_NOTIFY_TOKEN=your_line_notify_access_token
+  EXCHANGE_RATE_API_KEY=your_exchange_rate_api_key
+  ```
+  - `LINE_NOTIFY_TOKEN`: [LINE Notify](https://notify-bot.line.me/) のアクセストークン（必須）
+  - `EXCHANGE_RATE_API_KEY`: [exchangerates](https://exchangeratesapi.io/) の API KEY (トークンが無い場合は 日本円 の為替変換は行いません)
 
 5. アプリケーションをデプロイ：
    ```bash
    npm run deploy
    ```
-
-## テスト
-
-- Jestを使用してテストを実行：
-  ```bash
-  npm test
-  ```
 
 ## 設定
 
@@ -64,7 +59,7 @@ AWS の予算額と予想額を LINE に通知します。
 - `scheduleExpression`: スケジュール実行の定義式を設定します。 (`string`)  
   詳細は [AWS CloudFormation Schedule Expression](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-scheduler-schedule.html#cfn-scheduler-schedule-scheduleexpression) を参照してください。
 
-#### 予算通知設定 (budgetAlartConfig)
+#### 予算アラート通知設定 (budgetAlartConfig)
 
 - `enabled`: 予算通知の有効 / 無効を設定します。 (`boolean`)
 - `budgetAmount`: 予算額を設定します。 (`number`, 単位: USD)
