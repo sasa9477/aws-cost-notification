@@ -63,7 +63,7 @@ const integ = new IntegTest(app, "DataFlowTest", {
 
 const budget = stack.monthlyCostBudget!.budget as cdk.aws_budgets.CfnBudget.BudgetDataProperty;
 
-const updateBudgetAssersion = integ.assertions.awsApiCall("budgets", "UpdateBudget", {
+const updateBudget = integ.assertions.awsApiCall("budgets", "UpdateBudget", {
   AccountId: stack.account,
   NewBudget: {
     AutoAjustData: budget.autoAdjustData,
@@ -82,7 +82,7 @@ const updateBudgetAssersion = integ.assertions.awsApiCall("budgets", "UpdateBudg
   RetentionDays: cdk.aws_logs.RetentionDays.ONE_DAY,
 });
 
-updateBudgetAssersion.provider.addToRolePolicy({
+updateBudget.provider.addToRolePolicy({
   Effect: "Allow",
   Action: ["budgets:*"],
   Resource: ["*"],
@@ -90,13 +90,13 @@ updateBudgetAssersion.provider.addToRolePolicy({
 
 const costNotifacationHandler = stack.costNotifacationHandler!;
 
-const invokeCostNotificationHandler = integ.assertions.awsApiCall("lambda", "Invoke", {
+const invokeCostNotificationLambda = integ.assertions.awsApiCall("lambda", "Invoke", {
   FunctionName: costNotifacationHandler.functionName,
   // onSuccess を呼び出すために 非同期で実行
   InvocationType: "Event",
 });
 
-invokeCostNotificationHandler.provider.addPolicyStatementFromSdkCall("Lambda", "invokeFunction", [
+invokeCostNotificationLambda.provider.addPolicyStatementFromSdkCall("Lambda", "invokeFunction", [
   stack.formatArn({
     service: "lambda",
     resource: "function",
@@ -138,4 +138,4 @@ cdk.Aspects.of(listBucketAssertion).add({
   },
 });
 
-updateBudgetAssersion.next(invokeCostNotificationHandler).next(listBucketAssertion);
+updateBudget.next(invokeCostNotificationLambda).next(listBucketAssertion);
