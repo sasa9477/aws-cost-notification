@@ -1,9 +1,6 @@
 import { Fn, Aws } from "aws-cdk-lib";
 
 /**
-
- */
-/**
  * Stack 実行毎の一意な ID の一部を返します。
  * @returns Stack 実行毎の一意な ID の一部
  * @description
