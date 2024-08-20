@@ -14,7 +14,7 @@ const app = new cdk.App();
 
 /**
  * LineNotify への通知を lambda と s3 を使用してモックする
- * lambda の functionUrl を AwsCostNotificationStack に渡し、LineNotify への通知を lambda で受けとり s3 に保存する
+ * lambda の functionUrl を AwsCostNotificationStack に渡し、LineNotify への通知を lambda で経由で受けとり s3 に保存する
  */
 
 const mockStack = new LineNotifyMockStack(app, "LineNotifyMockStack", {
@@ -54,7 +54,7 @@ const integ = new IntegTest(app, "DataFlowTest", {
 /**
  * Assertions
  *
- * 1. UpdateBudget でコスト予算を更新しアラートを発生させる
+ * 1. UpdateBudget awsApiCall でコスト予算を更新しアラートを発生させる
  * 2. コスト通知の Lambda 関数を呼び出す
  * 3. S3 バケットに 3 つのオブジェクトが存在することを確認する
  * 　- コスト予算のアラートによって予算額と実際のコストの 2つのオブジェクトが作成される
