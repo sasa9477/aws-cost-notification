@@ -1,22 +1,69 @@
 import { commonLambdaHandlerContext } from "../fixtures/commonLambdaHandlerContext";
 import { handler } from "../../src/handlers/BudgetAlartHandler";
+import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
+import MockDate from "mockdate";
+import { mockClient } from "aws-sdk-client-mock";
+
+const costEcplorerMock = mockClient(CostExplorerClient);
 
 describe("BudgetAlartHandler", () => {
   beforeAll(() => {
-    const mockExchangeRateLatestResponse = {
-      success: true,
-      timestamp: 1715644000,
-      base: "EUR",
-      date: "2024-05-13",
-      rates: { USD: 1.123456, JPY: 168.5184 },
-    };
+    // dayjs の日付を固定する
+    MockDate.set("2024-05-14");
+
+    /**
+     *  AWS SDK の CostExplorerClient をモック化する
+     */
+
+    // 合計請求額の取得のモック
+    costEcplorerMock.on(GetCostAndUsageCommand).resolves({
+      $metadata: {
+        httpStatusCode: 200,
+        requestId: "",
+        attempts: 1,
+        totalRetryDelay: 0,
+      },
+      DimensionValueAttributes: [],
+      ResultsByTime: [
+        {
+          Estimated: true,
+          Groups: [],
+          TimePeriod: { End: "2024-05-14", Start: "2024-05-01" },
+          Total: { AmortizedCost: { Amount: "0.6459625819", Unit: "USD" } },
+        },
+      ],
+    });
+
+    // 予想請求額の取得のモック
+    costEcplorerMock.on(GetCostForecastCommand).resolves({
+      $metadata: {
+        httpStatusCode: 200,
+        requestId: "",
+        attempts: 1,
+        totalRetryDelay: 0,
+      },
+      ForecastResultsByTime: [
+        { MeanValue: "1.11254067343557", TimePeriod: { End: "2024-06-01", Start: "2024-05-01" } },
+      ],
+      Total: { Amount: "1.11254067343557", Unit: "USD" },
+    });
 
     // exchangerates API のモック
     jest.spyOn(global, "fetch").mockImplementation(() =>
       Promise.resolve({
         ok: true,
         status: 200,
-        json: () => Promise.resolve(mockExchangeRateLatestResponse),
+        json: () =>
+          Promise.resolve({
+            success: true,
+            timestamp: 1715657284,
+            base: "EUR",
+            date: "2024-05-14",
+            rates: {
+              USD: 1.078667,
+              JPY: 168.711092,
+            },
+          }),
       } as Response),
     );
   });
@@ -55,11 +102,14 @@ describe("BudgetAlartHandler", () => {
     };
 
     const result = await handler(event, commonLambdaHandlerContext, () => {});
-    expect(result).toMatch(
+    expect(result).toBe(
       `⚠️ AWS の予測コストが予算額を超えそうです。
 予算額 : $0.01 (¥2)
 閾値 : $0.01 (¥2)
-予想額 : $0.5 (¥75)`,
+予想額 : $0.5 (¥78)
+05/01 - 05/13 の請求額は $0.65 (¥101) です。
+今月の予想請求額は $1.12 (¥175) です。
+`,
     );
   });
 
@@ -93,11 +143,14 @@ describe("BudgetAlartHandler", () => {
     };
 
     const result = await handler(event, commonLambdaHandlerContext, () => {});
-    expect(result).toMatch(
+    expect(result).toBe(
       `🔥 AWS の実際のコストが予算額を超えそうです。
 予算額 : $0.01 (¥2)
 閾値 : $0.01 (¥2)
-実際のコスト : $0.5 (¥75)`,
+実際のコスト : $0.5 (¥78)
+05/01 - 05/13 の請求額は $0.65 (¥101) です。
+今月の予想請求額は $1.12 (¥175) です。
+`,
     );
   });
 });

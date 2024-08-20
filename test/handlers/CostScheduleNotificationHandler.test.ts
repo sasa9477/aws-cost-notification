@@ -147,7 +147,7 @@ describe("CostScheduleNotificationHandler", () => {
 
   test("請求額の出力が正しい", async () => {
     const result = await handler(commonEvent, commonLambdaHandlerContext, () => {});
-    expect(result).toMatch(
+    expect(result).toBe(
       `05/01 - 05/13 の請求額は $0.65 (¥101) です。
 今月の予想請求額は $1.12 (¥175) です。
 
