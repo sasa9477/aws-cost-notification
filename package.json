@@ -9,7 +9,7 @@
     "test": "jest",
     "integ-test": "integ-runner",
     "cdk": "cdk",
-    "prepare": "husky install",
+    "prepare": "husky",
     "synth": "cdk synth",
     "diff": "cdk diff",
     "bootstrap": "cdk bootstrap --all",
