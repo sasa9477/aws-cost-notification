@@ -9,7 +9,7 @@ cdk.out
 
 .history
 
-.env*
+.env
 
 # @aws/pdk grapth config file
 **/graph-metadata.json
