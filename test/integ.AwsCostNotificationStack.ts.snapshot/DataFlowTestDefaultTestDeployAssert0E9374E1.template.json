@@ -17,7 +17,7 @@
      "RetentionDays": "1"
     },
     "flattenResponse": "false",
-    "salt": "1724122073589"
+    "salt": "1730774950510"
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
@@ -198,7 +198,7 @@
      "InvocationType": "\"Event\""
     },
     "flattenResponse": "false",
-    "salt": "1724122073589"
+    "salt": "1730774950510"
    },
    "DependsOn": [
     "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
@@ -225,7 +225,7 @@
      "Bucket": "\"linenotifymockstack-line-notify-mock-bucket\""
     },
     "flattenResponse": "false",
-    "salt": "1724122073590"
+    "salt": "1730774950511"
    },
    "DependsOn": [
     "AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329"

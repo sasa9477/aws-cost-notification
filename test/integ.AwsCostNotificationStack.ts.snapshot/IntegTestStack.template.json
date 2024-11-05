@@ -235,8 +235,7 @@
       "LINE_NOTIFY_URL": {
        "Fn::ImportValue": "LineNotifyMockStack:ExportsOutputFnGetAttLineNotifyMockHandlerFunctionUrl65B94A2FFunctionUrl1247CBCD"
       },
-      "LINE_NOTIFY_TOKEN": "uYx1hi15rGUia9pLuLeLM3ZxAVkxqqNAAPL5eoqi2np",
-      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+      "LINE_NOTIFY_TOKEN": "uYx1hi15rGUia9pLuLeLM3ZxAVkxqqNAAPL5eoqi2np"
      }
     },
     "FunctionName": "IntegTestStackLineNotificationHandler",
@@ -409,13 +408,12 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-     "S3Key": "5ee655bee0b5b0e9700bbdc24d247344c87d489fa4f4d5019727b28c5dce2196.zip"
+     "S3Key": "d6b8ed653da26cdd35248682f2de31d7f2c89e81e57c4aee2c70a749729ae074.zip"
     },
     "Environment": {
      "Variables": {
       "TZ": "Asia/Tokyo",
-      "EXCHANGE_RATE_API_KEY": "668799ba00d2a9602bced8935180f246",
-      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+      "EXCHANGE_RATE_API_KEY": "668799ba00d2a9602bced8935180f246"
      }
     },
     "FunctionName": "IntegTestStackCostScheduleNotificationHandler",
@@ -787,6 +785,17 @@
     "PolicyDocument": {
      "Statement": [
       {
+       "Action": [
+        "ce:GetCostAndUsage",
+        "ce:GetCostForecast"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        "arn:aws:ce:us-east-1:643202082981:/GetCostAndUsage",
+        "arn:aws:ce:us-east-1:643202082981:/GetCostForecast"
+       ]
+      },
+      {
        "Action": "sns:Publish",
        "Effect": "Allow",
        "Resource": {
@@ -827,13 +836,12 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-     "S3Key": "2c6f11c96dab492d060442e24fa1346a4cf9736b9f81824ee435674fccb1b5a7.zip"
+     "S3Key": "d155e959edc487a9fa5386d207eb4af6755c07949f8ef41eefe7db52fb14ca56.zip"
     },
     "Environment": {
      "Variables": {
       "TZ": "Asia/Tokyo",
-      "EXCHANGE_RATE_API_KEY": "668799ba00d2a9602bced8935180f246",
-      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+      "EXCHANGE_RATE_API_KEY": "668799ba00d2a9602bced8935180f246"
      }
     },
     "FunctionName": "IntegTestStackBudgetAlartHandler",

@@ -94,6 +94,17 @@ export class BudgetAlartConstruct extends Construct {
       events: [new cdk.aws_lambda_event_sources.SnsEventSource(topic)],
       onSuccess: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
       onFailure: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
+      initialPolicy: [
+        // Cost Explorer のコスト使用量と 予想額の取得 を許可
+        new cdk.aws_iam.PolicyStatement({
+          actions: ["ce:GetCostAndUsage", "ce:GetCostForecast"],
+          effect: cdk.aws_iam.Effect.ALLOW,
+          resources: [
+            `arn:aws:ce:us-east-1:${cdk.Stack.of(this).account}:/GetCostAndUsage`,
+            `arn:aws:ce:us-east-1:${cdk.Stack.of(this).account}:/GetCostForecast`,
+          ],
+        }),
+      ],
     });
 
     this.monthlyCostBudget = new cdk.aws_budgets.CfnBudget(this, "MonthlyCostBudget", {

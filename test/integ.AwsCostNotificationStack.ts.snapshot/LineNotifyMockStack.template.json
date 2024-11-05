@@ -191,7 +191,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-     "S3Key": "6c1e9b465fa4b2d651dbc9ce3e732d8702a7b19137327684a71d89f1d355f1a2.zip"
+     "S3Key": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip"
     },
     "Timeout": 900,
     "MemorySize": 128,
@@ -202,7 +202,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs18.x",
+    "Runtime": "nodejs20.x",
     "Description": {
      "Fn::Join": [
       "",
@@ -380,8 +380,7 @@
      "Variables": {
       "BUCKET_NAME": {
        "Ref": "LineNotifyMockBucket2EC71B4E"
-      },
-      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+      }
      }
     },
     "FunctionName": "LineNotifyMockStackLineNotifyMockHandler",
