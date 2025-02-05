@@ -32,7 +32,7 @@ const stack = new AwsCostNotificationStack(app, "IntegTestStack", {
   },
   crossRegionReferences: true,
   config: testConfig,
-  lineNotifyUrl: mockStack.functionUrl.url,
+  lineNotificationTestUrl: mockStack.functionUrl.url,
 });
 
 cdk.Aspects.of(stack).add(new AwsSolutionsChecks({ verbose: true }));

@@ -37,12 +37,18 @@ AWS の予想額と実際のコストを LINE に通知します。
 4. 環境変数を設定：
 
    ルートディレクトリに `.env` ファイルを作成し、次の変数を追加します。
-     ```env
-     LINE_NOTIFY_TOKEN=your_line_notify_access_token
-     EXCHANGE_RATE_API_KEY=your_exchange_rate_api_key
-     ```
-     - `LINE_NOTIFY_TOKEN`: [LINE Notify](https://notify-bot.line.me/) のアクセストークン（必須）
-     - `EXCHANGE_RATE_API_KEY`: [exchangerates](https://exchangeratesapi.io/) の API KEY (トークンが無い場合は 日本円 の為替変換は行いません)
+
+   ```env
+   LINE_CHANNEL_ID=line_channel_id
+   LINE_CHANNEL_SECRET=line_channel_secret
+   LINE_USER_ID=line_user_id
+   EXCHANGE_RATE_API_KEY=your_exchange_rate_api_key
+   ```
+
+   - `LINE_CHANNEL_ID`: [LINE Messaging API](https://developers.line.biz/ja/reference/messaging-api/) のチャンネル ID（必須）
+   - `LINE_CHANNEL_SECRET`: LINE Messaging API のチャンネルシークレット（必須）
+   - `LINE_USER_ID`: LINE 公式アカウントの[ユーザー ID](https://developers.line.biz/ja/docs/messaging-api/getting-user-ids/#get-own-user-id)（必須）
+   - `EXCHANGE_RATE_API_KEY`: [exchangerates](https://exchangeratesapi.io/) の API KEY (トークンが無い場合は 日本円 の為替変換は行いません)
 
 5. アプリケーションをデプロイ：
    ```bash

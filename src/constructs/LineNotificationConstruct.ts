@@ -7,7 +7,7 @@ import { LINE_NOTIFICATION_HANDLER_ENV } from "../handlers/LineNotificationHandl
 
 export type LineNotificationConstructProps = {
   readonly config: Config;
-  readonly lineNotifyUrl?: string;
+  readonly lineNotificationTestUrl?: string;
 };
 
 export class LineNotificationConstruct extends Construct {
@@ -16,10 +16,17 @@ export class LineNotificationConstruct extends Construct {
   constructor(scope: Construct, id: string, props: LineNotificationConstructProps) {
     super(scope, id);
 
-    const { lineNotifyUrl } = props;
+    const { lineNotificationTestUrl } = props;
 
-    if (!process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN]) {
-      cdk.Annotations.of(this).addError(`LINE Notify のアクセストークンが設定されていません。`);
+    // 環境変数の確認
+    const lineChannelId = process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_CHANNEL_ID] || "";
+    const lineChannelSecret = process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_CHANNEL_SECRET] || "";
+    const lineUserId = process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_USER_ID] || "";
+
+    if (!lineChannelId || !lineChannelSecret || !lineUserId) {
+      cdk.Annotations.of(this).addError(
+        "環境変数に LINE_CHANNEL_ID, LINE_CHANNEL_SECRET, LINE_USER_ID のいずれかが設定されていません。",
+      );
     }
 
     const topicLoggingRole = new cdk.aws_iam.Role(this, "NotificationTopicLoggingRole", {
@@ -75,9 +82,10 @@ export class LineNotificationConstruct extends Construct {
     const lambda = new NodeJsLambdaFunction(this, "LineNotificationHandler", {
       entryFileName: "LineNotificationHandler",
       environment: {
-        [LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_URL]: lineNotifyUrl || "",
-        [LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN]:
-          process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFY_TOKEN] || "",
+        [LINE_NOTIFICATION_HANDLER_ENV.LINE_NOTIFICATION_TEST_URL]: lineNotificationTestUrl || "",
+        [LINE_NOTIFICATION_HANDLER_ENV.LINE_CHANNEL_ID]: lineChannelId,
+        [LINE_NOTIFICATION_HANDLER_ENV.LINE_CHANNEL_SECRET]: lineChannelSecret,
+        [LINE_NOTIFICATION_HANDLER_ENV.LINE_USER_ID]: lineUserId,
       },
       events: [new cdk.aws_lambda_event_sources.SnsEventSource(topic)],
     });
