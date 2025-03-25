@@ -4,6 +4,7 @@ import { AwsSolutionsChecks } from "cdk-nag";
 import { IConstruct } from "constructs";
 import * as dotenv from "dotenv";
 import { ApplyDestroyPolicyAspect } from "../src/aspects/ApplyDestroyPolicyAspect";
+import { CustomResourceLoggingConfigAspect } from "../src/aspects/CustomResourceLoggingConfigAspect";
 import { AwsCostNotificationStack } from "../src/stacks/AwsCostNotificationStack";
 import { LineMessagingApiMockStack } from "../src/stacks/LineMessagingApiMockStack";
 import { testConfig } from "./fixtures/testConfig";
@@ -14,10 +15,10 @@ const app = new cdk.App();
 
 /**
  * Line Messaging API への通知を lambda と s3 を使用してモックする
- * lambda の functionUrl を AwsCostNotificationStack に渡し、Line Messaging API への通知を lambda で経由で受けとり s3 に保存する
+ * lambda の functionUrl を AwsCostNotificationStack に渡し、Line Messaging API への通知を lambda で経由で受けとり S3 に保存する
  */
 
-const mockStack = new LineMessagingApiMockStack(app, "LineMessagingApiyMockStack", {
+const mockStack = new LineMessagingApiMockStack(app, "LineMessagingApiMockStack", {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: "ap-northeast-1",
@@ -38,6 +39,7 @@ const stack = new AwsCostNotificationStack(app, "IntegTestStack", {
 cdk.Aspects.of(stack).add(new AwsSolutionsChecks({ verbose: true }));
 cdk.Aspects.of(stack).add(new ApplyDestroyPolicyAspect());
 cdk.Aspects.of(mockStack).add(new ApplyDestroyPolicyAspect());
+cdk.Aspects.of(mockStack).add(new CustomResourceLoggingConfigAspect());
 
 const integ = new IntegTest(app, "DataFlowTest", {
   testCases: [stack, mockStack],

@@ -7,6 +7,7 @@ import "source-map-support/register";
 import { config } from "./config/config";
 import { AwsCostAnomalyNotificationStack } from "./stacks/AwsCostAnomalyNotificationStack";
 import { AwsCostNotificationStack } from "./stacks/AwsCostNotificationStack";
+import { CustomResourceLoggingConfigAspect } from "./aspects/CustomResourceLoggingConfigAspect";
 
 dotenv.config();
 
@@ -41,6 +42,9 @@ dotenv.config();
     // 依存関係を追加
     awsCostAnomalyNotificationStack.addDependency(awsCostNotificationStack);
   }
+
+  // Custom:: で始まる CDK で暗黙的に作成される Custom Resource のロググループ保持期間を変更する
+  cdk.Aspects.of(app).add(new CustomResourceLoggingConfigAspect());
 
   // AWS のセキュリティマトリックスのセキュリティを確認する
   cdk.Aspects.of(app).add(new AwsSolutionsChecks({ verbose: true }));
