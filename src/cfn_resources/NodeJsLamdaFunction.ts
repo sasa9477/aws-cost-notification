@@ -26,7 +26,7 @@ export class NodeJsLambdaFunction extends cdk.aws_lambda_nodejs.NodejsFunction {
 
     const logGroup = new cdk.aws_logs.LogGroup(scope, `${entryFileName}LogGroup`, {
       removalPolicy: cdk.RemovalPolicy.RETAIN_ON_UPDATE_OR_DELETE,
-      retention: cdk.aws_logs.RetentionDays.INFINITE,
+      retention: cdk.aws_logs.RetentionDays.ONE_YEAR,
     });
 
     super(scope, id, {
