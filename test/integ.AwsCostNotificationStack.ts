@@ -5,7 +5,7 @@ import { IConstruct } from "constructs";
 import * as dotenv from "dotenv";
 import { ApplyDestroyPolicyAspect } from "../src/aspects/ApplyDestroyPolicyAspect";
 import { AwsCostNotificationStack } from "../src/stacks/AwsCostNotificationStack";
-import { LineNotifyMockStack } from "../src/stacks/LineNotifyMockStack";
+import { LineMessagingApiMockStack } from "../src/stacks/LineMessagingApiMockStack";
 import { testConfig } from "./fixtures/testConfig";
 
 dotenv.config({ path: "../.env" });
@@ -13,11 +13,11 @@ dotenv.config({ path: "../.env" });
 const app = new cdk.App();
 
 /**
- * LineNotify への通知を lambda と s3 を使用してモックする
- * lambda の functionUrl を AwsCostNotificationStack に渡し、LineNotify への通知を lambda で経由で受けとり s3 に保存する
+ * Line Messaging API への通知を lambda と s3 を使用してモックする
+ * lambda の functionUrl を AwsCostNotificationStack に渡し、Line Messaging API への通知を lambda で経由で受けとり s3 に保存する
  */
 
-const mockStack = new LineNotifyMockStack(app, "LineNotifyMockStack", {
+const mockStack = new LineMessagingApiMockStack(app, "LineMessagingApiyMockStack", {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: "ap-northeast-1",
@@ -56,9 +56,18 @@ const integ = new IntegTest(app, "DataFlowTest", {
  *
  * 1. UpdateBudget awsApiCall でコスト予算を更新しアラートを発生させる
  * 2. コスト通知の Lambda 関数を呼び出す
- * 3. S3 バケットに 3 つのオブジェクトが存在することを確認する
- * 　- コスト予算のアラートによって予算額と実際のコストの 2つのオブジェクトが作成される
- * 　- コスト通知の Lambda 関数が実行されると、3つ目のオブジェクトが作成される
+ * 3. S3 バケットに 6 つのオブジェクトが存在することを確認する
+ *  - コスト予算のアラートアクション
+ *    - 予算額のコスト
+ *      - Line Messaging API の認証メッセージ
+ *      - アラートメッセージ
+ *    - 実際のコスト
+ *      - Line Messaging API の認証メッセージ
+ *      - アラートメッセージ
+ *  - コスト通知の Lambda 関数呼び出しアクション
+ *    - Line Messaging API の認証メッセージ
+ *    - アラートメッセージ
+ *
  */
 
 const budget = stack.monthlyCostBudget!.budget as cdk.aws_budgets.CfnBudget.BudgetDataProperty;
@@ -111,27 +120,28 @@ const listBucketAssertion = integ.assertions
   .awsApiCall("s3", "ListObjectsV2", {
     Bucket: bucket.bucketName,
   })
-  .expect(ExpectedResult.objectLike({ KeyCount: 3 }))
+  .expect(ExpectedResult.objectLike({ KeyCount: 6 }))
   .waitForAssertions({
     totalTimeout: cdk.Duration.minutes(10),
     interval: cdk.Duration.minutes(1),
     backoffRate: 3,
   });
 
+// listObjectsV2 は ListBucket の権限が必要なため付与する
 listBucketAssertion.provider.addToRolePolicy({
   Effect: "Allow",
-  Action: ["s3:GetObject*", "s3:List*"],
+  Action: ["s3:ListBucket"],
   Resource: [bucket.bucketArn, bucket.arnForObjects("*")],
 });
 
-// 暗黙的に AssertionsProvider.addPolicyStatementFromSdkCall が呼ばれ "Action": ["s3:ListObjectsV2"] の権限が追加される
-// 権限が足りないため、ここで明示的に waiterProvider に ListObjectsV2 を呼び出すための権限許可を追加する
+// 暗黙的に AssertionsProvider.addPolicyStatementFromSdkCall が呼ばれ ListObjectV2 API の名称から "Action": ["s3:ListObjectsV2"] の権限が追加される
+// しかし、必要な権限は ListBucket であるため、ここで明示的に waiterProvider に権限許可を追加する
 cdk.Aspects.of(listBucketAssertion).add({
   visit(node: IConstruct) {
     if (node instanceof AwsApiCall && node.waiterProvider) {
       node.waiterProvider.addToRolePolicy({
         Effect: "Allow",
-        Action: ["s3:GetObject*", "s3:List*"],
+        Action: ["s3:ListBucket"],
         Resource: [bucket.bucketArn, bucket.arnForObjects("*")],
       });
     }

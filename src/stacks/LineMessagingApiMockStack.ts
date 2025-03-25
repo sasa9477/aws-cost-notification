@@ -2,16 +2,16 @@ import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
 import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
-import { LINE_NOTIFY_MOCK_HANDLER_ENV } from "../handlers/LineNotifyMockHandler";
+import { LINE_MESSAGING_API_MOCK_HANDLER_ENV } from "../handlers/LineMessagingApiMockHandler";
 
-export class LineNotifyMockStack extends cdk.Stack {
+export class LineMessagingApiMockStack extends cdk.Stack {
   readonly bucket: cdk.aws_s3.Bucket;
   readonly functionUrl: cdk.aws_lambda.FunctionUrl;
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const bucket = new cdk.aws_s3.Bucket(this, "LineNotifyMockBucket", {
+    const bucket = new cdk.aws_s3.Bucket(this, "LineMessagingApiMockBucket", {
       bucketName: `${cdk.Stack.of(this).stackName.toLocaleLowerCase()}-line-notify-mock-bucket`,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
@@ -25,10 +25,10 @@ export class LineNotifyMockStack extends cdk.Stack {
       }),
     );
 
-    const lambda = new NodeJsLambdaFunction(this, "LineNotifyMockHandler", {
-      entryFileName: "LineNotifyMockHandler",
+    const lambda = new NodeJsLambdaFunction(this, "LineMessagingApiMockHandler", {
+      entryFileName: "LineMessagingApiMockHandler",
       environment: {
-        [LINE_NOTIFY_MOCK_HANDLER_ENV.BUCKET_NAME]: bucket.bucketName,
+        [LINE_MESSAGING_API_MOCK_HANDLER_ENV.BUCKET_NAME]: bucket.bucketName,
       },
     });
 
