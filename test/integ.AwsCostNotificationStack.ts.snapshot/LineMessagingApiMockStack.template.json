@@ -1,9 +1,9 @@
 {
  "Resources": {
-  "LineNotifyMockBucket2EC71B4E": {
+  "LineMessagingApiMockBucket163462C4": {
    "Type": "AWS::S3::Bucket",
    "Properties": {
-    "BucketName": "linenotifymockstack-line-notify-mock-bucket",
+    "BucketName": "linemessagingapimockstack-line-notify-mock-bucket",
     "Tags": [
      {
       "Key": "aws-cdk:auto-delete-objects",
@@ -35,11 +35,11 @@
     }
    }
   },
-  "LineNotifyMockBucketPolicy5421192E": {
+  "LineMessagingApiMockBucketPolicy256F0782": {
    "Type": "AWS::S3::BucketPolicy",
    "Properties": {
     "Bucket": {
-     "Ref": "LineNotifyMockBucket2EC71B4E"
+     "Ref": "LineMessagingApiMockBucket163462C4"
     },
     "PolicyDocument": {
      "Statement": [
@@ -63,7 +63,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "LineNotifyMockBucket2EC71B4E",
+          "LineMessagingApiMockBucket163462C4",
           "Arn"
          ]
         },
@@ -73,7 +73,7 @@
           [
            {
             "Fn::GetAtt": [
-             "LineNotifyMockBucket2EC71B4E",
+             "LineMessagingApiMockBucket163462C4",
              "Arn"
             ]
            },
@@ -111,7 +111,7 @@
     }
    }
   },
-  "LineNotifyMockBucketAutoDeleteObjectsCustomResourceDC870076": {
+  "LineMessagingApiMockBucketAutoDeleteObjectsCustomResource366A2574": {
    "Type": "Custom::S3AutoDeleteObjects",
    "Properties": {
     "ServiceToken": {
@@ -121,11 +121,11 @@
      ]
     },
     "BucketName": {
-     "Ref": "LineNotifyMockBucket2EC71B4E"
+     "Ref": "LineMessagingApiMockBucket163462C4"
     }
    },
    "DependsOn": [
-    "LineNotifyMockBucketPolicy5421192E"
+    "LineMessagingApiMockBucketPolicy256F0782"
    ],
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
@@ -209,11 +209,16 @@
       [
        "Lambda function for auto-deleting objects in ",
        {
-        "Ref": "LineNotifyMockBucket2EC71B4E"
+        "Ref": "LineMessagingApiMockBucket163462C4"
        },
        " S3 bucket."
       ]
      ]
+    },
+    "LoggingConfig": {
+     "LogGroup": {
+      "Ref": "CustomS3AutoDeleteObjectsCustomResourceProviderHandlerLogGroup397C0130"
+     }
     }
    },
    "DependsOn": [
@@ -233,7 +238,46 @@
     }
    }
   },
-  "LineNotifyMockHandlerRoleA98D6D4C": {
+  "CustomS3AutoDeleteObjectsCustomResourceProviderHandlerLogGroup397C0130": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+       {
+        "Fn::Select": [
+         0,
+         {
+          "Fn::Split": [
+           "-",
+           {
+            "Fn::Select": [
+             2,
+             {
+              "Fn::Split": [
+               "/",
+               {
+                "Ref": "AWS::StackId"
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 365
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "LineMessagingApiMockHandlerRole30AFAD31": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -282,7 +326,7 @@
     }
    }
   },
-  "LineNotifyMockHandlerRoleDefaultPolicy9CF11EBB": {
+  "LineMessagingApiMockHandlerRoleDefaultPolicy516E003A": {
    "Type": "AWS::IAM::Policy",
    "Properties": {
     "PolicyDocument": {
@@ -304,7 +348,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "LineNotifyMockBucket2EC71B4E",
+          "LineMessagingApiMockBucket163462C4",
           "Arn"
          ]
         },
@@ -314,7 +358,7 @@
           [
            {
             "Fn::GetAtt": [
-             "LineNotifyMockBucket2EC71B4E",
+             "LineMessagingApiMockBucket163462C4",
              "Arn"
             ]
            },
@@ -327,10 +371,10 @@
      ],
      "Version": "2012-10-17"
     },
-    "PolicyName": "LineNotifyMockHandlerRoleDefaultPolicy9CF11EBB",
+    "PolicyName": "LineMessagingApiMockHandlerRoleDefaultPolicy516E003A",
     "Roles": [
      {
-      "Ref": "LineNotifyMockHandlerRoleA98D6D4C"
+      "Ref": "LineMessagingApiMockHandlerRole30AFAD31"
      }
     ]
    },
@@ -353,8 +397,11 @@
     }
    }
   },
-  "LineNotifyMockHandlerLogGroup978401BC": {
+  "LineMessagingApiMockHandlerLogGroup44C7D70C": {
    "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "RetentionInDays": 365
+   },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
@@ -369,31 +416,31 @@
     }
    }
   },
-  "LineNotifyMockHandler4336C8BA": {
+  "LineMessagingApiMockHandler53EC5DEF": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-     "S3Key": "07bd4c95da31709c19120ffe238893842e2670ea21266f21ca3f4d0170efa350.zip"
+     "S3Key": "f7877d6d3da99d4b068656e23a31d09f90fd929af7c318f1ce4e816cf7c8a7e3.zip"
     },
     "Environment": {
      "Variables": {
       "BUCKET_NAME": {
-       "Ref": "LineNotifyMockBucket2EC71B4E"
+       "Ref": "LineMessagingApiMockBucket163462C4"
       }
      }
     },
-    "FunctionName": "LineNotifyMockStackLineNotifyMockHandler",
+    "FunctionName": "LineMessagingApiMockStackLineMessagingApiMockHandler",
     "Handler": "index.handler",
     "LoggingConfig": {
      "LogGroup": {
-      "Ref": "LineNotifyMockHandlerLogGroup978401BC"
+      "Ref": "LineMessagingApiMockHandlerLogGroup44C7D70C"
      }
     },
     "MemorySize": 128,
     "Role": {
      "Fn::GetAtt": [
-      "LineNotifyMockHandlerRoleA98D6D4C",
+      "LineMessagingApiMockHandlerRole30AFAD31",
       "Arn"
      ]
     },
@@ -401,8 +448,8 @@
     "Timeout": 10
    },
    "DependsOn": [
-    "LineNotifyMockHandlerRoleDefaultPolicy9CF11EBB",
-    "LineNotifyMockHandlerRoleA98D6D4C"
+    "LineMessagingApiMockHandlerRoleDefaultPolicy516E003A",
+    "LineMessagingApiMockHandlerRole30AFAD31"
    ],
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
@@ -423,13 +470,13 @@
     }
    }
   },
-  "LineNotifyMockHandlerFunctionUrl65B94A2F": {
+  "LineMessagingApiMockHandlerFunctionUrlBACC71E8": {
    "Type": "AWS::Lambda::Url",
    "Properties": {
     "AuthType": "NONE",
     "TargetFunctionArn": {
      "Fn::GetAtt": [
-      "LineNotifyMockHandler4336C8BA",
+      "LineMessagingApiMockHandler53EC5DEF",
       "Arn"
      ]
     }
@@ -448,13 +495,13 @@
     }
    }
   },
-  "LineNotifyMockHandlerinvokefunctionurlE2F9BCCB": {
+  "LineMessagingApiMockHandlerinvokefunctionurl0EFEE7EC": {
    "Type": "AWS::Lambda::Permission",
    "Properties": {
     "Action": "lambda:InvokeFunctionUrl",
     "FunctionName": {
      "Fn::GetAtt": [
-      "LineNotifyMockHandler4336C8BA",
+      "LineMessagingApiMockHandler53EC5DEF",
       "Arn"
      ]
     },
@@ -477,15 +524,15 @@
   }
  },
  "Outputs": {
-  "ExportsOutputFnGetAttLineNotifyMockHandlerFunctionUrl65B94A2FFunctionUrl1247CBCD": {
+  "ExportsOutputFnGetAttLineMessagingApiMockHandlerFunctionUrlBACC71E8FunctionUrlA76D3756": {
    "Value": {
     "Fn::GetAtt": [
-     "LineNotifyMockHandlerFunctionUrl65B94A2F",
+     "LineMessagingApiMockHandlerFunctionUrlBACC71E8",
      "FunctionUrl"
     ]
    },
    "Export": {
-    "Name": "LineNotifyMockStack:ExportsOutputFnGetAttLineNotifyMockHandlerFunctionUrl65B94A2FFunctionUrl1247CBCD"
+    "Name": "LineMessagingApiMockStack:ExportsOutputFnGetAttLineMessagingApiMockHandlerFunctionUrlBACC71E8FunctionUrlA76D3756"
    }
   }
  },

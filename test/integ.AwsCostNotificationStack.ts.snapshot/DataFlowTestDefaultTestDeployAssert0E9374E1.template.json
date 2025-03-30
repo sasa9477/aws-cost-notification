@@ -17,7 +17,7 @@
      "RetentionDays": "1"
     },
     "flattenResponse": "false",
-    "salt": "1730774950510"
+    "salt": "1743331468596"
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
@@ -105,12 +105,11 @@
         {
          "Effect": "Allow",
          "Action": [
-          "s3:GetObject*",
-          "s3:List*"
+          "s3:ListBucket"
          ],
          "Resource": [
-          "arn:aws:s3:::linenotifymockstack-line-notify-mock-bucket",
-          "arn:aws:s3:::linenotifymockstack-line-notify-mock-bucket/*"
+          "arn:aws:s3:::linemessagingapimockstack-line-notify-mock-bucket",
+          "arn:aws:s3:::linemessagingapimockstack-line-notify-mock-bucket/*"
          ]
         }
        ]
@@ -160,12 +159,20 @@
   "SingletonFunction1488541a7b23466481b69b4408076b81HandlerCD40AE9F": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
-    "Runtime": "nodejs18.x",
+    "Runtime": {
+     "Fn::FindInMap": [
+      "LatestNodeRuntimeMap",
+      {
+       "Ref": "AWS::Region"
+      },
+      "value"
+     ]
+    },
     "Code": {
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "65c9f57ca55e2d458059a930e997f2bc96560b3a3654cc442616d12089449d39.zip"
+     "S3Key": "530055f7515b3f0a47900f5df37e729ba40ca977b2d07b952bdefa2b8f883f42.zip"
     },
     "Timeout": 120,
     "Handler": "index.handler",
@@ -198,7 +205,7 @@
      "InvocationType": "\"Event\""
     },
     "flattenResponse": "false",
-    "salt": "1730774950510"
+    "salt": "1743331468597"
    },
    "DependsOn": [
     "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
@@ -206,7 +213,7 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
   },
-  "AwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79": {
+  "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b": {
    "Type": "Custom::DeployAssert@SdkCalls3ListObjectsV2",
    "Properties": {
     "ServiceToken": {
@@ -217,15 +224,15 @@
     },
     "service": "s3",
     "api": "ListObjectsV2",
-    "expected": "{\"$ObjectLike\":{\"KeyCount\":3}}",
+    "expected": "{\"$ObjectLike\":{\"KeyCount\":6}}",
     "stateMachineArn": {
-     "Ref": "AwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79WaitForACD804F3"
+     "Ref": "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitFor563A32CD"
     },
     "parameters": {
-     "Bucket": "\"linenotifymockstack-line-notify-mock-bucket\""
+     "Bucket": "\"linemessagingapimockstack-line-notify-mock-bucket\""
     },
     "flattenResponse": "false",
-    "salt": "1730774950511"
+    "salt": "1743331468597"
    },
    "DependsOn": [
     "AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329"
@@ -233,7 +240,7 @@
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
   },
-  "AwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79WaitForIsCompleteProviderInvoke8FB0129E": {
+  "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForIsCompleteProviderInvoke988E71C3": {
    "Type": "AWS::Lambda::Permission",
    "Properties": {
     "Action": "lambda:InvokeFunction",
@@ -245,7 +252,7 @@
     },
     "Principal": {
      "Fn::GetAtt": [
-      "AwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79WaitForRoleAA9A91C7",
+      "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForRoleE9F8206A",
       "Arn"
      ]
     }
@@ -254,7 +261,7 @@
     "AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329"
    ]
   },
-  "AwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79WaitForTimeoutProviderInvoke4E27B43C": {
+  "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForTimeoutProviderInvoke5DB6BB5E": {
    "Type": "AWS::Lambda::Permission",
    "Properties": {
     "Action": "lambda:InvokeFunction",
@@ -266,7 +273,7 @@
     },
     "Principal": {
      "Fn::GetAtt": [
-      "AwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79WaitForRoleAA9A91C7",
+      "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForRoleE9F8206A",
       "Arn"
      ]
     }
@@ -275,7 +282,7 @@
     "AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329"
    ]
   },
-  "AwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79WaitForRoleAA9A91C7": {
+  "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForRoleE9F8206A": {
    "Type": "AWS::IAM::Role",
    "Properties": {
     "AssumeRolePolicyDocument": {
@@ -323,7 +330,7 @@
     "AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329"
    ]
   },
-  "AwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79WaitForACD804F3": {
+  "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitFor563A32CD": {
    "Type": "AWS::StepFunctions::StateMachine",
    "Properties": {
     "DefinitionString": {
@@ -350,14 +357,14 @@
     },
     "RoleArn": {
      "Fn::GetAtt": [
-      "AwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79WaitForRoleAA9A91C7",
+      "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForRoleE9F8206A",
       "Arn"
      ]
     }
    },
    "DependsOn": [
     "AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329",
-    "AwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79WaitForRoleAA9A91C7"
+    "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForRoleE9F8206A"
    ]
   },
   "SingletonFunction76b3e830a873425f8453eddd85c86925Role918961BB": {
@@ -398,12 +405,11 @@
         {
          "Effect": "Allow",
          "Action": [
-          "s3:GetObject*",
-          "s3:List*"
+          "s3:ListBucket"
          ],
          "Resource": [
-          "arn:aws:s3:::linenotifymockstack-line-notify-mock-bucket",
-          "arn:aws:s3:::linenotifymockstack-line-notify-mock-bucket/*"
+          "arn:aws:s3:::linemessagingapimockstack-line-notify-mock-bucket",
+          "arn:aws:s3:::linemessagingapimockstack-line-notify-mock-bucket/*"
          ]
         }
        ]
@@ -415,12 +421,20 @@
   "SingletonFunction76b3e830a873425f8453eddd85c86925Handler81461ECE": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
-    "Runtime": "nodejs18.x",
+    "Runtime": {
+     "Fn::FindInMap": [
+      "LatestNodeRuntimeMap",
+      {
+       "Ref": "AWS::Region"
+      },
+      "value"
+     ]
+    },
     "Code": {
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "65c9f57ca55e2d458059a930e997f2bc96560b3a3654cc442616d12089449d39.zip"
+     "S3Key": "530055f7515b3f0a47900f5df37e729ba40ca977b2d07b952bdefa2b8f883f42.zip"
     },
     "Timeout": 120,
     "Handler": "index.isComplete",
@@ -457,12 +471,20 @@
   "SingletonFunction5c1898e096fb4e3e95d5f6c67f3ce41aHandlerADF3E6EA": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
-    "Runtime": "nodejs18.x",
+    "Runtime": {
+     "Fn::FindInMap": [
+      "LatestNodeRuntimeMap",
+      {
+       "Ref": "AWS::Region"
+      },
+      "value"
+     ]
+    },
     "Code": {
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "65c9f57ca55e2d458059a930e997f2bc96560b3a3654cc442616d12089449d39.zip"
+     "S3Key": "530055f7515b3f0a47900f5df37e729ba40ca977b2d07b952bdefa2b8f883f42.zip"
     },
     "Timeout": 120,
     "Handler": "index.onTimeout",
@@ -475,11 +497,135 @@
    }
   }
  },
+ "Mappings": {
+  "LatestNodeRuntimeMap": {
+   "af-south-1": {
+    "value": "nodejs20.x"
+   },
+   "ap-east-1": {
+    "value": "nodejs20.x"
+   },
+   "ap-northeast-1": {
+    "value": "nodejs20.x"
+   },
+   "ap-northeast-2": {
+    "value": "nodejs20.x"
+   },
+   "ap-northeast-3": {
+    "value": "nodejs20.x"
+   },
+   "ap-south-1": {
+    "value": "nodejs20.x"
+   },
+   "ap-south-2": {
+    "value": "nodejs20.x"
+   },
+   "ap-southeast-1": {
+    "value": "nodejs20.x"
+   },
+   "ap-southeast-2": {
+    "value": "nodejs20.x"
+   },
+   "ap-southeast-3": {
+    "value": "nodejs20.x"
+   },
+   "ap-southeast-4": {
+    "value": "nodejs20.x"
+   },
+   "ap-southeast-5": {
+    "value": "nodejs20.x"
+   },
+   "ap-southeast-7": {
+    "value": "nodejs20.x"
+   },
+   "ca-central-1": {
+    "value": "nodejs20.x"
+   },
+   "ca-west-1": {
+    "value": "nodejs20.x"
+   },
+   "cn-north-1": {
+    "value": "nodejs18.x"
+   },
+   "cn-northwest-1": {
+    "value": "nodejs18.x"
+   },
+   "eu-central-1": {
+    "value": "nodejs20.x"
+   },
+   "eu-central-2": {
+    "value": "nodejs20.x"
+   },
+   "eu-isoe-west-1": {
+    "value": "nodejs18.x"
+   },
+   "eu-north-1": {
+    "value": "nodejs20.x"
+   },
+   "eu-south-1": {
+    "value": "nodejs20.x"
+   },
+   "eu-south-2": {
+    "value": "nodejs20.x"
+   },
+   "eu-west-1": {
+    "value": "nodejs20.x"
+   },
+   "eu-west-2": {
+    "value": "nodejs20.x"
+   },
+   "eu-west-3": {
+    "value": "nodejs20.x"
+   },
+   "il-central-1": {
+    "value": "nodejs20.x"
+   },
+   "me-central-1": {
+    "value": "nodejs20.x"
+   },
+   "me-south-1": {
+    "value": "nodejs20.x"
+   },
+   "mx-central-1": {
+    "value": "nodejs20.x"
+   },
+   "sa-east-1": {
+    "value": "nodejs20.x"
+   },
+   "us-east-1": {
+    "value": "nodejs20.x"
+   },
+   "us-east-2": {
+    "value": "nodejs20.x"
+   },
+   "us-gov-east-1": {
+    "value": "nodejs18.x"
+   },
+   "us-gov-west-1": {
+    "value": "nodejs18.x"
+   },
+   "us-iso-east-1": {
+    "value": "nodejs18.x"
+   },
+   "us-iso-west-1": {
+    "value": "nodejs18.x"
+   },
+   "us-isob-east-1": {
+    "value": "nodejs18.x"
+   },
+   "us-west-1": {
+    "value": "nodejs20.x"
+   },
+   "us-west-2": {
+    "value": "nodejs20.x"
+   }
+  }
+ },
  "Outputs": {
-  "AssertionResultsAwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79": {
+  "AssertionResultsAwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b": {
    "Value": {
     "Fn::GetAtt": [
-     "AwsApiCalls3ListObjectsV22f25a9e7fe2282f198d5332bd0107a79",
+     "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b",
      "assertion"
     ]
    }

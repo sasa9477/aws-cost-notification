@@ -220,6 +220,9 @@
   },
   "LineNotificationConstructLineNotificationHandlerLogGroup0D100642": {
    "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "RetentionInDays": 365
+   },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
   },
@@ -228,14 +231,16 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-     "S3Key": "73139c9f3b2f7905a66c82078ac72dd203f28caea2f99306cc9c88a564da3ac8.zip"
+     "S3Key": "28c8098df9117d82af7344b0d0ffad456c40158d1e4f9dde9a5b3394757d5a87.zip"
     },
     "Environment": {
      "Variables": {
-      "LINE_NOTIFY_URL": {
-       "Fn::ImportValue": "LineNotifyMockStack:ExportsOutputFnGetAttLineNotifyMockHandlerFunctionUrl65B94A2FFunctionUrl1247CBCD"
+      "LINE_NOTIFICATION_TEST_URL": {
+       "Fn::ImportValue": "LineMessagingApiMockStack:ExportsOutputFnGetAttLineMessagingApiMockHandlerFunctionUrlBACC71E8FunctionUrlA76D3756"
       },
-      "LINE_NOTIFY_TOKEN": "uYx1hi15rGUia9pLuLeLM3ZxAVkxqqNAAPL5eoqi2np"
+      "LINE_CHANNEL_ID": "",
+      "LINE_CHANNEL_SECRET": "",
+      "LINE_USER_ID": ""
      }
     },
     "FunctionName": "IntegTestStackLineNotificationHandler",
@@ -400,6 +405,9 @@
   },
   "CostScheduleNotificationConstructCostScheduleNotificationHandlerLogGroup293A52C4": {
    "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "RetentionInDays": 365
+   },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
   },
@@ -408,12 +416,12 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-     "S3Key": "d6b8ed653da26cdd35248682f2de31d7f2c89e81e57c4aee2c70a749729ae074.zip"
+     "S3Key": "9d607c76fb3a745f2a2d83a8f5607bf6b22acb67992cf70c086c4bdee38ae1ec.zip"
     },
     "Environment": {
      "Variables": {
       "TZ": "Asia/Tokyo",
-      "EXCHANGE_RATE_API_KEY": "668799ba00d2a9602bced8935180f246"
+      "EXCHANGE_RATE_API_KEY": ""
      }
     },
     "FunctionName": "IntegTestStackCostScheduleNotificationHandler",
@@ -828,6 +836,9 @@
   },
   "BudgetAlartConstructBudgetAlartHandlerLogGroup7D1272DB": {
    "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "RetentionInDays": 365
+   },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
   },
@@ -836,12 +847,12 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-     "S3Key": "d155e959edc487a9fa5386d207eb4af6755c07949f8ef41eefe7db52fb14ca56.zip"
+     "S3Key": "045d27f28d894e6d55e05b94ff6c78aefd06ad36e6982abb47f8ac4a04662454.zip"
     },
     "Environment": {
      "Variables": {
       "TZ": "Asia/Tokyo",
-      "EXCHANGE_RATE_API_KEY": "668799ba00d2a9602bced8935180f246"
+      "EXCHANGE_RATE_API_KEY": ""
      }
     },
     "FunctionName": "IntegTestStackBudgetAlartHandler",
