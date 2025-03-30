@@ -2,14 +2,11 @@ import { AwsApiCall, ExpectedResult, IntegTest } from "@aws-cdk/integ-tests-alph
 import * as cdk from "aws-cdk-lib";
 import { AwsSolutionsChecks } from "cdk-nag";
 import { IConstruct } from "constructs";
-import * as dotenv from "dotenv";
 import { ApplyDestroyPolicyAspect } from "../src/aspects/ApplyDestroyPolicyAspect";
 import { CustomResourceLoggingConfigAspect } from "../src/aspects/CustomResourceLoggingConfigAspect";
 import { AwsCostNotificationStack } from "../src/stacks/AwsCostNotificationStack";
 import { LineMessagingApiMockStack } from "../src/stacks/LineMessagingApiMockStack";
 import { testConfig } from "./fixtures/testConfig";
-
-dotenv.config({ path: "../.env" });
 
 const app = new cdk.App();
 
@@ -33,6 +30,9 @@ const stack = new AwsCostNotificationStack(app, "IntegTestStack", {
   },
   crossRegionReferences: true,
   config: testConfig,
+  lineChannelId: "",
+  lineChannelSecret: "",
+  lineUserId: "",
   lineNotificationTestUrl: mockStack.functionUrl.url,
 });
 
