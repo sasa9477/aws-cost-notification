@@ -7,6 +7,9 @@ import { LINE_NOTIFICATION_HANDLER_ENV } from "../handlers/LineNotificationHandl
 
 export type LineNotificationConstructProps = {
   readonly config: Config;
+  readonly lineChannelId: string;
+  readonly lineChannelSecret: string;
+  readonly lineUserId: string;
   readonly lineNotificationTestUrl?: string;
 };
 
@@ -16,18 +19,7 @@ export class LineNotificationConstruct extends Construct {
   constructor(scope: Construct, id: string, props: LineNotificationConstructProps) {
     super(scope, id);
 
-    const { lineNotificationTestUrl } = props;
-
-    // 環境変数の確認
-    const lineChannelId = process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_CHANNEL_ID] || "";
-    const lineChannelSecret = process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_CHANNEL_SECRET] || "";
-    const lineUserId = process.env[LINE_NOTIFICATION_HANDLER_ENV.LINE_USER_ID] || "";
-
-    if (!lineChannelId || !lineChannelSecret || !lineUserId) {
-      cdk.Annotations.of(this).addError(
-        "環境変数に LINE_CHANNEL_ID, LINE_CHANNEL_SECRET, LINE_USER_ID のいずれかが設定されていません。",
-      );
-    }
+    const { lineChannelId, lineChannelSecret, lineUserId, lineNotificationTestUrl } = props;
 
     const topicLoggingRole = new cdk.aws_iam.Role(this, "NotificationTopicLoggingRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),

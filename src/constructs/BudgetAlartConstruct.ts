@@ -8,6 +8,7 @@ import { Config } from "../config/config";
 export type BudgetAlartConstructProps = {
   readonly config: Config;
   readonly notificationTopic: cdk.aws_sns.Topic;
+  readonly exchangeRateApiKey?: string;
 };
 
 export class BudgetAlartConstruct extends Construct {
@@ -88,8 +89,7 @@ export class BudgetAlartConstruct extends Construct {
       entryFileName: "BudgetAlartHandler",
       environment: {
         TZ: "Asia/Tokyo",
-        [BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY]:
-          process.env[BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY] || "",
+        [BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY]: props.exchangeRateApiKey ?? "",
       },
       events: [new cdk.aws_lambda_event_sources.SnsEventSource(topic)],
       onSuccess: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),

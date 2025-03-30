@@ -17,6 +17,9 @@ describe("AWS Cost Notification Stack", () => {
     cdk.Aspects.of(app).add(new AwsSolutionsChecks());
     stack = new AwsCostNotification.AwsCostNotificationStack(app, "JestStack", {
       config: testConfig,
+      lineChannelId: "",
+      lineChannelSecret: "",
+      lineUserId: "",
     });
 
     template = Template.fromStack(stack);

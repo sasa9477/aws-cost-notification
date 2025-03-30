@@ -7,8 +7,12 @@ import { Config } from "../config/config";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 
 export type AwsCostNotificationStackProps = cdk.StackProps & {
-  config: Config;
-  lineNotificationTestUrl?: string;
+  readonly config: Config;
+  readonly lineChannelId: string;
+  readonly lineChannelSecret: string;
+  readonly lineUserId: string;
+  readonly lineNotificationTestUrl?: string;
+  readonly exchangeRateApiKey?: string;
 };
 
 export class AwsCostNotificationStack extends cdk.Stack {
@@ -19,10 +23,13 @@ export class AwsCostNotificationStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: AwsCostNotificationStackProps) {
     super(scope, id, props);
 
-    const { config, lineNotificationTestUrl } = props;
+    const { config, lineChannelId, lineChannelSecret, lineUserId, lineNotificationTestUrl, exchangeRateApiKey } = props;
 
     const { notificationTopic } = new LineNotificationConstruct(this, "LineNotificationConstruct", {
       config,
+      lineChannelId,
+      lineChannelSecret,
+      lineUserId,
       lineNotificationTestUrl,
     });
 
@@ -43,6 +50,7 @@ export class AwsCostNotificationStack extends cdk.Stack {
       const { monthlyCostBudget } = new BudgetAlartConstruct(this, "BudgetAlartConstruct", {
         config,
         notificationTopic,
+        exchangeRateApiKey,
       });
 
       this.monthlyCostBudget = monthlyCostBudget;

@@ -8,19 +8,35 @@ import { config } from "./config/config";
 import { AwsCostAnomalyNotificationStack } from "./stacks/AwsCostAnomalyNotificationStack";
 import { AwsCostNotificationStack } from "./stacks/AwsCostNotificationStack";
 import { CustomResourceLoggingConfigAspect } from "./aspects/CustomResourceLoggingConfigAspect";
-
-dotenv.config();
+import * as valibot from "valibot";
 
 (async () => {
+  dotenv.config();
+
+  const env = valibot.parse(
+    valibot.object({
+      CDK_DEFAULT_ACCOUNT: valibot.string(),
+      LINE_CHANNEL_ID: valibot.string(),
+      LINE_CHANNEL_SECRET: valibot.string(),
+      LINE_USER_ID: valibot.string(),
+      EXCHANGE_RATE_API_KEY: valibot.string(),
+    }),
+    process.env,
+  );
+
   const app = new cdk.App();
 
   const awsCostNotificationStack = new AwsCostNotificationStack(app, "AwsCostNotificationStack", {
     env: {
-      account: process.env.CDK_DEFAULT_ACCOUNT,
+      account: env.CDK_DEFAULT_ACCOUNT,
       region: "ap-northeast-1",
     },
     crossRegionReferences: true,
     config,
+    lineChannelId: env.LINE_CHANNEL_ID,
+    lineChannelSecret: env.LINE_CHANNEL_SECRET,
+    lineUserId: env.LINE_USER_ID,
+    exchangeRateApiKey: env.EXCHANGE_RATE_API_KEY,
   });
 
   // 異常検知の通知は us-east-1 でのみサポートされているため、スタックを分ける
@@ -30,7 +46,7 @@ dotenv.config();
       "AwsCostAnomalyNotificationStack",
       {
         env: {
-          account: process.env.CDK_DEFAULT_ACCOUNT,
+          account: env.CDK_DEFAULT_ACCOUNT,
           region: "us-east-1",
         },
         crossRegionReferences: true,
