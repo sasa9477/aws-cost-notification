@@ -4,23 +4,25 @@ name: depependabot-auto-approve
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   depependabot-auto-approve:
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
-      # pull request のマージ
+      # pull request のマージに必要な権限を付与
       contents: write
       pull-requests: write
     steps:
-      - name: Dependabot metadata
+      - name: Fetch dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@8ca800c1642f5e46fd4fe73c07af0e3baf1375d6
+        uses: dependabot/fetch-metadata@v2
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - name: Enable auto-merge for Dependabot PRs
-        run: gh pr merge --auto --merge "$PR_NUMBER"
+
+      - name: Auto Merge
+        run: gh pr merge --auto --merge "$PR_URL"
         env:
-          PR_NUMBER: ${{github.event.pull_request.number}}
-          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
