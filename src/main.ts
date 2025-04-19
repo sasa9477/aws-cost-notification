@@ -16,10 +16,11 @@ import * as valibot from "valibot";
   const env = valibot.parse(
     valibot.object({
       CDK_DEFAULT_ACCOUNT: valibot.string(),
+      OUTPUT_GRAPH: valibot.optional(valibot.string(), "true"),
       LINE_CHANNEL_ID: valibot.string(),
       LINE_CHANNEL_SECRET: valibot.string(),
       LINE_USER_ID: valibot.string(),
-      EXCHANGE_RATE_API_KEY: valibot.string(),
+      EXCHANGE_RATE_API_KEY: valibot.optional(valibot.string()),
     }),
     process.env,
   );
@@ -66,35 +67,37 @@ import * as valibot from "valibot";
   cdk.Aspects.of(app).add(new AwsSolutionsChecks({ verbose: true }));
 
   // CDK のグラフを出力する
-  const graph = new CdkGraph(app, {
-    plugins: [
-      new CdkGraphDiagramPlugin({
-        defaults: {
-          format: [DiagramFormat.SVG],
-        },
-        diagrams: [
-          {
-            name: "compact.light",
-            title: "AWS Cost Notification",
-            theme: "light",
-            filterPlan: {
-              preset: FilterPreset.COMPACT,
-            },
+  if (env.OUTPUT_GRAPH === "true") {
+    const graph = new CdkGraph(app, {
+      plugins: [
+        new CdkGraphDiagramPlugin({
+          defaults: {
+            format: [DiagramFormat.SVG],
           },
-          {
-            name: "compact.dark",
-            title: "AWS Cost Notification",
-            theme: "dark",
-            filterPlan: {
-              preset: FilterPreset.COMPACT,
+          diagrams: [
+            {
+              name: "compact.light",
+              title: "AWS Cost Notification",
+              theme: "light",
+              filterPlan: {
+                preset: FilterPreset.COMPACT,
+              },
             },
-          },
-        ],
-      }),
-    ],
-  });
+            {
+              name: "compact.dark",
+              title: "AWS Cost Notification",
+              theme: "dark",
+              filterPlan: {
+                preset: FilterPreset.COMPACT,
+              },
+            },
+          ],
+        }),
+      ],
+    });
 
-  app.synth();
+    app.synth();
 
-  await graph.report();
+    await graph.report();
+  }
 })();
