@@ -6,6 +6,7 @@ on:
 
 jobs:
   dependabot-pr-check:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
       # AWS 認証に OIDC を使用するため
