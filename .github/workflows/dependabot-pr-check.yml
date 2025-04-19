@@ -1,3 +1,5 @@
+# dependabot PR 作成時に test と cdk diff を実行して確認する
+
 name: dependabot-pr-check
 
 on:
