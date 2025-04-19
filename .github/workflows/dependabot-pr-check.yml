@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  pr-check:
+  dependabot-pr-check:
     runs-on: ubuntu-latest
     permissions:
       # AWS 認証に OIDC を使用するため
