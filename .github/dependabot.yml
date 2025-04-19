@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+    schedule:
+      # 毎週月曜日
+      interval: "weekly"
+      day: "monday"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      # 毎週月曜日
+      interval: "weekly"
+      day: "monday"
