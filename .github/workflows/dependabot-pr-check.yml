@@ -42,3 +42,8 @@ jobs:
 
       - name: Cdk diff check
         run: pnpm run cdk diff -- --fail true # 差分がある場合はエラーを返す
+        env:
+          LINE_CHANNEL_ID: ${{ secrets.LINE_CHANNEL_ID }}
+          LINE_CHANNEL_SECRET: ${{ secrets.LINE_CHANNEL_SECRET }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+          EXCHANGE_RATE_API_KEY: ${{ secrets.EXCHANGE_RATE_API_KEY }}
