@@ -1,0 +1,26 @@
+# ステータスチェックを行うルールセットを作成し、テストに合格したときに自動的にマージする
+
+name: depependabot-auto-approve
+
+on:
+  pull_request:
+
+jobs:
+  depependabot-auto-approve:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      # pull request のマージ
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@8ca800c1642f5e46fd4fe73c07af0e3baf1375d6
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --merge "$PR_NUMBER"
+        env:
+          PR_NUMBER: ${{github.event.pull_request.number}}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
