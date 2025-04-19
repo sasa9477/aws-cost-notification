@@ -1,16 +1,11 @@
 name: dependabot-pr-check
 
 on:
-  # dependabot が PR を作成したとき
-  workflow_run:
-    workflows: ["dependabot-pr-check-trigger"]
-    types:
-      - completed
+  pull_request_target:
+    types: [opened, synchronize, reopened]
 
 jobs:
   pr-check:
-    # dependabot の PR 作成による直接のトリガーは除外する
-    if: ${{ !(github.event_name == 'pull_request' && github.actor == 'dependabot[bot]') }}
     runs-on: ubuntu-latest
     permissions:
       # AWS 認証に OIDC を使用するため
@@ -20,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_branch }} # PR の HEAD をチェックアウトする
+          ref: ${{ github.event.pull_request.head.ref }} # PR の HEAD をチェックアウトする
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
