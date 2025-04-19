@@ -13,6 +13,8 @@ import * as valibot from "valibot";
 (async () => {
   dotenv.config();
 
+  error check
+
   const env = valibot.parse(
     valibot.object({
       CDK_DEFAULT_ACCOUNT: valibot.string(),
