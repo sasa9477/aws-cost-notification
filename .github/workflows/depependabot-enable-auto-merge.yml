@@ -1,13 +1,13 @@
-# ステータスチェックを行うルールセットを作成し、テストに合格したときに自動的にマージする
+# 自動マージの有効化
 
-name: depependabot-auto-approve
+name: depependabot-enable-auto-merge
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  depependabot-auto-approve:
+  depependabot-enable-auto-merge:
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
@@ -21,7 +21,7 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Auto Merge
+      - name: Enable Auto Merge
         run: gh pr merge --auto --merge "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
