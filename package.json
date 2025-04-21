@@ -39,7 +39,7 @@
     "@aws-sdk/lib-storage": "^3.787.0",
     "@aws/pdk": "^0.26.3",
     "aws-cdk-lib": "^2.190.0",
-    "cdk-nag": "^2.35.74",
+    "cdk-nag": "^2.35.76",
     "constructs": "^10.4.2",
     "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
