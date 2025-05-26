@@ -17,12 +17,12 @@
     "destroy": "cdk destroy --all"
   },
   "devDependencies": {
-    "@aws-cdk/integ-runner": "2.186.8",
+    "@aws-cdk/integ-runner": "2.186.9",
     "@aws-cdk/integ-tests-alpha": "2.185.0-alpha.0",
     "@types/aws-lambda": "^8.10.149",
     "@types/jest": "^29.5.14",
-    "@types/node": "22.15.19",
-    "aws-cdk": "^2.1016.0",
+    "@types/node": "22.15.21",
+    "aws-cdk": "^2.1016.1",
     "aws-sdk-client-mock": "^4.1.0",
     "esbuild": "^0.25.4",
     "husky": "^9.1.7",
@@ -34,12 +34,12 @@
     "typescript": "~5.8.3"
   },
   "dependencies": {
-    "@aws-sdk/client-cost-explorer": "^3.812.0",
-    "@aws-sdk/client-s3": "^3.812.0",
-    "@aws-sdk/lib-storage": "^3.812.0",
+    "@aws-sdk/client-cost-explorer": "^3.817.0",
+    "@aws-sdk/client-s3": "^3.817.0",
+    "@aws-sdk/lib-storage": "^3.817.0",
     "@aws/pdk": "^0.26.8",
-    "aws-cdk-lib": "^2.196.0",
-    "cdk-nag": "^2.35.101",
+    "aws-cdk-lib": "^2.198.0",
+    "cdk-nag": "^2.35.106",
     "constructs": "^10.4.2",
     "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
