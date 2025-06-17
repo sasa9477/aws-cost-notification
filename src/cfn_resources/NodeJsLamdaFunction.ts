@@ -30,7 +30,7 @@ export class NodeJsLambdaFunction extends cdk.aws_lambda_nodejs.NodejsFunction {
     });
 
     super(scope, id, {
-      runtime: cdk.aws_lambda.Runtime.NODEJS_18_X,
+      runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
       memorySize: 128,
       timeout: cdk.Duration.seconds(10),
       role: _role,
