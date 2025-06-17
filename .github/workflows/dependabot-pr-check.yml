@@ -1,4 +1,5 @@
 # dependabot PR 作成時に test と cdk diff を実行して確認する
+# test と cdk diff に失敗した場合は、PR のレビューアにレポジトリのオーナーを追加する
 
 name: dependabot-pr-check
 
@@ -51,3 +52,22 @@ jobs:
           LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
           EXCHANGE_RATE_API_KEY: ${{ secrets.EXCHANGE_RATE_API_KEY }}
           OUTPUT_GRAPH: "false"
+
+  dependabot-add-repos-owner-as-reviewer:
+    needs: dependabot-pr-check
+    if: ${{ failure()}}
+    runs-on: ubuntu-latest
+    permissions:
+      # レビューアの設定に必要な権限を付与
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # レポジトリオーナーをレビューアに設定
+      - name: Add repository owner as reviewer
+        run: gh pr edit "$PR_URL" --add-reviewer "$OWNER"
+        env:
+          OWNER: ${{ github.repository_owner }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
