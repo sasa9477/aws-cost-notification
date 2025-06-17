@@ -18,14 +18,14 @@ importers:
         specifier: ^3.830.0
         version: 3.830.0(@aws-sdk/client-s3@3.830.0)
       '@aws/pdk':
-        specifier: ^0.26.11
-        version: 0.26.11(@aws-cdk/aws-cognito-identitypool-alpha@2.163.1-alpha.0(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2))(aws-cdk-lib@2.201.0(constructs@10.4.2))(cdk-nag@2.36.18(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2))(constructs@10.4.2)(projen@0.82.8(constructs@10.4.2))
+        specifier: ^0.26.12
+        version: 0.26.12(@aws-cdk/aws-cognito-identitypool-alpha@2.163.1-alpha.0(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2))(aws-cdk-lib@2.201.0(constructs@10.4.2))(cdk-nag@2.36.19(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2))(constructs@10.4.2)(projen@0.82.8(constructs@10.4.2))
       aws-cdk-lib:
         specifier: ^2.201.0
         version: 2.201.0(constructs@10.4.2)
       cdk-nag:
-        specifier: ^2.36.18
-        version: 2.36.18(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2)
+        specifier: ^2.36.19
+        version: 2.36.19(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2)
       constructs:
         specifier: ^10.4.2
         version: 10.4.2
@@ -297,8 +297,8 @@ packages:
     resolution: {integrity: sha512-DIIotRnefVL6DiaHtO6/21DhJ4JZnnIwdNbpwiAhdt/AVbttcE4yw925gsjur0OGv5BTYXQXU3YnANBYnZjuQA==}
     engines: {node: '>=18.0.0'}
 
-  '@aws/pdk@0.26.11':
-    resolution: {integrity: sha512-P4fItSB+5kMrn692WObmGaWQoab6wxIoaGdQZEza5SqLENTwZMymNN51/Z6c9SkfiVLJgy/P4nuVcgv5Dhf4ww==}
+  '@aws/pdk@0.26.12':
+    resolution: {integrity: sha512-kf9J4nbB2k5XTEfL6rexVRgqv8qsjdCsRF+TXoK6C05agR9P6R1o9edcY/n2e3rekbkccuH0H3ooq0INTJ8gRQ==}
     hasBin: true
     peerDependencies:
       '@aws-cdk/aws-cognito-identitypool-alpha': ^2.163.1-alpha.0
@@ -1346,8 +1346,8 @@ packages:
   caniuse-lite@1.0.30001723:
     resolution: {integrity: sha512-1R/elMjtehrFejxwmexeXAtae5UO9iSyFn6G/I806CYC/BLyyBk1EPhrKBkWhy6wM6Xnm47dSJQec+tLJ39WHw==}
 
-  cdk-nag@2.36.18:
-    resolution: {integrity: sha512-Z0SYxaIekh2ymujJ471rRmzrCWmrvTqfS7bRjFXQ1xvAkku+3qeYVv5Xhef8IshPPe3b9R6knW7mIl0CfhFguA==}
+  cdk-nag@2.36.19:
+    resolution: {integrity: sha512-L0r3FIIbhesrxWow5Y0wbrH6PYRUxRGY4wlsCDtgxkrpq1V9FDmp8GcCAV7ELUUmotmbVeC1AbyzG2Cj4I0tXg==}
     peerDependencies:
       aws-cdk-lib: ^2.156.0
       constructs: ^10.0.5
@@ -2970,11 +2970,11 @@ snapshots:
       '@smithy/types': 4.3.1
       tslib: 2.8.1
 
-  '@aws/pdk@0.26.11(@aws-cdk/aws-cognito-identitypool-alpha@2.163.1-alpha.0(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2))(aws-cdk-lib@2.201.0(constructs@10.4.2))(cdk-nag@2.36.18(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2))(constructs@10.4.2)(projen@0.82.8(constructs@10.4.2))':
+  '@aws/pdk@0.26.12(@aws-cdk/aws-cognito-identitypool-alpha@2.163.1-alpha.0(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2))(aws-cdk-lib@2.201.0(constructs@10.4.2))(cdk-nag@2.36.19(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2))(constructs@10.4.2)(projen@0.82.8(constructs@10.4.2))':
     dependencies:
       '@aws-cdk/aws-cognito-identitypool-alpha': 2.163.1-alpha.0(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2)
       aws-cdk-lib: 2.201.0(constructs@10.4.2)
-      cdk-nag: 2.36.18(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2)
+      cdk-nag: 2.36.19(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2)
       constructs: 10.4.2
       projen: 0.82.8(constructs@10.4.2)
 
@@ -4155,7 +4155,7 @@ snapshots:
 
   caniuse-lite@1.0.30001723: {}
 
-  cdk-nag@2.36.18(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2):
+  cdk-nag@2.36.19(aws-cdk-lib@2.201.0(constructs@10.4.2))(constructs@10.4.2):
     dependencies:
       aws-cdk-lib: 2.201.0(constructs@10.4.2)
       constructs: 10.4.2
