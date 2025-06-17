@@ -1,13 +1,13 @@
 # 自動マージの有効化
 
-name: depependabot-enable-auto-merge
+name: dependabot-enable-auto-merge
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  depependabot-enable-auto-merge:
+  ddependabot-enable-auto-merge:
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
