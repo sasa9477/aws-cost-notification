@@ -17,7 +17,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.ref }} # PR の HEAD をチェックアウトする
 
@@ -62,7 +62,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # レポジトリオーナーをレビューアに設定
       - name: Add repository owner as reviewer
