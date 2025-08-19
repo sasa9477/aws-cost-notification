@@ -2,7 +2,6 @@
   "name": "aws-cost-notification",
   "version": "0.1.0",
   "scripts": {
-    "postinstall": "patch-package",
     "build": "tsc",
     "watch": "tsc -w",
     "clean": "tsc --build --clean",
@@ -43,7 +42,6 @@
     "constructs": "^10.4.2",
     "dayjs": "^1.11.13",
     "dotenv": "^17.2.1",
-    "patch-package": "^8.0.0",
     "source-map-support": "^0.5.21",
     "valibot": "^1.1.0"
   },
@@ -55,6 +53,9 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "unrs-resolver"
-    ]
+    ],
+    "patchedDependencies": {
+      "@aws-cdk/integ-tests-alpha": "patches/@aws-cdk__integ-tests-alpha.patch"
+    }
   }
 }

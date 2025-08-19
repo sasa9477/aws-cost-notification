@@ -1,7 +1,7 @@
-diff --git a/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js b/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js
-index 480116c..4e6859c 100644
---- a/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js
-+++ b/node_modules/@aws-cdk/integ-tests-alpha/lib/assertions/providers/provider.js
+diff --git a/lib/assertions/providers/provider.js b/lib/assertions/providers/provider.js
+index 365870feaedda044ddf1f9d38b1d0b0c4b38a146..452e4c0c0c59650d195ca95f37db0b1616389c0e 100644
+--- a/lib/assertions/providers/provider.js
++++ b/lib/assertions/providers/provider.js
 @@ -8,6 +8,14 @@ const path = require("path");
  const core_1 = require("aws-cdk-lib/core");
  const constructs_1 = require("constructs");
