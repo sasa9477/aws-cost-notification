@@ -1,5 +1,5 @@
 {
-  "version": "39.0.0",
+  "version": "48.0.0",
   "testCases": {
     "DataFlowTest/DefaultTest": {
       "stacks": [
@@ -20,5 +20,6 @@
       "assertionStack": "DataFlowTest/DefaultTest/DeployAssert",
       "assertionStackName": "DataFlowTestDefaultTestDeployAssert0E9374E1"
     }
-  }
+  },
+  "minimumCliVersion": "2.1025.0"
 }

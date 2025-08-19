@@ -1,5 +1,5 @@
 {
-  "version": "39.0.0",
+  "version": "48.0.0",
   "files": {
     "530055f7515b3f0a47900f5df37e729ba40ca977b2d07b952bdefa2b8f883f42": {
       "source": {
@@ -7,22 +7,23 @@
         "packaging": "zip"
       },
       "destinations": {
-        "current_account-current_region": {
+        "current_account-current_region-1fb847fa": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
           "objectKey": "530055f7515b3f0a47900f5df37e729ba40ca977b2d07b952bdefa2b8f883f42.zip",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }
     },
-    "61311fd625c1cd7beff5a6c6db300932fc48c0a3bf757c578034c6ff918bcb11": {
+    "b036ed075315c2b0ea2f8d53c1e62dd20ec329e079022d0b09cee6ac4e9029f3": {
+      "displayName": "DataFlowTestDefaultTestDeployAssert0E9374E1 Template",
       "source": {
         "path": "DataFlowTestDefaultTestDeployAssert0E9374E1.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "current_account-current_region": {
+        "current_account-current_region-75d3165d": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "61311fd625c1cd7beff5a6c6db300932fc48c0a3bf757c578034c6ff918bcb11.json",
+          "objectKey": "b036ed075315c2b0ea2f8d53c1e62dd20ec329e079022d0b09cee6ac4e9029f3.json",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }
