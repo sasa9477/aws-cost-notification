@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@aws-cdk/integ-tests-alpha':
-    hash: enfgrbgh35qedg6sxs234q4una
+    hash: 626e3c5ef95116de080e103a7a228748594743bcf8f4184ffa078976e68e5583
     path: patches/@aws-cdk__integ-tests-alpha.patch
 
 importers:
@@ -52,7 +52,7 @@ importers:
         version: 2.190.1
       '@aws-cdk/integ-tests-alpha':
         specifier: 2.185.0-alpha.0
-        version: 2.185.0-alpha.0(patch_hash=enfgrbgh35qedg6sxs234q4una)(aws-cdk-lib@2.212.0(constructs@10.4.2))(constructs@10.4.2)
+        version: 2.185.0-alpha.0(patch_hash=626e3c5ef95116de080e103a7a228748594743bcf8f4184ffa078976e68e5583)(aws-cdk-lib@2.212.0(constructs@10.4.2))(constructs@10.4.2)
       '@types/aws-lambda':
         specifier: ^8.10.152
         version: 8.10.152
@@ -2362,7 +2362,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
-  '@aws-cdk/integ-tests-alpha@2.185.0-alpha.0(patch_hash=enfgrbgh35qedg6sxs234q4una)(aws-cdk-lib@2.212.0(constructs@10.4.2))(constructs@10.4.2)':
+  '@aws-cdk/integ-tests-alpha@2.185.0-alpha.0(patch_hash=626e3c5ef95116de080e103a7a228748594743bcf8f4184ffa078976e68e5583)(aws-cdk-lib@2.212.0(constructs@10.4.2))(constructs@10.4.2)':
     dependencies:
       aws-cdk-lib: 2.212.0(constructs@10.4.2)
       constructs: 10.4.2
