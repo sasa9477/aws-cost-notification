@@ -45,17 +45,7 @@
     "source-map-support": "^0.5.21",
     "valibot": "^1.1.0"
   },
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "esbuild",
-      "unrs-resolver"
-    ],
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "unrs-resolver"
-    ],
-    "patchedDependencies": {
-      "@aws-cdk/integ-tests-alpha": "patches/@aws-cdk__integ-tests-alpha.patch"
-    }
+  "engines": {
+    "pnpm": ">=10.16.0"
   }
 }
