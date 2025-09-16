@@ -10,6 +10,9 @@ updates:
       # 毎週月曜日
       interval: "weekly"
       day: "monday"
+    cooldown:
+      # リリースから30日が経過していないパッケージは更新しない
+      default-days: 30
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -17,3 +20,6 @@ updates:
       # 毎週月曜日
       interval: "weekly"
       day: "monday"
+    cooldown:
+      # リリースから30日が経過していないパッケージは更新しない
+      default-days: 30
