@@ -51,7 +51,6 @@ jobs:
           LINE_CHANNEL_SECRET: ${{ secrets.LINE_CHANNEL_SECRET }}
           LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
           EXCHANGE_RATE_API_KEY: ${{ secrets.EXCHANGE_RATE_API_KEY }}
-          OUTPUT_GRAPH: "false"
 
   dependabot-add-repos-owner-as-reviewer:
     needs: dependabot-pr-check
