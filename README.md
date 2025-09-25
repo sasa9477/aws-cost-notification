@@ -25,16 +25,7 @@ AWS の予想額と実際のコストを LINE に通知します。
    npm install
    ```
 
-3. graphviz のインストール：
-
-   ```bash
-   brew install graphviz
-   ```
-
-   cdk 構成図の作成に graphviz を使用します。構成図の作成は、エラーにならないため必須ではありません。  
-   [こちら](https://graphviz.org/download/)からバイナリファイルをダウンロードすることもできます。
-
-4. 環境変数を設定：
+3. 環境変数を設定：
 
    ルートディレクトリに `.env` ファイルを作成し、次の変数を追加します。
 
@@ -50,7 +41,7 @@ AWS の予想額と実際のコストを LINE に通知します。
    - `LINE_USER_ID`: LINE 公式アカウントの[ユーザー ID](https://developers.line.biz/ja/docs/messaging-api/getting-user-ids/#get-own-user-id)（必須）
    - `EXCHANGE_RATE_API_KEY`: [exchangerates](https://exchangeratesapi.io/) の API KEY (トークンが無い場合は 日本円 の為替変換は行いません)
 
-5. アプリケーションをデプロイ：
+4. アプリケーションをデプロイ：
    ```bash
    npm run deploy
    ```
