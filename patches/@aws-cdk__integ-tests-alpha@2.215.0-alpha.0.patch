@@ -1,8 +1,8 @@
 diff --git a/lib/assertions/providers/provider.js b/lib/assertions/providers/provider.js
-index 365870feaedda044ddf1f9d38b1d0b0c4b38a146..452e4c0c0c59650d195ca95f37db0b1616389c0e 100644
+index c3ba06b6ccb5ab8b6ed742736a6e3682a86c1917..7571746dad3cba3d164e26a954df11db37f32452 100644
 --- a/lib/assertions/providers/provider.js
 +++ b/lib/assertions/providers/provider.js
-@@ -8,6 +8,14 @@ const path = require("path");
+@@ -8,6 +8,15 @@ const path = require("path");
  const core_1 = require("aws-cdk-lib/core");
  const constructs_1 = require("constructs");
  const helpers_internal_1 = require("aws-cdk-lib/custom-resources/lib/helpers-internal");
@@ -17,7 +17,7 @@ index 365870feaedda044ddf1f9d38b1d0b0c4b38a146..452e4c0c0c59650d195ca95f37db0b16
  /**
   * integ-tests can only depend on '@aws-cdk/core' so
   * this construct creates a lambda function provider using
-@@ -66,7 +74,13 @@ class LambdaFunctionProvider extends constructs_1.Construct {
+@@ -66,7 +75,13 @@ class LambdaFunctionProvider extends constructs_1.Construct {
              const logGroup = new core_1.CfnResource(this, 'LogGroup', {
                  type: 'AWS::Logs::LogGroup',
                  properties: {

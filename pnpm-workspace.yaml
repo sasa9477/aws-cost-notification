@@ -1,13 +1,9 @@
-ignoredBuiltDependencies:
-  - esbuild
-  - unrs-resolver
+# 30 days (30 * 24 * 60 = 43200 minutes)
+minimumReleaseAge: 43200
 
 onlyBuiltDependencies:
   - esbuild
   - unrs-resolver
 
 patchedDependencies:
-  "@aws-cdk/integ-tests-alpha": patches/@aws-cdk__integ-tests-alpha.patch
-
-# 30 days (30 * 24 * 60 = 43200 minutes)
-minimumReleaseAge: 43200
+  "@aws-cdk/integ-tests-alpha@2.215.0-alpha.0": patches/@aws-cdk__integ-tests-alpha@2.215.0-alpha.0.patch
