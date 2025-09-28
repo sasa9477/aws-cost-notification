@@ -1,7 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
-import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
+import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLambdaFunction";
 import { LINE_MESSAGING_API_MOCK_HANDLER_ENV } from "../handlers/LineMessagingApiMockHandler";
 
 export class LineMessagingApiMockStack extends cdk.Stack {

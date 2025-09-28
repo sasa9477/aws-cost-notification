@@ -1,12 +1,12 @@
 import { commonLambdaHandlerContext } from "../fixtures/commonLambdaHandlerContext";
-import { handler } from "../../src/handlers/BudgetAlartHandler";
+import { handler } from "../../src/handlers/BudgetAlertHandler";
 import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
 import MockDate from "mockdate";
 import { mockClient } from "aws-sdk-client-mock";
 
-const costEcplorerMock = mockClient(CostExplorerClient);
+const costExplorerMock = mockClient(CostExplorerClient);
 
-describe("BudgetAlartHandler", () => {
+describe("BudgetAlertHandler", () => {
   beforeAll(() => {
     // dayjs の日付を固定する
     MockDate.set("2024-05-14");
@@ -16,7 +16,7 @@ describe("BudgetAlartHandler", () => {
      */
 
     // 合計請求額の取得のモック
-    costEcplorerMock.on(GetCostAndUsageCommand).resolves({
+    costExplorerMock.on(GetCostAndUsageCommand).resolves({
       $metadata: {
         httpStatusCode: 200,
         requestId: "",
@@ -35,7 +35,7 @@ describe("BudgetAlartHandler", () => {
     });
 
     // 予想請求額の取得のモック
-    costEcplorerMock.on(GetCostForecastCommand).resolves({
+    costExplorerMock.on(GetCostForecastCommand).resolves({
       $metadata: {
         httpStatusCode: 200,
         requestId: "",
@@ -79,11 +79,11 @@ describe("BudgetAlartHandler", () => {
           EventSource: "aws:sns",
           EventVersion: "1.0",
           EventSubscriptionArn:
-            "arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlartTopic:7baee125-ecb5-4e2e-8efb-4f3555b2401f",
+            "arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlertTopic:7baee125-ecb5-4e2e-8efb-4f3555b2401f",
           Sns: {
             Type: "Notification",
             MessageId: "46b827e0-aada-5e65-90d9-795c0bab6976",
-            TopicArn: "arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlartTopic",
+            TopicArn: "arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlertTopic",
             Subject: "AWS Budgets: AwsCostNotificationStack-MonthlyCostBudget has exceeded your alert threshold",
             Message:
               "AWS Budget Notification May 13, 2024\nAWS Account 123456789012\n\nDear AWS Customer,\n\nYou requested that we alert you when the FORECASTED Cost associated with your AwsCostNotificationStack-MonthlyCostBudget budget is greater than $0.01 for the current month. The FORECASTED Cost associated with this budget is $1.03. You can find additional details below and by accessing the AWS Budgets dashboard [1].\n\nBudget Name: AwsCostNotificationStack-MonthlyCostBudget\nBudget Type: Cost\nBudgeted Amount: $0.01\nAlert Type: FORECASTED\nAlert Threshold: > $0.01\nFORECASTED Amount: $0.5\n\n[1] https://console.aws.amazon.com/billing/home#/budgets\n",
@@ -94,7 +94,7 @@ describe("BudgetAlartHandler", () => {
             SigningCertUrl:
               "https://sns.ap-northeast-1.amazonaws.com/SimpleNotificationService-60eadc530605d63b8e62a523676ef735.pem",
             UnsubscribeUrl:
-              "https://sns.ap-northeast-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlartTopic:7baee125-ecb5-4e2e-8efb-4f3555b2401f",
+              "https://sns.ap-northeast-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlertTopic:7baee125-ecb5-4e2e-8efb-4f3555b2401f",
             MessageAttributes: {},
           },
         },
@@ -120,11 +120,11 @@ describe("BudgetAlartHandler", () => {
           EventSource: "aws:sns",
           EventVersion: "1.0",
           EventSubscriptionArn:
-            "arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlartTopic:7baee125-ecb5-4e2e-8efb-4f3555b2401f",
+            "arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlertTopic:7baee125-ecb5-4e2e-8efb-4f3555b2401f",
           Sns: {
             Type: "Notification",
             MessageId: "254078db-ff09-5f4f-8c04-266076dcf322",
-            TopicArn: "arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlartTopic",
+            TopicArn: "arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlertTopic",
             Subject: "AWS Budgets: AwsCostNotificationStack-MonthlyCostBudget has exceeded your alert threshold",
             Message:
               "AWS Budget Notification May 13, 2024\nAWS Account 123456789012\n\nDear AWS Customer,\n\nYou requested that we alert you when the ACTUAL Cost associated with your AwsCostNotificationStack-MonthlyCostBudget budget is greater than $0.01 for the current month. The ACTUAL Cost associated with this budget is $0.60. You can find additional details below and by accessing the AWS Budgets dashboard [1].\n\nBudget Name: AwsCostNotificationStack-MonthlyCostBudget\nBudget Type: Cost\nBudgeted Amount: $0.01\nAlert Type: ACTUAL\nAlert Threshold: > $0.01\nACTUAL Amount: $0.5\n\n[1] https://console.aws.amazon.com/billing/home#/budgets\n",
@@ -135,7 +135,7 @@ describe("BudgetAlartHandler", () => {
             SigningCertUrl:
               "https://sns.ap-northeast-1.amazonaws.com/SimpleNotificationService-60eadc530605d63b8e62a523676ef735.pem",
             UnsubscribeUrl:
-              "https://sns.ap-northeast-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlartTopic:7baee125-ecb5-4e2e-8efb-4f3555b2401f",
+              "https://sns.ap-northeast-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:ap-northeast-1:123456789012:AwsCostNotificationStack-BudgetAlertTopic:7baee125-ecb5-4e2e-8efb-4f3555b2401f",
             MessageAttributes: {},
           },
         },

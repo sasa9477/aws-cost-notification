@@ -1,7 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { BudgetAlartConstruct } from "../constructs/BudgetAlartConstruct";
-import { CostScheduleNotifacationConstruct } from "../constructs/CostScheduleNotificationConstruct";
+import { BudgetAlertConstruct } from "../constructs/BudgetAlertConstruct";
+import { CostScheduleNotificationConstruct } from "../constructs/CostScheduleNotificationConstruct";
 import { LineNotificationConstruct } from "../constructs/LineNotificationConstruct";
 import { Config } from "../config/config";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
@@ -17,7 +17,7 @@ export type AwsCostNotificationStackProps = cdk.StackProps & {
 
 export class AwsCostNotificationStack extends cdk.Stack {
   public readonly notificationTopic: cdk.aws_sns.Topic;
-  public readonly costNotifacationHandler?: NodejsFunction;
+  public readonly costNotificationHandler?: NodejsFunction;
   public readonly monthlyCostBudget?: cdk.aws_budgets.CfnBudget;
 
   constructor(scope: Construct, id: string, props: AwsCostNotificationStackProps) {
@@ -34,7 +34,7 @@ export class AwsCostNotificationStack extends cdk.Stack {
     });
 
     if (config.costScheduleNotificationConfig.enabled) {
-      const { costNotifacationHandler } = new CostScheduleNotifacationConstruct(
+      const { costNotificationHandler } = new CostScheduleNotificationConstruct(
         this,
         "CostScheduleNotificationConstruct",
         {
@@ -43,11 +43,11 @@ export class AwsCostNotificationStack extends cdk.Stack {
         },
       );
 
-      this.costNotifacationHandler = costNotifacationHandler;
+      this.costNotificationHandler = costNotificationHandler;
     }
 
-    if (config.budgetAlartConfig.enabled) {
-      const { monthlyCostBudget } = new BudgetAlartConstruct(this, "BudgetAlartConstruct", {
+    if (config.budgetAlertConfig.enabled) {
+      const { monthlyCostBudget } = new BudgetAlertConstruct(this, "BudgetAlertConstruct", {
         config,
         notificationTopic,
         exchangeRateApiKey,

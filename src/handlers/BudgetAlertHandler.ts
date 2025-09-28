@@ -4,7 +4,7 @@ import { roundDigit } from "../utils/roundDigit";
 import { getDateRange, getForecastBilling, getTotalBilling } from "./apis/CostExplorerApi";
 import dayjs from "dayjs";
 
-export const BUDGET_ALART_HANDLER_ENV = {
+export const BUDGET_ALERT_HANDLER_ENV = {
   EXCHANGE_RATE_API_KEY: "EXCHANGE_RATE_API_KEY",
 };
 
@@ -20,7 +20,7 @@ export const handler: lambda.Handler<lambda.SNSEvent, string> = async (event) =>
   const { startDate, endDate } = getDateRange();
   const totalBilling = await getTotalBilling(startDate, endDate);
   const forecastBilling = await getForecastBilling();
-  const exchangeRate = await getExchangeRate(process.env[BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY] || "");
+  const exchangeRate = await getExchangeRate(process.env[BUDGET_ALERT_HANDLER_ENV.EXCHANGE_RATE_API_KEY] || "");
 
   const snsMessage = event.Records[0].Sns.Message;
 

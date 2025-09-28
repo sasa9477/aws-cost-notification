@@ -14,7 +14,7 @@ export class AwsCostAnomalyNotificationStack extends cdk.Stack {
     const { config, notificationTopic } = props;
 
     // 異常検知モニターを作成する
-    // MonitorDimension が Serive のモニターは、AWS アカウント に 1つしか作成できないため、手動で作成している場合はエラーになる
+    // MonitorDimension が Service のモニターは、AWS アカウント に 1つしか作成できないため、手動で作成している場合はエラーになる
     const monitor = new cdk.aws_ce.CfnAnomalyMonitor(this, "AnomalyServicesMonitor", {
       monitorName: "AnomalyServicesMonitor",
       monitorType: "DIMENSIONAL",

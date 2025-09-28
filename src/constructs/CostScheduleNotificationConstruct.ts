@@ -1,19 +1,19 @@
 import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
-import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
+import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLambdaFunction";
 import { COST_SCHEDULE_NOTIFICATION_HANDLER_ENV } from "../handlers/CostScheduleNotificationHandler";
 import { Config } from "../config/config";
 
-export type CostScheduleNotifacationConstructProps = {
+export type CostScheduleNotificationConstructProps = {
   readonly config: Config;
   readonly notificationTopic: cdk.aws_sns.Topic;
 };
 
-export class CostScheduleNotifacationConstruct extends Construct {
-  public readonly costNotifacationHandler: NodeJsLambdaFunction;
+export class CostScheduleNotificationConstruct extends Construct {
+  public readonly costNotificationHandler: NodeJsLambdaFunction;
 
-  constructor(scope: Construct, id: string, props: CostScheduleNotifacationConstructProps) {
+  constructor(scope: Construct, id: string, props: CostScheduleNotificationConstructProps) {
     super(scope, id);
 
     const { config, notificationTopic } = props;
@@ -64,7 +64,7 @@ export class CostScheduleNotifacationConstruct extends Construct {
       },
     });
 
-    this.costNotifacationHandler = lambda;
+    this.costNotificationHandler = lambda;
 
     /**
      * cdk-nag のセキュリティ抑制設定

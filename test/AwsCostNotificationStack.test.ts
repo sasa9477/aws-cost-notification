@@ -25,12 +25,12 @@ describe("AWS Cost Notification Stack", () => {
     template = Template.fromStack(stack);
   });
 
-  describe("BudgetAlartConstruct", () => {
+  describe("BudgetAlertConstruct", () => {
     test("予算アラートの設定がされている", () => {
       template.hasResourceProperties("AWS::Budgets::Budget", {
         Budget: {
           BudgetLimit: {
-            Amount: testConfig.budgetAlartConfig.budgetAmount,
+            Amount: testConfig.budgetAlertConfig.budgetAmount,
             Unit: "USD",
           },
           BudgetType: "COST",
@@ -41,7 +41,7 @@ describe("AWS Cost Notification Stack", () => {
             Notification: {
               ComparisonOperator: "GREATER_THAN",
               NotificationType: "ACTUAL",
-              Threshold: testConfig.budgetAlartConfig.actualAmountCostAlertThreshold,
+              Threshold: testConfig.budgetAlertConfig.actualAmountCostAlertThreshold,
               ThresholdType: "PERCENTAGE",
             },
           },
@@ -49,7 +49,7 @@ describe("AWS Cost Notification Stack", () => {
             Notification: {
               ComparisonOperator: "GREATER_THAN",
               NotificationType: "FORECASTED",
-              Threshold: testConfig.budgetAlartConfig.forecastedAmountCostAlertThreshold,
+              Threshold: testConfig.budgetAlertConfig.forecastedAmountCostAlertThreshold,
               ThresholdType: "PERCENTAGE",
             },
           },
@@ -60,7 +60,7 @@ describe("AWS Cost Notification Stack", () => {
     test("Budget から SNS トピックに Publish するためのポリシーが設定されている", () => {
       const topic = template.findResources("AWS::SNS::Topic", {
         Properties: {
-          TopicName: Match.stringLikeRegexp("BudgetAlartTopic"),
+          TopicName: Match.stringLikeRegexp("BudgetAlertTopic"),
         },
       });
 
@@ -88,7 +88,7 @@ describe("AWS Cost Notification Stack", () => {
   });
 
   describe("CostNotificationConstruct", () => {
-    test("コスト通知用ラムダ関数に Cost Exploerer へのコスト使用量と予想額の取得が許可されている", () => {
+    test("コスト通知用ラムダ関数に Cost Explorer へのコスト使用量と予想額の取得が許可されている", () => {
       template.hasResourceProperties("AWS::IAM::Policy", {
         PolicyDocument: {
           Statement: Match.arrayWith([
@@ -139,7 +139,7 @@ describe("AWS Cost Notification Stack", () => {
       }
     });
 
-    test("cdk-nag のセキュリティチェックで warnning が無い", () => {
+    test("cdk-nag のセキュリティチェックで warning が無い", () => {
       const warnings = Annotations.fromStack(stack).findWarning("*", Match.stringLikeRegexp("AwsSolutions-.*"));
 
       try {

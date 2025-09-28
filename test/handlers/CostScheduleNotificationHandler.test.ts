@@ -17,7 +17,7 @@ const commonEvent: lambda.EventBridgeEvent<"Scheduled Event", any> = {
   detail: {},
 };
 
-const costEcplorerMock = mockClient(CostExplorerClient);
+const costExplorerMock = mockClient(CostExplorerClient);
 
 describe("CostScheduleNotificationHandler", () => {
   beforeAll(() => {
@@ -48,7 +48,7 @@ describe("CostScheduleNotificationHandler", () => {
      */
 
     // 合計請求額の取得のモック
-    costEcplorerMock.on(GetCostAndUsageCommand).resolves({
+    costExplorerMock.on(GetCostAndUsageCommand).resolves({
       $metadata: {
         httpStatusCode: 200,
         requestId: "",
@@ -67,7 +67,7 @@ describe("CostScheduleNotificationHandler", () => {
     });
 
     // サービスごとの請求額の取得のモック
-    costEcplorerMock
+    costExplorerMock
       .on(GetCostAndUsageCommand, {
         GroupBy: [
           {
@@ -125,7 +125,7 @@ describe("CostScheduleNotificationHandler", () => {
       });
 
     // 予想請求額の取得のモック
-    costEcplorerMock.on(GetCostForecastCommand).resolves({
+    costExplorerMock.on(GetCostForecastCommand).resolves({
       $metadata: {
         httpStatusCode: 200,
         requestId: "",
@@ -141,7 +141,7 @@ describe("CostScheduleNotificationHandler", () => {
 
   afterAll(() => {
     MockDate.reset();
-    costEcplorerMock.restore();
+    costExplorerMock.restore();
     jest.restoreAllMocks();
   });
 

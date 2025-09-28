@@ -1,25 +1,25 @@
 import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
-import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
-import { BUDGET_ALART_HANDLER_ENV } from "../handlers/BudgetAlartHandler";
+import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLambdaFunction";
+import { BUDGET_ALERT_HANDLER_ENV } from "../handlers/BudgetAlertHandler";
 import { Config } from "../config/config";
 
-export type BudgetAlartConstructProps = {
+export type BudgetAlertConstructProps = {
   readonly config: Config;
   readonly notificationTopic: cdk.aws_sns.Topic;
   readonly exchangeRateApiKey?: string;
 };
 
-export class BudgetAlartConstruct extends Construct {
+export class BudgetAlertConstruct extends Construct {
   public readonly monthlyCostBudget: cdk.aws_budgets.CfnBudget;
 
-  constructor(scope: Construct, id: string, props: BudgetAlartConstructProps) {
+  constructor(scope: Construct, id: string, props: BudgetAlertConstructProps) {
     super(scope, id);
 
     const { config, notificationTopic } = props;
 
-    const topicLoggingRole = new cdk.aws_iam.Role(this, "BudgetAlartTopicLoggingRole", {
+    const topicLoggingRole = new cdk.aws_iam.Role(this, "BudgetAlertTopicLoggingRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("sns.amazonaws.com"),
     });
 
@@ -37,9 +37,9 @@ export class BudgetAlartConstruct extends Construct {
       }),
     );
 
-    const topic = new cdk.aws_sns.Topic(this, "BudgetAlartTopic", {
-      topicName: `${cdk.Stack.of(this).stackName}BudgetAlartTopic`,
-      displayName: `${cdk.Stack.of(this).stackName}BudgetAlartTopic`,
+    const topic = new cdk.aws_sns.Topic(this, "BudgetAlertTopic", {
+      topicName: `${cdk.Stack.of(this).stackName}BudgetAlertTopic`,
+      displayName: `${cdk.Stack.of(this).stackName}BudgetAlertTopic`,
       enforceSSL: true,
       loggingConfigs: [
         {
@@ -85,11 +85,11 @@ export class BudgetAlartConstruct extends Construct {
       }),
     );
 
-    const lambda = new NodeJsLambdaFunction(this, "BudgetAlartHandler", {
-      entryFileName: "BudgetAlartHandler",
+    const lambda = new NodeJsLambdaFunction(this, "BudgetAlertHandler", {
+      entryFileName: "BudgetAlertHandler",
       environment: {
         TZ: "Asia/Tokyo",
-        [BUDGET_ALART_HANDLER_ENV.EXCHANGE_RATE_API_KEY]: props.exchangeRateApiKey ?? "",
+        [BUDGET_ALERT_HANDLER_ENV.EXCHANGE_RATE_API_KEY]: props.exchangeRateApiKey ?? "",
       },
       events: [new cdk.aws_lambda_event_sources.SnsEventSource(topic)],
       onSuccess: new cdk.aws_lambda_destinations.SnsDestination(notificationTopic),
@@ -113,7 +113,7 @@ export class BudgetAlartConstruct extends Construct {
         budgetType: "COST",
         timeUnit: "MONTHLY",
         budgetLimit: {
-          amount: config.budgetAlartConfig.budgetAmount,
+          amount: config.budgetAlertConfig.budgetAmount,
           unit: "USD",
         },
       },
@@ -123,12 +123,12 @@ export class BudgetAlartConstruct extends Construct {
           notification: {
             notificationType: "ACTUAL",
             comparisonOperator: "GREATER_THAN",
-            threshold: config.budgetAlartConfig.actualAmountCostAlertThreshold,
+            threshold: config.budgetAlertConfig.actualAmountCostAlertThreshold,
             thresholdType: "PERCENTAGE",
           },
           subscribers: [
             {
-              // SNS か　email　のみ設定可能
+              // SNS か email のみ設定可能
               subscriptionType: "SNS",
               address: topic.topicArn,
             },
@@ -139,7 +139,7 @@ export class BudgetAlartConstruct extends Construct {
           notification: {
             notificationType: "FORECASTED",
             comparisonOperator: "GREATER_THAN",
-            threshold: config.budgetAlartConfig.forecastedAmountCostAlertThreshold,
+            threshold: config.budgetAlertConfig.forecastedAmountCostAlertThreshold,
             thresholdType: "PERCENTAGE",
           },
           subscribers: [

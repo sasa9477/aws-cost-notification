@@ -8,19 +8,19 @@ const client = new CostExplorerClient({ region: "us-east-1" });
  * 取得する期間の開始日と終了日を取得する
  */
 export function getDateRange() {
-  const begginningOfMonth = dayjs().startOf("month").format("YYYY-MM-DD");
+  const beginningOfMonth = dayjs().startOf("month").format("YYYY-MM-DD");
   const today = dayjs().format("YYYY-MM-DD");
 
   // 今日が月初めの場合、先月の月初めから今日までの期間を取得する
-  if (today === begginningOfMonth) {
-    const begginningOfLastMonth = dayjs().subtract(1, "month").startOf("month").format("YYYY-MM-DD");
+  if (today === beginningOfMonth) {
+    const beginningOfLastMonth = dayjs().subtract(1, "month").startOf("month").format("YYYY-MM-DD");
     return {
-      startDate: begginningOfLastMonth,
+      startDate: beginningOfLastMonth,
       endDate: today,
     };
   }
   return {
-    startDate: begginningOfMonth,
+    startDate: beginningOfMonth,
     endDate: today,
   };
 }

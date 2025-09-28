@@ -37,7 +37,7 @@ const awsCostNotificationStack = new AwsCostNotificationStack(app, "AwsCostNotif
 });
 
 // 異常検知の通知は us-east-1 でのみサポートされているため、スタックを分ける
-if (config.costAnomalyNotificationConfig.enebled) {
+if (config.costAnomalyNotificationConfig.enabled) {
   const awsCostAnomalyNotificationStack = new AwsCostAnomalyNotificationStack(app, "AwsCostAnomalyNotificationStack", {
     env: {
       account: env.CDK_DEFAULT_ACCOUNT,

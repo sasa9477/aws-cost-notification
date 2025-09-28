@@ -1,7 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import { NagSuppressions } from "cdk-nag";
 import { Construct } from "constructs";
-import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLamdaFunction";
+import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLambdaFunction";
 import { Config } from "../config/config";
 import { LINE_NOTIFICATION_HANDLER_ENV } from "../handlers/LineNotificationHandler";
 
@@ -91,7 +91,7 @@ export class LineNotificationConstruct extends Construct {
     NagSuppressions.addResourceSuppressions(lambda, [
       {
         id: "AwsSolutions-L1",
-        reason: "Lambda で Nodejs 18x を使用するため、抑制する。",
+        reason: "Lambda で Nodejs 20x を使用するため、抑制する。",
       },
     ]);
 

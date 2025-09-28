@@ -15,7 +15,7 @@ export type Config = {
   /**
    * 予算通知の設定
    */
-  budgetAlartConfig: {
+  budgetAlertConfig: {
     /**
      * 予算通知の有効 / 無効
      */
@@ -38,7 +38,7 @@ export type Config = {
    */
   costAnomalyNotificationConfig: {
     // コスト異常通知の有効 / 無効
-    enebled: boolean;
+    enabled: boolean;
     // 予想支出の異常通知アラートの閾値 (USD)
     forecastedAmountCostAlertThreshold: number;
   };
@@ -50,7 +50,7 @@ export const config: Config = {
     // 毎週月曜日の 10:00 に実行
     scheduleExpression: "cron(0 10 ? * 2 *)",
   },
-  budgetAlartConfig: {
+  budgetAlertConfig: {
     enabled: true,
     // 予算額は 4 USD
     budgetAmount: 4,
@@ -60,7 +60,7 @@ export const config: Config = {
     forecastedAmountCostAlertThreshold: 80,
   },
   costAnomalyNotificationConfig: {
-    enebled: true,
+    enabled: true,
     forecastedAmountCostAlertThreshold: 1,
   },
 };

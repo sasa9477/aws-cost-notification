@@ -56,7 +56,7 @@ AWS の予想額と実際のコストを LINE に通知します。
 - `scheduleExpression`: スケジュール実行の定義式を設定します。 (`string`)  
   詳細は [AWS CloudFormation Schedule Expression](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-scheduler-schedule.html#cfn-scheduler-schedule-scheduleexpression) を参照してください。
 
-#### 予算アラート通知設定 (budgetAlartConfig)
+#### 予算アラート通知設定 (budgetAlertConfig)
 
 - `enabled`: 予算通知の有効 / 無効を設定します。 (`boolean`)
 - `budgetAmount`: 予算額を設定します。 (`number`, 単位: USD)

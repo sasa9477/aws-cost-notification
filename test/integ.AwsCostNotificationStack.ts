@@ -77,7 +77,7 @@ const budget = stack.monthlyCostBudget!.budget as cdk.aws_budgets.CfnBudget.Budg
 const updateBudget = integ.assertions.awsApiCall("budgets", "UpdateBudget", {
   AccountId: stack.account,
   NewBudget: {
-    AutoAjustData: budget.autoAdjustData,
+    AutoAdjustData: budget.autoAdjustData,
     BudgetLimit: {
       Amount: "0.01",
       Unit: (budget.budgetLimit as cdk.aws_budgets.CfnBudget.SpendProperty).unit || "USD",
@@ -86,7 +86,7 @@ const updateBudget = integ.assertions.awsApiCall("budgets", "UpdateBudget", {
     BudgetType: budget.budgetType,
     CostFilters: budget.costFilters,
     CostTypes: budget.costTypes,
-    PlandBudgetLimits: budget.plannedBudgetLimits,
+    PlanedBudgetLimits: budget.plannedBudgetLimits,
     TimePeriod: budget.timePeriod,
     TimeUnit: budget.timeUnit,
   },
@@ -99,10 +99,10 @@ updateBudget.provider.addToRolePolicy({
   Resource: ["*"],
 });
 
-const costNotifacationHandler = stack.costNotifacationHandler!;
+const costNotificationHandler = stack.costNotificationHandler!;
 
 const invokeCostNotificationLambda = integ.assertions.awsApiCall("lambda", "Invoke", {
-  FunctionName: costNotifacationHandler.functionName,
+  FunctionName: costNotificationHandler.functionName,
   // onSuccess を呼び出すために 非同期で実行
   InvocationType: "Event",
 });
@@ -112,7 +112,7 @@ invokeCostNotificationLambda.provider.addPolicyStatementFromSdkCall("Lambda", "i
     service: "lambda",
     resource: "function",
     arnFormat: cdk.ArnFormat.COLON_RESOURCE_NAME,
-    resourceName: costNotifacationHandler.functionName,
+    resourceName: costNotificationHandler.functionName,
   }),
 ]);
 

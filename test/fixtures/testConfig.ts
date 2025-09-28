@@ -5,14 +5,14 @@ export const testConfig: Config = {
     enabled: true,
     scheduleExpression: "cron(0 10 ? * 2 *)",
   },
-  budgetAlartConfig: {
+  budgetAlertConfig: {
     enabled: true,
     budgetAmount: 100,
     actualAmountCostAlertThreshold: 50,
     forecastedAmountCostAlertThreshold: 50,
   },
   costAnomalyNotificationConfig: {
-    enebled: false,
+    enabled: false,
     forecastedAmountCostAlertThreshold: 1,
   },
 };
