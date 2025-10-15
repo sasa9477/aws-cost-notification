@@ -1,5 +1,4 @@
-# 30 days (30 * 24 * 60 = 43200 minutes)
-minimumReleaseAge: 43200
+minimumReleaseAge: 43200 # 30 days (30 * 24 * 60 = 43200 minutes)
 
 onlyBuiltDependencies:
   - esbuild
