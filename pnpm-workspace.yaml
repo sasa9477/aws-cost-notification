@@ -1,5 +1,8 @@
 minimumReleaseAge: 43200 # 30 days (30 * 24 * 60 = 43200 minutes)
 
+minimumReleaseAgeExclude:
+  - valibot@1.2.0
+
 onlyBuiltDependencies:
   - esbuild
   - unrs-resolver
