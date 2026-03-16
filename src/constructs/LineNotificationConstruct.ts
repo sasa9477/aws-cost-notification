@@ -91,7 +91,7 @@ export class LineNotificationConstruct extends Construct {
     NagSuppressions.addResourceSuppressions(lambda, [
       {
         id: "AwsSolutions-L1",
-        reason: "Lambda で Nodejs 20x を使用するため、抑制する。",
+        reason: "Lambda で指定した Nodejs のバージョンを使用するため、抑制する。",
       },
     ]);
 

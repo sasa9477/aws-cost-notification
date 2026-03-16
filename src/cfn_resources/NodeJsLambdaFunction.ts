@@ -2,8 +2,10 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as path from "path";
 
-export interface NodeJsLambdaFunctionProps
-  extends Omit<cdk.aws_lambda_nodejs.NodejsFunctionProps, "entry" | "functionName"> {
+export interface NodeJsLambdaFunctionProps extends Omit<
+  cdk.aws_lambda_nodejs.NodejsFunctionProps,
+  "entry" | "functionName"
+> {
   entryFileName: string;
 }
 
@@ -30,7 +32,7 @@ export class NodeJsLambdaFunction extends cdk.aws_lambda_nodejs.NodejsFunction {
     });
 
     super(scope, id, {
-      runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
+      runtime: cdk.aws_lambda.Runtime.NODEJS_24_X,
       memorySize: 128,
       timeout: cdk.Duration.seconds(10),
       role: _role,
