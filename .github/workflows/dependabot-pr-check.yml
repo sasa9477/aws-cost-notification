@@ -22,7 +22,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }} # PR の HEAD をチェックアウトする
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: latest
           run_install: false
