@@ -35,6 +35,14 @@ jobs:
       - name: Test
         run: pnpm run test
 
+      - name: Synth
+        run: pnpm run synth
+        env:
+          CDK_DEFAULT_ACCOUNT: "123456789012"
+          LINE_CHANNEL_ID: "dummy"
+          LINE_CHANNEL_SECRET: "dummy"
+          LINE_USER_ID: "dummy"
+
       - name: Add repository owner as reviewer
         if: ${{ always() }}
         run: gh pr edit "$PR_URL" --add-reviewer "$OWNER"
