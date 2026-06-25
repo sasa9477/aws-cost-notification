@@ -1,11 +1,9 @@
-minimumReleaseAge: 43200 # 30 days (30 * 24 * 60 = 43200 minutes)
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true
 
-minimumReleaseAgeExclude:
-  - valibot@1.2.0
-
-onlyBuiltDependencies:
-  - esbuild
-  - unrs-resolver
+# 7 days (7 * 24 * 60 = 10080 minutes)
+minimumReleaseAge: 10080
 
 patchedDependencies:
   "@aws-cdk/integ-tests-alpha@2.215.0-alpha.0": patches/@aws-cdk__integ-tests-alpha@2.215.0-alpha.0.patch
