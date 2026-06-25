@@ -16,14 +16,6 @@ export class LineMessagingApiMockStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
-    bucket.addToResourcePolicy(
-      new cdk.aws_iam.PolicyStatement({
-        effect: cdk.aws_iam.Effect.ALLOW,
-        actions: ["s3:GetBucket*", "s3:List*", "s3:DeleteObject*", "s3:PutBucketPolicy"],
-        principals: [new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com")],
-        resources: [bucket.bucketArn, bucket.arnForObjects("*")],
-      }),
-    );
 
     const lambda = new NodeJsLambdaFunction(this, "LineMessagingApiMockHandler", {
       entryFileName: "LineMessagingApiMockHandler",
@@ -59,16 +51,20 @@ export class LineMessagingApiMockStack extends cdk.Stack {
     // https://github.com/cdklabs/cdk-nag/issues/2351
     const bucketLogicalId = cdk.Stack.of(this).getLogicalId(bucket.node.defaultChild as cdk.CfnElement);
     const iam5Reason = "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する";
+    const iam5RuleIds = [
+      "AwsSolutions-IAM5[Resource::*]",
+      `AwsSolutions-IAM5[Resource::<${bucketLogicalId}.Arn>/*]`,
+      "AwsSolutions-IAM5[Action::s3:Abort*]",
+      "AwsSolutions-IAM5[Action::s3:DeleteObject*]",
+      "AwsSolutions-IAM5[Action::s3:GetBucket*]",
+      "AwsSolutions-IAM5[Action::s3:GetObject*]",
+      "AwsSolutions-IAM5[Action::s3:List*]",
+    ];
     lambda.role.node.findAll().forEach((child) => {
-      child.node.addMetadata(cdk.Validations.ACKNOWLEDGED_RULES_METADATA_KEY, {
-        "AwsSolutions-IAM5[Resource::*]": iam5Reason,
-        [`AwsSolutions-IAM5[Resource::<${bucketLogicalId}.Arn>/*]`]: iam5Reason,
-        "AwsSolutions-IAM5[Action::s3:Abort*]": iam5Reason,
-        "AwsSolutions-IAM5[Action::s3:DeleteObject*]": iam5Reason,
-        "AwsSolutions-IAM5[Action::s3:GetBucket*]": iam5Reason,
-        "AwsSolutions-IAM5[Action::s3:GetObject*]": iam5Reason,
-        "AwsSolutions-IAM5[Action::s3:List*]": iam5Reason,
-      });
+      child.node.addMetadata(
+        cdk.Validations.ACKNOWLEDGED_RULES_METADATA_KEY,
+        Object.fromEntries(iam5RuleIds.map((id) => [id, iam5Reason])),
+      );
     });
 
     cdk.Validations.of(bucket).acknowledge({
