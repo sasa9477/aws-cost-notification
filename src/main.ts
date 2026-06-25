@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
-import { AwsSolutionsChecks } from "cdk-nag";
 import * as dotenv from "dotenv";
+import { AwsSolutionsChecks } from "cdk-nag";
 import "source-map-support/register";
 import { config } from "./config/config";
 import { AwsCostAnomalyNotificationStack } from "./stacks/AwsCostAnomalyNotificationStack";
@@ -56,4 +56,4 @@ if (config.costAnomalyNotificationConfig.enabled) {
 cdk.Aspects.of(app).add(new CustomResourceLoggingConfigAspect());
 
 // AWS のセキュリティマトリックスのセキュリティを確認する
-cdk.Aspects.of(app).add(new AwsSolutionsChecks({ verbose: true }));
+cdk.Validations.of(app).addPlugins(new AwsSolutionsChecks(app, { verbose: true }));

@@ -15,17 +15,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
         "BudgetAlertConstructBudgetAlertHandlerRoleDefaultPolicy68BAD42F",
         "BudgetAlertConstructBudgetAlertHandlerRole355CA4D5",
       ],
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-L1",
-              "is_reason_encoded": true,
-              "reason": "TGFtYmRhIOOBpyBOb2RlanMgMTh4IOOCkuS9v+eUqOOBmeOCi+OBn+OCgeOAgeaKkeWItuOBmeOCi+OAgg==",
-            },
-          ],
-        },
-      },
       "Properties": {
         "Code": {
           "S3Bucket": {
@@ -119,17 +108,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "UpdateReplacePolicy": "Retain",
     },
     "BudgetAlertConstructBudgetAlertHandlerRole355CA4D5": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-IAM4",
-              "is_reason_encoded": true,
-              "reason": "TGFtYmRhIOOBpyBBV1NMYW1iZGFCYXNpY0V4ZWN1dGlvblJvbGUgTWFuYWdlZCBQb2xpY3kg44KS5L2/55So44GZ44KL44Gf44KB44CB5oqR5Yi244GZ44KL44CC",
-            },
-          ],
-        },
-      },
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -161,17 +139,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "Type": "AWS::IAM::Role",
     },
     "BudgetAlertConstructBudgetAlertHandlerRoleDefaultPolicy68BAD42F": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-IAM4",
-              "is_reason_encoded": true,
-              "reason": "TGFtYmRhIOOBpyBBV1NMYW1iZGFCYXNpY0V4ZWN1dGlvblJvbGUgTWFuYWdlZCBQb2xpY3kg44KS5L2/55So44GZ44KL44Gf44KB44CB5oqR5Yi244GZ44KL44CC",
-            },
-          ],
-        },
-      },
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -228,17 +195,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "Type": "AWS::IAM::Policy",
     },
     "BudgetAlertConstructBudgetAlertTopic754D47EA": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-SNS2",
-              "is_reason_encoded": true,
-              "reason": "S01TIOOCreODvOOCkuS9nOaIkOOBmeOCi+OBqCAkMSAvIG1vbnRoIOOBi+OBi+OCi+OBn+OCgeOAgeaKkeWItuOBmeOCi+OAgg==",
-            },
-          ],
-        },
-      },
       "Properties": {
         "DeliveryStatusLogging": [
           {
@@ -264,17 +220,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "Type": "AWS::SNS::Topic",
     },
     "BudgetAlertConstructBudgetAlertTopicLoggingRoleD3D2101A": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-IAM5",
-              "is_reason_encoded": true,
-              "reason": "U05TIOOBruODreOCsOWHuuWKm+OBq+OBryA6KiDjgYzlv4XopoHjgarjgZ/jgoHjgIHmipHliLbjgZnjgovjgII=",
-            },
-          ],
-        },
-      },
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -292,17 +237,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "Type": "AWS::IAM::Role",
     },
     "BudgetAlertConstructBudgetAlertTopicLoggingRoleDefaultPolicy5FC26D8E": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-IAM5",
-              "is_reason_encoded": true,
-              "reason": "U05TIOOBruODreOCsOWHuuWKm+OBq+OBryA6KiDjgYzlv4XopoHjgarjgZ/jgoHjgIHmipHliLbjgZnjgovjgII=",
-            },
-          ],
-        },
-      },
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -330,17 +264,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "Type": "AWS::IAM::Policy",
     },
     "BudgetAlertConstructBudgetAlertTopicPolicy6D927116": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-SNS2",
-              "is_reason_encoded": true,
-              "reason": "S01TIOOCreODvOOCkuS9nOaIkOOBmeOCi+OBqCAkMSAvIG1vbnRoIOOBi+OBi+OCi+OBn+OCgeOAgeaKkeWItuOBmeOCi+OAgg==",
-            },
-          ],
-        },
-      },
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -529,17 +452,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
         "CostScheduleNotificationConstructCostScheduleNotificationHandlerRoleDefaultPolicyE63C8C25",
         "CostScheduleNotificationConstructCostScheduleNotificationHandlerRoleBF14AF54",
       ],
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-L1",
-              "is_reason_encoded": true,
-              "reason": "TGFtYmRhIOOBpyBOb2RlanMgMTh4IOOCkuS9v+eUqOOBmeOCi+OBn+OCgeOAgeaKkeWItuOBmeOCi+OAgg==",
-            },
-          ],
-        },
-      },
       "Properties": {
         "Code": {
           "S3Bucket": {
@@ -602,17 +514,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "UpdateReplacePolicy": "Retain",
     },
     "CostScheduleNotificationConstructCostScheduleNotificationHandlerRoleBF14AF54": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-IAM4",
-              "is_reason_encoded": true,
-              "reason": "TGFtYmRhIOOBpyBBV1NMYW1iZGFCYXNpY0V4ZWN1dGlvblJvbGUgTWFuYWdlZCBQb2xpY3kg44KS5L2/55So44GZ44KL44Gf44KB44CB5oqR5Yi244GZ44KL44CC",
-            },
-          ],
-        },
-      },
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -644,17 +545,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "Type": "AWS::IAM::Role",
     },
     "CostScheduleNotificationConstructCostScheduleNotificationHandlerRoleDefaultPolicyE63C8C25": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-IAM4",
-              "is_reason_encoded": true,
-              "reason": "TGFtYmRhIOOBpyBBV1NMYW1iZGFCYXNpY0V4ZWN1dGlvblJvbGUgTWFuYWdlZCBQb2xpY3kg44KS5L2/55So44GZ44KL44Gf44KB44CB5oqR5Yi244GZ44KL44CC",
-            },
-          ],
-        },
-      },
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -714,17 +604,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "DependsOn": [
         "LineNotificationConstructLineNotificationHandlerRole184B36DA",
       ],
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-L1",
-              "is_reason_encoded": true,
-              "reason": "TGFtYmRhIOOBp+aMh+WumuOBl+OBnyBOb2RlanMg44Gu44OQ44O844K444On44Oz44KS5L2/55So44GZ44KL44Gf44KB44CB5oqR5Yi244GZ44KL44CC",
-            },
-          ],
-        },
-      },
       "Properties": {
         "Code": {
           "S3Bucket": {
@@ -799,17 +678,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "Type": "AWS::SNS::Subscription",
     },
     "LineNotificationConstructLineNotificationHandlerRole184B36DA": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-IAM4",
-              "is_reason_encoded": true,
-              "reason": "TGFtYmRhIOOBpyBBV1NMYW1iZGFCYXNpY0V4ZWN1dGlvblJvbGUgTWFuYWdlZCBQb2xpY3kg44KS5L2/55So44GZ44KL44Gf44KB44CB5oqR5Yi244GZ44KL44CC",
-            },
-          ],
-        },
-      },
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -841,17 +709,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "Type": "AWS::IAM::Role",
     },
     "LineNotificationConstructNotificationTopicE4CBF5A0": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-SNS2",
-              "is_reason_encoded": true,
-              "reason": "S01TIOOCreODvOOCkuS9nOaIkOOBmeOCi+OBqCAkMSAvIG1vbnRoIOOBi+OBi+OCi+OBn+OCgeOAgeaKkeWItuOBmeOCi+OAgg==",
-            },
-          ],
-        },
-      },
       "Properties": {
         "DeliveryStatusLogging": [
           {
@@ -877,17 +734,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "Type": "AWS::SNS::Topic",
     },
     "LineNotificationConstructNotificationTopicLoggingRoleD4E69E45": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-IAM5",
-              "is_reason_encoded": true,
-              "reason": "U05TIOOBruODreOCsOWHuuWKm+OBq+OBryA6KiDjgYzlv4XopoHjgarjgZ/jgoHjgIHmipHliLbjgZnjgovjgII=",
-            },
-          ],
-        },
-      },
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -905,17 +751,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "Type": "AWS::IAM::Role",
     },
     "LineNotificationConstructNotificationTopicLoggingRoleDefaultPolicy386C5713": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-IAM5",
-              "is_reason_encoded": true,
-              "reason": "U05TIOOBruODreOCsOWHuuWKm+OBq+OBryA6KiDjgYzlv4XopoHjgarjgZ/jgoHjgIHmipHliLbjgZnjgovjgII=",
-            },
-          ],
-        },
-      },
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -941,17 +776,6 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       "Type": "AWS::IAM::Policy",
     },
     "LineNotificationConstructNotificationTopicPolicy38D7AE12": {
-      "Metadata": {
-        "cdk_nag": {
-          "rules_to_suppress": [
-            {
-              "id": "AwsSolutions-SNS2",
-              "is_reason_encoded": true,
-              "reason": "S01TIOOCreODvOOCkuS9nOaIkOOBmeOCi+OBqCAkMSAvIG1vbnRoIOOBi+OBi+OCi+OBn+OCgeOAgeaKkeWItuOBmeOCi+OAgg==",
-            },
-          ],
-        },
-      },
       "Properties": {
         "PolicyDocument": {
           "Statement": [

@@ -1,5 +1,5 @@
 import * as cdk from "aws-cdk-lib";
-import { NagSuppressions } from "cdk-nag";
+
 import { Construct } from "constructs";
 import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLambdaFunction";
 import { COST_SCHEDULE_NOTIFICATION_HANDLER_ENV } from "../handlers/CostScheduleNotificationHandler";
@@ -70,22 +70,16 @@ export class CostScheduleNotificationConstruct extends Construct {
      * cdk-nag のセキュリティ抑制設定
      */
 
-    NagSuppressions.addResourceSuppressions(lambda, [
-      {
-        id: "AwsSolutions-L1",
-        reason: "Lambda で Nodejs 18x を使用するため、抑制する。",
-      },
-    ]);
+    cdk.Validations.of(lambda).acknowledge({
+      id: "AwsSolutions-L1",
+      reason: "Lambda で Nodejs 18x を使用するため、抑制する。",
+    });
 
-    NagSuppressions.addResourceSuppressions(
-      lambda.role,
-      [
-        {
-          id: "AwsSolutions-IAM4",
-          reason: "Lambda で AWSLambdaBasicExecutionRole Managed Policy を使用するため、抑制する。",
-        },
-      ],
-      true,
-    );
+    // サフィックス付きルール ID は acknowledge() では抑制できないため、addMetadata を使用する
+    // https://github.com/cdklabs/cdk-nag/issues/2351
+    lambda.role.node.addMetadata(cdk.Validations.ACKNOWLEDGED_RULES_METADATA_KEY, {
+      "AwsSolutions-IAM4[Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]":
+        "Lambda で AWSLambdaBasicExecutionRole Managed Policy を使用するため、抑制する。",
+    });
   }
 }
