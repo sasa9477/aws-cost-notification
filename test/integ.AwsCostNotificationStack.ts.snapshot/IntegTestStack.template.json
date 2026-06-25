@@ -106,9 +106,7 @@
        ],
        "Condition": {
         "StringEquals": {
-         "AWS:SourceOwner": {
-          "Ref": "AWS::AccountId"
-         }
+         "AWS:SourceOwner": "643202082981"
         }
        },
        "Effect": "Allow",
@@ -177,9 +175,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
-     },
+     "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
      "S3Key": "28c8098df9117d82af7344b0d0ffad456c40158d1e4f9dde9a5b3394757d5a87.zip"
     },
     "Environment": {
@@ -295,30 +291,8 @@
        ],
        "Effect": "Allow",
        "Resource": [
-        {
-         "Fn::Join": [
-          "",
-          [
-           "arn:aws:ce:us-east-1:",
-           {
-            "Ref": "AWS::AccountId"
-           },
-           ":/GetCostAndUsage"
-          ]
-         ]
-        },
-        {
-         "Fn::Join": [
-          "",
-          [
-           "arn:aws:ce:us-east-1:",
-           {
-            "Ref": "AWS::AccountId"
-           },
-           ":/GetCostForecast"
-          ]
-         ]
-        }
+        "arn:aws:ce:us-east-1:643202082981:/GetCostAndUsage",
+        "arn:aws:ce:us-east-1:643202082981:/GetCostForecast"
        ]
       },
       {
@@ -353,9 +327,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
-     },
+     "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
      "S3Key": "589916275409257f9fb3f98481bd9a2e5f9ac6d95c54a68b7ae05a04f460e8fb.zip"
     },
     "Environment": {
@@ -593,9 +565,7 @@
        ],
        "Condition": {
         "StringEquals": {
-         "AWS:SourceOwner": {
-          "Ref": "AWS::AccountId"
-         }
+         "AWS:SourceOwner": "643202082981"
         }
        },
        "Effect": "Allow",
@@ -675,30 +645,8 @@
        ],
        "Effect": "Allow",
        "Resource": [
-        {
-         "Fn::Join": [
-          "",
-          [
-           "arn:aws:ce:us-east-1:",
-           {
-            "Ref": "AWS::AccountId"
-           },
-           ":/GetCostAndUsage"
-          ]
-         ]
-        },
-        {
-         "Fn::Join": [
-          "",
-          [
-           "arn:aws:ce:us-east-1:",
-           {
-            "Ref": "AWS::AccountId"
-           },
-           ":/GetCostForecast"
-          ]
-         ]
-        }
+        "arn:aws:ce:us-east-1:643202082981:/GetCostAndUsage",
+        "arn:aws:ce:us-east-1:643202082981:/GetCostForecast"
        ]
       },
       {
@@ -733,9 +681,7 @@
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
-     },
+     "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
      "S3Key": "9df4fb7ed1a0b11dfc122b89b1fc5ab4d74c31a88f9f3edf4d2f5b02c9ea0281.zip"
     },
     "Environment": {

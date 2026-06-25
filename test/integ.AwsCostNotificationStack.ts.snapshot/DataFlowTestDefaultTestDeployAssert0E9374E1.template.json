@@ -1,6 +1,6 @@
 {
  "Resources": {
-  "AwsApiCallbudgetsUpdateBudgetc5d64cba7f1d4965447d015c6e62dac9": {
+  "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862": {
    "Type": "Custom::DeployAssert@SdkCallbudgetsUpdateBudget",
    "Properties": {
     "ServiceToken": {
@@ -12,23 +12,12 @@
     "service": "budgets",
     "api": "UpdateBudget",
     "parameters": {
-     "AccountId": {
-      "Fn::Join": [
-       "",
-       [
-        "\"",
-        {
-         "Ref": "AWS::AccountId"
-        },
-        "\""
-       ]
-      ]
-     },
+     "AccountId": "\"643202082981\"",
      "NewBudget": "{\"BudgetLimit\":{\"Amount\":\"0.01\",\"Unit\":\"USD\"},\"BudgetName\":\"IntegTestStack-MonthlyCostBudget\",\"BudgetType\":\"COST\",\"TimeUnit\":\"MONTHLY\"}",
      "RetentionDays": "1"
     },
     "flattenResponse": "false",
-    "salt": "1782406074238"
+    "salt": "1782427272750"
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
@@ -92,18 +81,7 @@
          ],
          "Effect": "Allow",
          "Resource": [
-          {
-           "Fn::Join": [
-            "",
-            [
-             "arn:aws:lambda:ap-northeast-1:",
-             {
-              "Ref": "AWS::AccountId"
-             },
-             ":function:IntegTestStackCostScheduleNotificationHandler"
-            ]
-           ]
-          }
+          "arn:aws:lambda:ap-northeast-1:643202082981:function:IntegTestStackCostScheduleNotificationHandler"
          ]
         },
         {
@@ -190,10 +168,10 @@
      "InvocationType": "\"Event\""
     },
     "flattenResponse": "false",
-    "salt": "1782406074239"
+    "salt": "1782427272751"
    },
    "DependsOn": [
-    "AwsApiCallbudgetsUpdateBudgetc5d64cba7f1d4965447d015c6e62dac9"
+    "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
    ],
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete"
@@ -217,7 +195,7 @@
      "Bucket": "\"linemessagingapimockstack-line-notify-mock-bucket\""
     },
     "flattenResponse": "false",
-    "salt": "1782406074240"
+    "salt": "1782427272751"
    },
    "DependsOn": [
     "AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329"
