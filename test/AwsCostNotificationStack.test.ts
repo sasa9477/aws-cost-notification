@@ -25,6 +25,10 @@ describe("AWS Cost Notification Stack", () => {
     template = Template.fromStack(stack);
   });
 
+  test("スナップショットテスト", () => {
+    expect(template.toJSON()).toMatchSnapshot();
+  });
+
   describe("BudgetAlertConstruct", () => {
     test("予算アラートの設定がされている", () => {
       template.hasResourceProperties("AWS::Budgets::Budget", {
