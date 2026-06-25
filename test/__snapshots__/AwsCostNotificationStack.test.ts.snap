@@ -549,7 +549,7 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
         },
         "Environment": {
           "Variables": {
-            "EXCHANGE_RATE_API_KEY": "668799ba00d2a9602bced8935180f246",
+            "EXCHANGE_RATE_API_KEY": "",
             "TZ": "Asia/Tokyo",
           },
         },

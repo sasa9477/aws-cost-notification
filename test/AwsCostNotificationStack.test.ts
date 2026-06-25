@@ -1,18 +1,17 @@
 import * as cdk from "aws-cdk-lib";
 import { Annotations, Capture, Match, Template } from "aws-cdk-lib/assertions";
 import { AwsSolutionsChecks } from "cdk-nag";
-import * as dotenv from "dotenv";
 import * as AwsCostNotification from "../src/stacks/AwsCostNotificationStack";
 import { formatCdkNagErrorMessage } from "../src/utils/formatCdkNagErrorMessage";
 import { testConfig } from "./fixtures/testConfig";
-
-dotenv.config();
 
 describe("AWS Cost Notification Stack", () => {
   let stack: cdk.Stack;
   let template: Template;
 
   beforeAll(() => {
+    delete process.env.EXCHANGE_RATE_API_KEY;
+
     const app = new cdk.App();
     cdk.Aspects.of(app).add(new AwsSolutionsChecks());
     stack = new AwsCostNotification.AwsCostNotificationStack(app, "JestStack", {
