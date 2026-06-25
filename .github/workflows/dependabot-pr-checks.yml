@@ -35,6 +35,9 @@ jobs:
       - name: Test
         run: pnpm run test
 
+      - name: Synth
+        run: pnpm run synth
+
       - name: Add repository owner as reviewer
         if: ${{ always() }}
         run: gh pr edit "$PR_URL" --add-reviewer "$OWNER"
