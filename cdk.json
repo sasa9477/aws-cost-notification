@@ -58,6 +58,7 @@
     "@aws-cdk/aws-cloudwatch-actions:changeLambdaPermissionLogicalIdForLambdaAction": true,
     "@aws-cdk/aws-codepipeline:crossAccountKeysDefaultValueToFalse": true,
     "@aws-cdk/aws-codepipeline:defaultPipelineTypeToV2": true,
-    "@aws-cdk/aws-kms:reduceCrossAccountRegionPolicyScope": true
+    "@aws-cdk/aws-kms:reduceCrossAccountRegionPolicyScope": true,
+    "@aws-cdk/core:defaultCrossStackReferences": "weak"
   }
 }
