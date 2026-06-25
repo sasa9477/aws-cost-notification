@@ -1,20 +1,21 @@
 import * as cdk from "aws-cdk-lib";
-import { Annotations, Capture, Match, Template } from "aws-cdk-lib/assertions";
+import { Capture, Match, Template } from "aws-cdk-lib/assertions";
+import type { PolicyValidationPluginReport } from "aws-cdk-lib";
 import { AwsSolutionsChecks } from "cdk-nag";
 
 import * as AwsCostNotification from "../src/stacks/AwsCostNotificationStack";
-import { formatCdkNagErrorMessage } from "../src/utils/formatCdkNagErrorMessage";
 import { testConfig } from "./fixtures/testConfig";
 
 describe("AWS Cost Notification Stack", () => {
   let stack: cdk.Stack;
   let template: Template;
+  let nagReport: PolicyValidationPluginReport;
 
   beforeAll(() => {
     delete process.env.EXCHANGE_RATE_API_KEY;
 
     const app = new cdk.App();
-    cdk.Validations.of(app).addPlugins(new AwsSolutionsChecks(app));
+    const checks = new AwsSolutionsChecks(app, { verbose: true });
     stack = new AwsCostNotification.AwsCostNotificationStack(app, "JestStack", {
       config: testConfig,
       lineChannelId: "",
@@ -23,6 +24,7 @@ describe("AWS Cost Notification Stack", () => {
     });
 
     template = Template.fromStack(stack);
+    nagReport = checks.validateScope(app);
   });
 
   test("スナップショットテスト", () => {
@@ -133,23 +135,14 @@ describe("AWS Cost Notification Stack", () => {
   });
 
   describe("cdk-nag check", () => {
-    test("cdk-nag のチェックで Error が無い", () => {
-      const errors = Annotations.fromStack(stack).findError("*", Match.stringLikeRegexp("AwsSolutions-.*"));
-
-      try {
-        expect(errors).toHaveLength(0);
-      } catch (error) {
-        throw new Error(formatCdkNagErrorMessage(errors));
-      }
-    });
-
-    test("cdk-nag のセキュリティチェックで warning が無い", () => {
-      const warnings = Annotations.fromStack(stack).findWarning("*", Match.stringLikeRegexp("AwsSolutions-.*"));
-
-      try {
-        expect(warnings).toHaveLength(0);
-      } catch (error) {
-        throw new Error(formatCdkNagErrorMessage(warnings));
+    test("cdk-nag の違反が無い", () => {
+      if (!nagReport.success) {
+        const messages = nagReport.violations.map(
+          (v) =>
+            `[${v.severity}] ${v.ruleName}: ${v.description}\n` +
+            v.violatingResources.map((r) => `  - ${r.constructPath}`).join("\n"),
+        );
+        throw new Error(`cdk-nag violations found:\n${messages.join("\n\n")}`);
       }
     });
   });
