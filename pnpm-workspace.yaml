@@ -4,6 +4,3 @@ allowBuilds:
 
 # 7 days (7 * 24 * 60 = 10080 minutes)
 minimumReleaseAge: 10080
-
-patchedDependencies:
-  "@aws-cdk/integ-tests-alpha@2.215.0-alpha.0": patches/@aws-cdk__integ-tests-alpha@2.215.0-alpha.0.patch

@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  '@aws-cdk/integ-tests-alpha@2.215.0-alpha.0': 1a159b6951a9a76e3d45e79bbf4ceee4ff9b72273c33ffc2aa4f0d1214498953
-
 importers:
 
   .:
@@ -46,8 +43,8 @@ importers:
         specifier: 2.200.1
         version: 2.200.1
       '@aws-cdk/integ-tests-alpha':
-        specifier: 2.215.0-alpha.0
-        version: 2.215.0-alpha.0(patch_hash=1a159b6951a9a76e3d45e79bbf4ceee4ff9b72273c33ffc2aa4f0d1214498953)(aws-cdk-lib@2.260.0(constructs@10.6.0))(constructs@10.6.0)
+        specifier: 2.260.0-alpha.0
+        version: 2.260.0-alpha.0(aws-cdk-lib@2.260.0(constructs@10.6.0))(constructs@10.6.0)
       '@types/aws-lambda':
         specifier: ^8.10.161
         version: 8.10.162
@@ -111,12 +108,12 @@ packages:
     engines: {node: '>= 18.0.0'}
     hasBin: true
 
-  '@aws-cdk/integ-tests-alpha@2.215.0-alpha.0':
-    resolution: {integrity: sha512-Xzc3XAd+Yxw6GNhQ427x1WEtTBUA6c05xwE7UOCl0P/xgyQLpDIuBaZPUerTzy/eLpn7/3bnTxKGrTZg4i18Mg==}
-    engines: {node: '>= 18.0.0'}
+  '@aws-cdk/integ-tests-alpha@2.260.0-alpha.0':
+    resolution: {integrity: sha512-GGGKoAkDs7i6o5pWicVsbA5qG5bkQIQCuCeBJNtEHyEaSsNclOgKSIIgvsC+ykWkeIc4J0ZcFFRLulw/GhAGHA==}
+    engines: {node: '>= 20.0.0'}
     peerDependencies:
-      aws-cdk-lib: ^2.215.0
-      constructs: ^10.0.0
+      aws-cdk-lib: ^2.260.0
+      constructs: ^10.5.0
 
   '@aws-cdk/service-spec-types@0.0.251':
     resolution: {integrity: sha512-193kY3ki/wNZJVMY2plwmQzOiTOtePeEfudAj8bw7/UAFtHUAS9qTLY2YLr+4JIHqkoV12GkshPgsLRFySclFg==}
@@ -1998,7 +1995,7 @@ snapshots:
       '@aws-cdk/aws-service-spec': 0.1.185
       aws-cdk: 2.1128.0
 
-  '@aws-cdk/integ-tests-alpha@2.215.0-alpha.0(patch_hash=1a159b6951a9a76e3d45e79bbf4ceee4ff9b72273c33ffc2aa4f0d1214498953)(aws-cdk-lib@2.260.0(constructs@10.6.0))(constructs@10.6.0)':
+  '@aws-cdk/integ-tests-alpha@2.260.0-alpha.0(aws-cdk-lib@2.260.0(constructs@10.6.0))(constructs@10.6.0)':
     dependencies:
       aws-cdk-lib: 2.260.0(constructs@10.6.0)
       constructs: 10.6.0
