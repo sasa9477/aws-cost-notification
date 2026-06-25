@@ -1,5 +1,5 @@
 import * as cdk from "aws-cdk-lib";
-import { NagSuppressions } from "cdk-nag";
+
 import { Construct } from "constructs";
 import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLambdaFunction";
 import { LINE_MESSAGING_API_MOCK_HANDLER_ENV } from "../handlers/LineMessagingApiMockHandler";
@@ -43,53 +43,31 @@ export class LineMessagingApiMockStack extends cdk.Stack {
      * cdk-nag
      */
 
-    NagSuppressions.addResourceSuppressions(lambda, [
-      {
-        id: "AwsSolutions-L1",
-        reason: "Lambda で Nodejs 18x を使用するため、抑制する。",
-      },
-    ]);
+    cdk.Validations.of(lambda).acknowledge({
+      id: "AwsSolutions-L1",
+      reason: "Lambda で Nodejs 18x を使用するため、抑制する。",
+    });
 
-    NagSuppressions.addResourceSuppressions(
-      lambda.role,
-      [
-        {
-          id: "AwsSolutions-IAM4",
-          reason: "Lambda で AWSLambdaBasicExecutionRole Managed Policy を使用するため、抑制する。",
-        },
-      ],
-      true,
-    );
+    // サフィックス付きルール ID は acknowledge() では抑制できないため、addMetadata を使用する
+    // https://github.com/cdklabs/cdk-nag/issues/2351
+    lambda.role.node.addMetadata(cdk.Validations.ACKNOWLEDGED_RULES_METADATA_KEY, {
+      "AwsSolutions-IAM4[Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]":
+        "Lambda で AWSLambdaBasicExecutionRole Managed Policy を使用するため、抑制する。",
+    });
 
-    NagSuppressions.addResourceSuppressions(
-      this,
-      [
-        {
-          id: "AwsSolutions-IAM5",
-          reason: "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
-        },
-      ],
-      true,
-    );
-    NagSuppressions.addResourceSuppressions(
-      bucket,
-      [
-        {
-          id: "AwsSolutions-S1",
-          reason: "テスト用のバケットのため、アクセスログは設定しない",
-        },
-      ],
-      true,
-    );
-    NagSuppressions.addResourceSuppressions(
-      bucket,
-      [
-        {
-          id: "AwsSolutions-S10",
-          reason: "テスト用のバケットのため、SSLは設定しない",
-        },
-      ],
-      true,
-    );
+    cdk.Validations.of(this).acknowledge({
+      id: "AwsSolutions-IAM5[Resource::*]",
+      reason: "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+    });
+
+    cdk.Validations.of(bucket).acknowledge({
+      id: "AwsSolutions-S1",
+      reason: "テスト用のバケットのため、アクセスログは設定しない",
+    });
+
+    cdk.Validations.of(bucket).acknowledge({
+      id: "AwsSolutions-S10",
+      reason: "テスト用のバケットのため、SSLは設定しない",
+    });
   }
 }

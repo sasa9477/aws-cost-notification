@@ -36,7 +36,7 @@ const stack = new AwsCostNotificationStack(app, "IntegTestStack", {
   lineNotificationTestUrl: mockStack.functionUrl.url,
 });
 
-cdk.Aspects.of(stack).add(new AwsSolutionsChecks({ verbose: true }));
+cdk.Validations.of(stack).addPlugins(new AwsSolutionsChecks(stack, { verbose: true }));
 cdk.Aspects.of(stack).add(new ApplyDestroyPolicyAspect());
 cdk.Aspects.of(mockStack).add(new ApplyDestroyPolicyAspect());
 cdk.Aspects.of(mockStack).add(new CustomResourceLoggingConfigAspect());

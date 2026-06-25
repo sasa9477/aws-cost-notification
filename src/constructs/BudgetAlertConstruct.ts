@@ -1,5 +1,5 @@
 import * as cdk from "aws-cdk-lib";
-import { NagSuppressions } from "cdk-nag";
+
 import { Construct } from "constructs";
 import { NodeJsLambdaFunction } from "../cfn_resources/NodeJsLambdaFunction";
 import { BUDGET_ALERT_HANDLER_ENV } from "../handlers/BudgetAlertHandler";
@@ -156,45 +156,26 @@ export class BudgetAlertConstruct extends Construct {
      * cdk-nag のセキュリティ抑制設定
      */
 
-    NagSuppressions.addResourceSuppressions(lambda, [
-      {
-        id: "AwsSolutions-L1",
-        reason: "Lambda で Nodejs 18x を使用するため、抑制する。",
-      },
-    ]);
+    cdk.Validations.of(lambda).acknowledge({
+      id: "AwsSolutions-L1",
+      reason: "Lambda で Nodejs 18x を使用するため、抑制する。",
+    });
 
-    NagSuppressions.addResourceSuppressions(
-      lambda.role,
-      [
-        {
-          id: "AwsSolutions-IAM4",
-          reason: "Lambda で AWSLambdaBasicExecutionRole Managed Policy を使用するため、抑制する。",
-        },
-      ],
-      true,
-    );
+    // サフィックス付きルール ID は acknowledge() では抑制できないため、addMetadata を使用する
+    // https://github.com/cdklabs/cdk-nag/issues/2351
+    lambda.role.node.addMetadata(cdk.Validations.ACKNOWLEDGED_RULES_METADATA_KEY, {
+      "AwsSolutions-IAM4[Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]":
+        "Lambda で AWSLambdaBasicExecutionRole Managed Policy を使用するため、抑制する。",
+    });
 
-    NagSuppressions.addResourceSuppressions(
-      topicLoggingRole,
-      [
-        {
-          id: "AwsSolutions-IAM5",
-          reason: "SNS のログ出力には :* が必要なため、抑制する。",
-        },
-      ],
-      true,
-    );
+    cdk.Validations.of(topicLoggingRole).acknowledge({
+      id: "AwsSolutions-IAM5[Resource::*]",
+      reason: "SNS のログ出力には :* が必要なため、抑制する。",
+    });
 
-    NagSuppressions.addResourceSuppressions(
-      topic,
-      [
-        {
-          id: "AwsSolutions-SNS2",
-          // detail: "SNSトピックにサーバー側の暗号化が有効になっていません。サーバー側の暗号化は、サブスクライバーにメッセージとして配信される機密データを追加で保護します。"
-          reason: "KMS キーを作成すると $1 / month かかるため、抑制する。",
-        },
-      ],
-      true,
-    );
+    cdk.Validations.of(topic).acknowledge({
+      id: "AwsSolutions-SNS2",
+      reason: "KMS キーを作成すると $1 / month かかるため、抑制する。",
+    });
   }
 }
