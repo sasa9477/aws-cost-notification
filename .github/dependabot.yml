@@ -3,23 +3,31 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     groups:
-      dependencies:
-        patterns:
-          - "*"
+      major:
+        update-types:
+          - "major"
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
     schedule:
-      # 毎週月曜日
-      interval: "weekly"
-      day: "monday"
+      interval: "monthly"
+      time: "10:00"
+      timezone: "Asia/Tokyo"
     cooldown:
-      # リリースから30日が経過していないパッケージは更新しない
-      default-days: 30
+      # リリースから7日が経過していないパッケージは更新しない
+      default-days: 7
 
   - package-ecosystem: "github-actions"
     directory: "/"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
     schedule:
-      # 毎週月曜日
-      interval: "weekly"
-      day: "monday"
+      interval: "monthly"
+      time: "10:00"
+      timezone: "Asia/Tokyo"
     cooldown:
-      # リリースから30日が経過していないパッケージは更新しない
-      default-days: 30
+      # リリースから7日が経過していないパッケージは更新しない
+      default-days: 7
