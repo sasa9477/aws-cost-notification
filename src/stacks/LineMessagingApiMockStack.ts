@@ -55,9 +55,20 @@ export class LineMessagingApiMockStack extends cdk.Stack {
         "Lambda で AWSLambdaBasicExecutionRole Managed Policy を使用するため、抑制する。",
     });
 
-    cdk.Validations.of(this).acknowledge({
-      id: "AwsSolutions-IAM5[Resource::*]",
-      reason: "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+    // サフィックス付きルール ID は acknowledge() では抑制できないため、addMetadata を使用する
+    // https://github.com/cdklabs/cdk-nag/issues/2351
+    const bucketLogicalId = cdk.Stack.of(this).getLogicalId(bucket.node.defaultChild as cdk.CfnElement);
+    const iam5Reason = "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する";
+    lambda.role.node.findAll().forEach((child) => {
+      child.node.addMetadata(cdk.Validations.ACKNOWLEDGED_RULES_METADATA_KEY, {
+        "AwsSolutions-IAM5[Resource::*]": iam5Reason,
+        [`AwsSolutions-IAM5[Resource::<${bucketLogicalId}.Arn>/*]`]: iam5Reason,
+        "AwsSolutions-IAM5[Action::s3:Abort*]": iam5Reason,
+        "AwsSolutions-IAM5[Action::s3:DeleteObject*]": iam5Reason,
+        "AwsSolutions-IAM5[Action::s3:GetBucket*]": iam5Reason,
+        "AwsSolutions-IAM5[Action::s3:GetObject*]": iam5Reason,
+        "AwsSolutions-IAM5[Action::s3:List*]": iam5Reason,
+      });
     });
 
     cdk.Validations.of(bucket).acknowledge({
