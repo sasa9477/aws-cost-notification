@@ -1,5 +1,5 @@
 {
-  "version": "48.0.0",
+  "version": "54.0.0",
   "artifacts": {
     "LineMessagingApiMockStack.assets": {
       "type": "cdk:asset-manifest",
@@ -11,21 +11,21 @@
     },
     "LineMessagingApiMockStack": {
       "type": "aws:cloudformation:stack",
-      "environment": "aws://643202082981/ap-northeast-1",
+      "environment": "aws://unknown-account/ap-northeast-1",
       "properties": {
         "templateFile": "LineMessagingApiMockStack.template.json",
         "terminationProtection": false,
         "validateOnSynth": false,
-        "assumeRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-deploy-role-643202082981-ap-northeast-1",
-        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-cfn-exec-role-643202082981-ap-northeast-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-643202082981-ap-northeast-1/6e2921ec5ffb6cd650bff479c81bfc3ecb25413a82bd50e9c64aebda11af0a9e.json",
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-ap-northeast-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-ap-northeast-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1/5288b9973cae863cf8c52c61140c3bfcb626899a237440154d224a3cf67e57b5.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
           "LineMessagingApiMockStack.assets"
         ],
         "lookupRole": {
-          "arn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-lookup-role-643202082981-ap-northeast-1",
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-ap-northeast-1",
           "requiresBootstrapStackVersion": 8,
           "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
         }
@@ -33,274 +33,7 @@
       "dependencies": [
         "LineMessagingApiMockStack.assets"
       ],
-      "metadata": {
-        "/LineMessagingApiMockStack/LineMessagingApiMockBucket": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "bucketName": "*",
-              "removalPolicy": "destroy",
-              "autoDeleteObjects": true
-            }
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockBucket/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineMessagingApiMockBucket163462C4"
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockBucket/Policy": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "bucket": "*"
-            }
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockBucket/Policy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineMessagingApiMockBucketPolicy256F0782"
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockBucket/AutoDeleteObjectsCustomResource": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockBucket/AutoDeleteObjectsCustomResource/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineMessagingApiMockBucketAutoDeleteObjectsCustomResource366A2574"
-          }
-        ],
-        "/LineMessagingApiMockStack/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
-          {
-            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
-            "data": true
-          }
-        ],
-        "/LineMessagingApiMockStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
-          }
-        ],
-        "/LineMessagingApiMockStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
-          }
-        ],
-        "/LineMessagingApiMockStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/HandlerLogGroup": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "logGroupName": "*",
-              "removalPolicy": "destroy",
-              "retention": 365
-            }
-          }
-        ],
-        "/LineMessagingApiMockStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/HandlerLogGroup/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandlerLogGroup397C0130"
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandlerRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "assumedBy": {
-                "principalAccount": "*",
-                "assumeRoleAction": "*"
-              },
-              "managedPolicies": [
-                {
-                  "managedPolicyArn": "*"
-                }
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPrincipalPolicy": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandlerRole/ImportLineMessagingApiMockHandlerRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandlerRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineMessagingApiMockHandlerRole30AFAD31"
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandlerRole/DefaultPolicy": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addStatements": [
-                {}
-              ]
-            }
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandlerRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineMessagingApiMockHandlerRoleDefaultPolicy516E003A"
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandlerLogGroup": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "removalPolicy": "retain-on-update-or-delete",
-              "retention": 365
-            }
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandlerLogGroup/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineMessagingApiMockHandlerLogGroup44C7D70C"
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandler": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "runtime": "*",
-              "memorySize": "*",
-              "timeout": "*",
-              "role": "*",
-              "logGroup": "*",
-              "entry": "*",
-              "functionName": "*",
-              "bundling": {
-                "externalModules": "*",
-                "tsconfig": "*"
-              },
-              "environment": "*",
-              "code": "*",
-              "handler": "*"
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {}
-          },
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "runtime": "*",
-              "memorySize": "*",
-              "timeout": "*",
-              "role": "*",
-              "logGroup": "*",
-              "entry": "*",
-              "functionName": "*",
-              "bundling": {
-                "externalModules": "*",
-                "tsconfig": "*"
-              },
-              "environment": "*"
-            }
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandler/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineMessagingApiMockHandler53EC5DEF"
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandler/FunctionUrl": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "function": "*",
-              "authType": "NONE"
-            }
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandler/FunctionUrl/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineMessagingApiMockHandlerFunctionUrlBACC71E8"
-          }
-        ],
-        "/LineMessagingApiMockStack/LineMessagingApiMockHandler/invoke-function-url": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineMessagingApiMockHandlerinvokefunctionurl0EFEE7EC"
-          }
-        ],
-        "/LineMessagingApiMockStack/Exports/Output{\"Fn::GetAtt\":[\"LineMessagingApiMockHandlerFunctionUrlBACC71E8\",\"FunctionUrl\"]}": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ExportsOutputFnGetAttLineMessagingApiMockHandlerFunctionUrlBACC71E8FunctionUrlA76D3756"
-          }
-        ],
-        "/LineMessagingApiMockStack/BootstrapVersion": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BootstrapVersion"
-          }
-        ],
-        "/LineMessagingApiMockStack/CheckBootstrapVersion": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CheckBootstrapVersion"
-          }
-        ]
-      },
+      "additionalMetadataFile": "LineMessagingApiMockStack.metadata.json",
       "displayName": "LineMessagingApiMockStack"
     },
     "IntegTestStack.assets": {
@@ -313,21 +46,21 @@
     },
     "IntegTestStack": {
       "type": "aws:cloudformation:stack",
-      "environment": "aws://643202082981/ap-northeast-1",
+      "environment": "aws://unknown-account/ap-northeast-1",
       "properties": {
         "templateFile": "IntegTestStack.template.json",
         "terminationProtection": false,
         "validateOnSynth": false,
-        "assumeRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-deploy-role-643202082981-ap-northeast-1",
-        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-cfn-exec-role-643202082981-ap-northeast-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-643202082981-ap-northeast-1/ba1e18a5b3dd2a377cdd52ec23ef816389f2c5e46cba5b1e657f32e2e8c8ec95.json",
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-ap-northeast-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-ap-northeast-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1/b008de9fd0920dcbc80658b5c2b7f3925829f4fc1d98c7d268068ca67ae90403.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
           "IntegTestStack.assets"
         ],
         "lookupRole": {
-          "arn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-lookup-role-643202082981-ap-northeast-1",
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-ap-northeast-1",
           "requiresBootstrapStackVersion": 8,
           "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
         }
@@ -336,988 +69,7 @@
         "LineMessagingApiMockStack",
         "IntegTestStack.assets"
       ],
-      "metadata": {
-        "/IntegTestStack/LineNotificationConstruct/NotificationTopicLoggingRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "assumedBy": {
-                "principalAccount": "*",
-                "assumeRoleAction": "*"
-              }
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPolicy": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPrincipalPolicy": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/NotificationTopicLoggingRole/ImportNotificationTopicLoggingRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/NotificationTopicLoggingRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineNotificationConstructNotificationTopicLoggingRoleD4E69E45"
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/NotificationTopicLoggingRole/DefaultPolicy": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addStatements": [
-                {}
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/NotificationTopicLoggingRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineNotificationConstructNotificationTopicLoggingRoleDefaultPolicy386C5713"
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/NotificationTopic": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "topicName": "*",
-              "displayName": "*",
-              "enforceSSL": true,
-              "loggingConfigs": [
-                {
-                  "protocol": "lambda",
-                  "successFeedbackRole": "*",
-                  "failureFeedbackRole": "*",
-                  "successFeedbackSampleRate": "*"
-                }
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addLoggingConfig": [
-                {
-                  "protocol": "lambda",
-                  "successFeedbackRole": "*",
-                  "failureFeedbackRole": "*",
-                  "successFeedbackSampleRate": "*"
-                }
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/NotificationTopic/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineNotificationConstructNotificationTopicE4CBF5A0"
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/NotificationTopic/Policy": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "topics": [
-                "*"
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/NotificationTopic/Policy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineNotificationConstructNotificationTopicPolicy38D7AE12"
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/LineNotificationHandlerRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "assumedBy": {
-                "principalAccount": "*",
-                "assumeRoleAction": "*"
-              },
-              "managedPolicies": [
-                {
-                  "managedPolicyArn": "*"
-                }
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/LineNotificationHandlerRole/ImportLineNotificationHandlerRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/LineNotificationHandlerRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineNotificationConstructLineNotificationHandlerRole184B36DA"
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/LineNotificationHandlerLogGroup": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "removalPolicy": "retain-on-update-or-delete",
-              "retention": 365
-            }
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/LineNotificationHandlerLogGroup/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineNotificationConstructLineNotificationHandlerLogGroup0D100642"
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/LineNotificationHandler": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "runtime": "*",
-              "memorySize": "*",
-              "timeout": "*",
-              "role": "*",
-              "logGroup": "*",
-              "entry": "*",
-              "functionName": "*",
-              "bundling": {
-                "externalModules": "*",
-                "tsconfig": "*"
-              },
-              "environment": "*",
-              "events": "*",
-              "code": "*",
-              "handler": "*"
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {}
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {}
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {}
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {}
-          },
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "runtime": "*",
-              "memorySize": "*",
-              "timeout": "*",
-              "role": "*",
-              "logGroup": "*",
-              "entry": "*",
-              "functionName": "*",
-              "bundling": {
-                "externalModules": "*",
-                "tsconfig": "*"
-              },
-              "environment": "*",
-              "events": "*"
-            }
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/LineNotificationHandler/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineNotificationConstructLineNotificationHandler196C8691"
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/LineNotificationHandler/AllowInvoke:IntegTestStackLineNotificationConstructNotificationTopic205E1087": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineNotificationConstructLineNotificationHandlerAllowInvokeIntegTestStackLineNotificationConstructNotificationTopic205E108797B05EC8"
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/LineNotificationHandler/NotificationTopic": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "topic": "*",
-              "endpoint": "*",
-              "protocol": "lambda",
-              "filterPolicy": "*",
-              "filterPolicyWithMessageBody": "*",
-              "region": "*",
-              "deadLetterQueue": "*"
-            }
-          }
-        ],
-        "/IntegTestStack/LineNotificationConstruct/LineNotificationHandler/NotificationTopic/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LineNotificationConstructLineNotificationHandlerNotificationTopicFC4F915E"
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostScheduleNotificationHandlerRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "assumedBy": {
-                "principalAccount": "*",
-                "assumeRoleAction": "*"
-              },
-              "managedPolicies": [
-                {
-                  "managedPolicyArn": "*"
-                }
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPrincipalPolicy": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPrincipalPolicy": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPrincipalPolicy": [
-                {}
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostScheduleNotificationHandlerRole/ImportCostScheduleNotificationHandlerRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostScheduleNotificationHandlerRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CostScheduleNotificationConstructCostScheduleNotificationHandlerRoleBF14AF54"
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostScheduleNotificationHandlerRole/DefaultPolicy": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addStatements": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addStatements": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addStatements": [
-                {}
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostScheduleNotificationHandlerRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CostScheduleNotificationConstructCostScheduleNotificationHandlerRoleDefaultPolicyE63C8C25"
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostScheduleNotificationHandlerLogGroup": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "removalPolicy": "retain-on-update-or-delete",
-              "retention": 365
-            }
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostScheduleNotificationHandlerLogGroup/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CostScheduleNotificationConstructCostScheduleNotificationHandlerLogGroup293A52C4"
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostScheduleNotificationHandler": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "runtime": "*",
-              "memorySize": "*",
-              "timeout": "*",
-              "role": "*",
-              "logGroup": "*",
-              "entry": "*",
-              "functionName": "*",
-              "bundling": {
-                "externalModules": "*",
-                "tsconfig": "*"
-              },
-              "environment": "*",
-              "onSuccess": "*",
-              "onFailure": "*",
-              "code": "*",
-              "handler": "*"
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {}
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {}
-          },
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "runtime": "*",
-              "memorySize": "*",
-              "timeout": "*",
-              "role": "*",
-              "logGroup": "*",
-              "entry": "*",
-              "functionName": "*",
-              "bundling": {
-                "externalModules": "*",
-                "tsconfig": "*"
-              },
-              "environment": "*",
-              "onSuccess": "*",
-              "onFailure": "*"
-            }
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostScheduleNotificationHandler/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CostScheduleNotificationConstructCostScheduleNotificationHandler917D5237"
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostScheduleNotificationHandler/EventInvokeConfig": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "function": "*",
-              "onFailure": "*",
-              "onSuccess": "*",
-              "maxEventAge": "*",
-              "retryAttempts": "*"
-            }
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostScheduleNotificationHandler/EventInvokeConfig/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CostScheduleNotificationConstructCostScheduleNotificationHandlerEventInvokeConfig30AE1961"
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostNotificationSchedulerRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "assumedBy": {
-                "principalAccount": "*",
-                "assumeRoleAction": "*"
-              }
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPolicy": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPrincipalPolicy": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostNotificationSchedulerRole/ImportCostNotificationSchedulerRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostNotificationSchedulerRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CostScheduleNotificationConstructCostNotificationSchedulerRoleEF98CEDD"
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostNotificationSchedulerRole/DefaultPolicy": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addStatements": [
-                {}
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostNotificationSchedulerRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CostScheduleNotificationConstructCostNotificationSchedulerRoleDefaultPolicyA672125A"
-          }
-        ],
-        "/IntegTestStack/CostScheduleNotificationConstruct/CostNotificationSchedule": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CostScheduleNotificationConstructCostNotificationScheduleAA10C610"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertTopicLoggingRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "assumedBy": {
-                "principalAccount": "*",
-                "assumeRoleAction": "*"
-              }
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPolicy": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPrincipalPolicy": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertTopicLoggingRole/ImportBudgetAlertTopicLoggingRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertTopicLoggingRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructBudgetAlertTopicLoggingRoleD3D2101A"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertTopicLoggingRole/DefaultPolicy": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addStatements": [
-                {}
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertTopicLoggingRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructBudgetAlertTopicLoggingRoleDefaultPolicy5FC26D8E"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertTopic": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "topicName": "*",
-              "displayName": "*",
-              "enforceSSL": true,
-              "loggingConfigs": [
-                {
-                  "protocol": "lambda",
-                  "successFeedbackRole": "*",
-                  "failureFeedbackRole": "*",
-                  "successFeedbackSampleRate": "*"
-                }
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addLoggingConfig": [
-                {
-                  "protocol": "lambda",
-                  "successFeedbackRole": "*",
-                  "failureFeedbackRole": "*",
-                  "successFeedbackSampleRate": "*"
-                }
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertTopic/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructBudgetAlertTopic754D47EA"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertTopic/Policy": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "topics": [
-                "*"
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertTopic/Policy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructBudgetAlertTopicPolicy6D927116"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandlerRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "assumedBy": {
-                "principalAccount": "*",
-                "assumeRoleAction": "*"
-              },
-              "managedPolicies": [
-                {
-                  "managedPolicyArn": "*"
-                }
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPrincipalPolicy": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachInlinePolicy": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPrincipalPolicy": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addToPrincipalPolicy": [
-                {}
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandlerRole/ImportBudgetAlertHandlerRole": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandlerRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructBudgetAlertHandlerRole355CA4D5"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandlerRole/DefaultPolicy": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "attachToRole": [
-                "*"
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addStatements": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addStatements": [
-                {}
-              ]
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {
-              "addStatements": [
-                {}
-              ]
-            }
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandlerRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructBudgetAlertHandlerRoleDefaultPolicy68BAD42F"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandlerLogGroup": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "removalPolicy": "retain-on-update-or-delete",
-              "retention": 365
-            }
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandlerLogGroup/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructBudgetAlertHandlerLogGroupB0D163EA"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandler": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "runtime": "*",
-              "memorySize": "*",
-              "timeout": "*",
-              "role": "*",
-              "logGroup": "*",
-              "entry": "*",
-              "functionName": "*",
-              "bundling": {
-                "externalModules": "*",
-                "tsconfig": "*"
-              },
-              "environment": "*",
-              "events": "*",
-              "onSuccess": "*",
-              "onFailure": "*",
-              "code": "*",
-              "handler": "*"
-            }
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {}
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": {}
-          },
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "runtime": "*",
-              "memorySize": "*",
-              "timeout": "*",
-              "role": "*",
-              "logGroup": "*",
-              "entry": "*",
-              "functionName": "*",
-              "bundling": {
-                "externalModules": "*",
-                "tsconfig": "*"
-              },
-              "environment": "*",
-              "events": "*",
-              "onSuccess": "*",
-              "onFailure": "*"
-            }
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandler/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructBudgetAlertHandler511F71D7"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandler/AllowInvoke:IntegTestStackBudgetAlertConstructBudgetAlertTopicF2AFEA3A": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructBudgetAlertHandlerAllowInvokeIntegTestStackBudgetAlertConstructBudgetAlertTopicF2AFEA3AEAC1EB41"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandler/BudgetAlertTopic": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "topic": "*",
-              "endpoint": "*",
-              "protocol": "lambda",
-              "filterPolicy": "*",
-              "filterPolicyWithMessageBody": "*",
-              "region": "*",
-              "deadLetterQueue": "*"
-            }
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandler/BudgetAlertTopic/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructBudgetAlertHandlerBudgetAlertTopicE466A07F"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandler/EventInvokeConfig": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": {
-              "function": "*",
-              "onFailure": "*",
-              "onSuccess": "*",
-              "maxEventAge": "*",
-              "retryAttempts": "*"
-            }
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/BudgetAlertHandler/EventInvokeConfig/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructBudgetAlertHandlerEventInvokeConfig69E774CA"
-          }
-        ],
-        "/IntegTestStack/BudgetAlertConstruct/MonthlyCostBudget": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BudgetAlertConstructMonthlyCostBudgetE1BB0FAD"
-          }
-        ],
-        "/IntegTestStack/BootstrapVersion": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BootstrapVersion"
-          }
-        ],
-        "/IntegTestStack/CheckBootstrapVersion": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CheckBootstrapVersion"
-          }
-        ]
-      },
+      "additionalMetadataFile": "IntegTestStack.metadata.json",
       "displayName": "IntegTestStack"
     },
     "DataFlowTestDefaultTestDeployAssert0E9374E1.assets": {
@@ -1337,7 +89,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/57e8201aac7de30a31d15413b9653b56c25a92c9be22b4db327fe9039fc8e604.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/2aabc4c405b84b10468e55854aa87a59d11d02f7f5bfa97cc6378b9ac92edf1e.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -1352,142 +104,7 @@
       "dependencies": [
         "DataFlowTestDefaultTestDeployAssert0E9374E1.assets"
       ],
-      "metadata": {
-        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862/Default": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862/Default/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AwsApiCallbudgetsUpdateBudgetead4a4a699852e842dd2dbe5ffda6862"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Role": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "SingletonFunction1488541a7b23466481b69b4408076b81Role37ABCE73"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/LogGroup": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "SingletonFunction1488541a7b23466481b69b4408076b81LogGroupB3CD1BAA"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Handler": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "SingletonFunction1488541a7b23466481b69b4408076b81HandlerCD40AE9F"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/LatestNodeRuntimeMap": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "LatestNodeRuntimeMap"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329/Default": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329/Default/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/Default": [
-          {
-            "type": "aws:cdk:analytics:construct",
-            "data": "*"
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": "*"
-          },
-          {
-            "type": "aws:cdk:analytics:method",
-            "data": "*"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/Default/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/WaitFor/IsCompleteProvider/Invoke": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForIsCompleteProviderInvoke988E71C3"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/WaitFor/TimeoutProvider/Invoke": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForTimeoutProviderInvoke5DB6BB5E"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/WaitFor/Role": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForRoleE9F8206A"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/WaitFor/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitFor563A32CD"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/AssertionResults": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AssertionResultsAwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction76b3e830a873425f8453eddd85c86925/Role": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "SingletonFunction76b3e830a873425f8453eddd85c86925Role918961BB"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction76b3e830a873425f8453eddd85c86925/Handler": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "SingletonFunction76b3e830a873425f8453eddd85c86925Handler81461ECE"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction5c1898e096fb4e3e95d5f6c67f3ce41a/Role": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "SingletonFunction5c1898e096fb4e3e95d5f6c67f3ce41aRoleB84BD8CE"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction5c1898e096fb4e3e95d5f6c67f3ce41a/Handler": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "SingletonFunction5c1898e096fb4e3e95d5f6c67f3ce41aHandlerADF3E6EA"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/BootstrapVersion": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "BootstrapVersion"
-          }
-        ],
-        "/DataFlowTest/DefaultTest/DeployAssert/CheckBootstrapVersion": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CheckBootstrapVersion"
-          }
-        ]
-      },
+      "additionalMetadataFile": "DataFlowTestDefaultTestDeployAssert0E9374E1.metadata.json",
       "displayName": "DataFlowTest/DefaultTest/DeployAssert"
     },
     "Tree": {
@@ -1633,7 +250,7 @@
           "@aws-cdk/aws-iam:importedRoleStackSafeDefaultPolicyName": {
             "userValue": true,
             "recommendedValue": true,
-            "explanation": "Enable this feature to by default create default policy names for imported roles that depend on the stack the role is in."
+            "explanation": "Enable this feature to create default policy names for imported roles that depend on the stack the role is in."
           },
           "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": {
             "userValue": true,
@@ -1787,6 +404,11 @@
             "recommendedValue": true,
             "explanation": "When enabled, nodegroupName attribute of the provisioned EKS NodeGroup will not have the cluster name prefix."
           },
+          "@aws-cdk/aws-eks:useNativeOidcProvider": {
+            "userValue": true,
+            "recommendedValue": true,
+            "explanation": "When enabled, EKS V2 clusters will use the native OIDC provider resource AWS::IAM::OIDCProvider instead of creating the OIDCProvider with a custom resource (iam.OpenIDConnectProvider)."
+          },
           "@aws-cdk/aws-ec2:ebsDefaultGp3Volume": {
             "userValue": true,
             "recommendedValue": true,
@@ -1818,16 +440,6 @@
             "userValue": true,
             "recommendedValue": true,
             "explanation": "When enabled, stack tags need to be assigned explicitly on a Stack."
-          },
-          "@aws-cdk/aws-ecs:enableImdsBlockingDeprecatedFeature": {
-            "userValue": false,
-            "recommendedValue": false,
-            "explanation": "When set to true along with canContainersAccessInstanceRole=false in ECS cluster, new updated commands will be added to UserData to block container accessing IMDS. **Applicable to Linux only. IMPORTANT: See [details.](#aws-cdkaws-ecsenableImdsBlockingDeprecatedFeature)**"
-          },
-          "@aws-cdk/aws-ecs:disableEcsImdsBlocking": {
-            "userValue": true,
-            "recommendedValue": true,
-            "explanation": "When set to true, CDK synth will throw exception if canContainersAccessInstanceRole is false. **IMPORTANT: See [details.](#aws-cdkaws-ecsdisableEcsImdsBlocking)**"
           },
           "@aws-cdk/aws-ecs:reduceEc2FargateCloudWatchPermissions": {
             "userValue": true,
@@ -1972,10 +584,70 @@
             "userValue": true,
             "recommendedValue": true,
             "explanation": "When enabled, CDK creates and manages loggroup for the lambda function"
+          },
+          "@aws-cdk/aws-elasticloadbalancingv2:networkLoadBalancerWithSecurityGroupByDefault": {
+            "userValue": true,
+            "recommendedValue": true,
+            "explanation": "When enabled, Network Load Balancer will be created with a security group by default."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:httpInvokeDynamicJsonPathEndpoint": {
+            "recommendedValue": true,
+            "explanation": "When enabled, allows using a dynamic apiEndpoint with JSONPath format in HttpInvoke tasks.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-ecs-patterns:uniqueTargetGroupId": {
+            "userValue": true,
+            "recommendedValue": true,
+            "explanation": "When enabled, ECS patterns will generate unique target group IDs to prevent conflicts during load balancer replacement"
+          },
+          "@aws-cdk/aws-route53-patterns:useDistribution": {
+            "userValue": true,
+            "recommendedValue": true,
+            "explanation": "Use the `Distribution` resource instead of `CloudFrontWebDistribution`"
+          },
+          "@aws-cdk/aws-cloudfront:defaultFunctionRuntimeV2_0": {
+            "userValue": true,
+            "recommendedValue": true,
+            "explanation": "Use cloudfront-js-2.0 as the default runtime for CloudFront Functions"
+          },
+          "@aws-cdk/aws-elasticloadbalancingv2:usePostQuantumTlsPolicy": {
+            "userValue": true,
+            "recommendedValue": true,
+            "explanation": "When enabled, HTTPS/TLS listeners use post-quantum TLS policy by default"
+          },
+          "@aws-cdk/core:automaticL1Traits": {
+            "recommendedValue": true,
+            "explanation": "Automatically use the default L1 traits for L1 constructs`",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-batch:defaultToAL2023": {
+            "userValue": true,
+            "recommendedValue": true,
+            "explanation": "Use AL2023 as the default imageType for EC2 Batch compute environments instead of the deprecated AL2"
+          },
+          "@aws-cdk/aws-eks:defaultToAL2023": {
+            "recommendedValue": true,
+            "explanation": "Use AL2023 as the default AMI type for EKS managed node groups using non-GPU instance types instead of the deprecated AL2"
+          },
+          "@aws-cdk/core:annotationsInValidationReport": {
+            "userValue": true,
+            "recommendedValue": true,
+            "explanation": "Include construct annotations (warnings and errors) in the policy validation report"
+          },
+          "@aws-cdk/core:defaultCrossStackReferences": {
+            "recommendedValue": "weak",
+            "explanation": "Controls whether cross-region stack references are strong, weak, or both",
+            "unconfiguredBehavesLike": {
+              "v2": "strong"
+            }
           }
         }
       }
     }
   },
-  "minimumCliVersion": "2.1029.1"
+  "minimumCliVersion": "2.1128.0"
 }

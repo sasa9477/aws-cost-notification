@@ -12,28 +12,7 @@
     ]
    },
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "cdk_nag": {
-     "rules_to_suppress": [
-      {
-       "reason": "44OG44K544OI55So44Gu44K544K/44OD44Kv44Gu44Gf44KB44CBSUFNIOODneODquOCt+ODvOOBruODr+OCpOODq+ODieOCq+ODvOODieOCkuioseWPr+OBmeOCiw==",
-       "id": "AwsSolutions-IAM5",
-       "is_reason_encoded": true
-      },
-      {
-       "reason": "44OG44K544OI55So44Gu44OQ44Kx44OD44OI44Gu44Gf44KB44CB44Ki44Kv44K744K544Ot44Kw44Gv6Kit5a6a44GX44Gq44GE",
-       "id": "AwsSolutions-S1",
-       "is_reason_encoded": true
-      },
-      {
-       "reason": "44OG44K544OI55So44Gu44OQ44Kx44OD44OI44Gu44Gf44KB44CBU1NM44Gv6Kit5a6a44GX44Gq44GE",
-       "id": "AwsSolutions-S10",
-       "is_reason_encoded": true
-      }
-     ]
-    }
-   }
+   "DeletionPolicy": "Delete"
   },
   "LineMessagingApiMockBucketPolicy256F0782": {
    "Type": "AWS::S3::BucketPolicy",
@@ -57,7 +36,40 @@
           "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
           "Arn"
          ]
+        }
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "LineMessagingApiMockBucket163462C4",
+          "Arn"
+         ]
         },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "LineMessagingApiMockBucket163462C4",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": [
+        "s3:DeleteObject*",
+        "s3:GetBucket*",
+        "s3:List*",
+        "s3:PutBucketPolicy"
+       ],
+       "Effect": "Allow",
+       "Principal": {
         "Service": "lambda.amazonaws.com"
        },
        "Resource": [
@@ -88,28 +100,7 @@
     }
    },
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "cdk_nag": {
-     "rules_to_suppress": [
-      {
-       "reason": "44OG44K544OI55So44Gu44K544K/44OD44Kv44Gu44Gf44KB44CBSUFNIOODneODquOCt+ODvOOBruODr+OCpOODq+ODieOCq+ODvOODieOCkuioseWPr+OBmeOCiw==",
-       "id": "AwsSolutions-IAM5",
-       "is_reason_encoded": true
-      },
-      {
-       "reason": "44OG44K544OI55So44Gu44OQ44Kx44OD44OI44Gu44Gf44KB44CB44Ki44Kv44K744K544Ot44Kw44Gv6Kit5a6a44GX44Gq44GE",
-       "id": "AwsSolutions-S1",
-       "is_reason_encoded": true
-      },
-      {
-       "reason": "44OG44K544OI55So44Gu44OQ44Kx44OD44OI44Gu44Gf44KB44CBU1NM44Gv6Kit5a6a44GX44Gq44GE",
-       "id": "AwsSolutions-S10",
-       "is_reason_encoded": true
-      }
-     ]
-    }
-   }
+   "DeletionPolicy": "Delete"
   },
   "LineMessagingApiMockBucketAutoDeleteObjectsCustomResource366A2574": {
    "Type": "Custom::S3AutoDeleteObjects",
@@ -128,28 +119,7 @@
     "LineMessagingApiMockBucketPolicy256F0782"
    ],
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "cdk_nag": {
-     "rules_to_suppress": [
-      {
-       "reason": "44OG44K544OI55So44Gu44K544K/44OD44Kv44Gu44Gf44KB44CBSUFNIOODneODquOCt+ODvOOBruODr+OCpOODq+ODieOCq+ODvOODieOCkuioseWPr+OBmeOCiw==",
-       "id": "AwsSolutions-IAM5",
-       "is_reason_encoded": true
-      },
-      {
-       "reason": "44OG44K544OI55So44Gu44OQ44Kx44OD44OI44Gu44Gf44KB44CB44Ki44Kv44K744K544Ot44Kw44Gv6Kit5a6a44GX44Gq44GE",
-       "id": "AwsSolutions-S1",
-       "is_reason_encoded": true
-      },
-      {
-       "reason": "44OG44K544OI55So44Gu44OQ44Kx44OD44OI44Gu44Gf44KB44CBU1NM44Gv6Kit5a6a44GX44Gq44GE",
-       "id": "AwsSolutions-S10",
-       "is_reason_encoded": true
-      }
-     ]
-    }
-   }
+   "DeletionPolicy": "Delete"
   },
   "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
    "Type": "AWS::IAM::Role",
@@ -173,24 +143,15 @@
     ]
    },
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "cdk_nag": {
-     "rules_to_suppress": [
-      {
-       "reason": "44OG44K544OI55So44Gu44K544K/44OD44Kv44Gu44Gf44KB44CBSUFNIOODneODquOCt+ODvOOBruODr+OCpOODq+ODieOCq+ODvOODieOCkuioseWPr+OBmeOCiw==",
-       "id": "AwsSolutions-IAM5",
-       "is_reason_encoded": true
-      }
-     ]
-    }
-   }
+   "DeletionPolicy": "Delete"
   },
   "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
+     },
      "S3Key": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip"
     },
     "Timeout": 900,
@@ -202,7 +163,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs22.x",
+    "Runtime": "nodejs24.x",
     "Description": {
      "Fn::Join": [
       "",
@@ -225,18 +186,7 @@
     "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
    ],
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "cdk_nag": {
-     "rules_to_suppress": [
-      {
-       "reason": "44OG44K544OI55So44Gu44K544K/44OD44Kv44Gu44Gf44KB44CBSUFNIOODneODquOCt+ODvOOBruODr+OCpOODq+ODieOCq+ODvOODieOCkuioseWPr+OBmeOCiw==",
-       "id": "AwsSolutions-IAM5",
-       "is_reason_encoded": true
-      }
-     ]
-    }
-   }
+   "DeletionPolicy": "Delete"
   },
   "CustomS3AutoDeleteObjectsCustomResourceProviderHandlerLogGroup397C0130": {
    "Type": "AWS::Logs::LogGroup",
@@ -308,23 +258,7 @@
     ]
    },
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "cdk_nag": {
-     "rules_to_suppress": [
-      {
-       "reason": "TGFtYmRhIOOBpyBBV1NMYW1iZGFCYXNpY0V4ZWN1dGlvblJvbGUgTWFuYWdlZCBQb2xpY3kg44KS5L2/55So44GZ44KL44Gf44KB44CB5oqR5Yi244GZ44KL44CC",
-       "id": "AwsSolutions-IAM4",
-       "is_reason_encoded": true
-      },
-      {
-       "reason": "44OG44K544OI55So44Gu44K544K/44OD44Kv44Gu44Gf44KB44CBSUFNIOODneODquOCt+ODvOOBruODr+OCpOODq+ODieOCq+ODvOODieOCkuioseWPr+OBmeOCiw==",
-       "id": "AwsSolutions-IAM5",
-       "is_reason_encoded": true
-      }
-     ]
-    }
-   }
+   "DeletionPolicy": "Delete"
   },
   "LineMessagingApiMockHandlerRoleDefaultPolicy516E003A": {
    "Type": "AWS::IAM::Policy",
@@ -379,23 +313,7 @@
     ]
    },
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "cdk_nag": {
-     "rules_to_suppress": [
-      {
-       "reason": "TGFtYmRhIOOBpyBBV1NMYW1iZGFCYXNpY0V4ZWN1dGlvblJvbGUgTWFuYWdlZCBQb2xpY3kg44KS5L2/55So44GZ44KL44Gf44KB44CB5oqR5Yi244GZ44KL44CC",
-       "id": "AwsSolutions-IAM4",
-       "is_reason_encoded": true
-      },
-      {
-       "reason": "44OG44K544OI55So44Gu44K544K/44OD44Kv44Gu44Gf44KB44CBSUFNIOODneODquOCt+ODvOOBruODr+OCpOODq+ODieOCq+ODvOODieOCkuioseWPr+OBmeOCiw==",
-       "id": "AwsSolutions-IAM5",
-       "is_reason_encoded": true
-      }
-     ]
-    }
-   }
+   "DeletionPolicy": "Delete"
   },
   "LineMessagingApiMockHandlerLogGroup44C7D70C": {
    "Type": "AWS::Logs::LogGroup",
@@ -403,24 +321,15 @@
     "RetentionInDays": 365
    },
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "cdk_nag": {
-     "rules_to_suppress": [
-      {
-       "reason": "44OG44K544OI55So44Gu44K544K/44OD44Kv44Gu44Gf44KB44CBSUFNIOODneODquOCt+ODvOOBruODr+OCpOODq+ODieOCq+ODvOODieOCkuioseWPr+OBmeOCiw==",
-       "id": "AwsSolutions-IAM5",
-       "is_reason_encoded": true
-      }
-     ]
-    }
-   }
+   "DeletionPolicy": "Delete"
   },
   "LineMessagingApiMockHandler53EC5DEF": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
     "Code": {
-     "S3Bucket": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
+     },
      "S3Key": "f7877d6d3da99d4b068656e23a31d09f90fd929af7c318f1ce4e816cf7c8a7e3.zip"
     },
     "Environment": {
@@ -444,7 +353,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs20.x",
+    "Runtime": "nodejs24.x",
     "Timeout": 10
    },
    "DependsOn": [
@@ -452,23 +361,7 @@
     "LineMessagingApiMockHandlerRole30AFAD31"
    ],
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "cdk_nag": {
-     "rules_to_suppress": [
-      {
-       "reason": "TGFtYmRhIOOBpyBOb2RlanMgMTh4IOOCkuS9v+eUqOOBmeOCi+OBn+OCgeOAgeaKkeWItuOBmeOCi+OAgg==",
-       "id": "AwsSolutions-L1",
-       "is_reason_encoded": true
-      },
-      {
-       "reason": "44OG44K544OI55So44Gu44K544K/44OD44Kv44Gu44Gf44KB44CBSUFNIOODneODquOCt+ODvOOBruODr+OCpOODq+ODieOCq+ODvOODieOCkuioseWPr+OBmeOCiw==",
-       "id": "AwsSolutions-IAM5",
-       "is_reason_encoded": true
-      }
-     ]
-    }
-   }
+   "DeletionPolicy": "Delete"
   },
   "LineMessagingApiMockHandlerFunctionUrlBACC71E8": {
    "Type": "AWS::Lambda::Url",
@@ -482,18 +375,7 @@
     }
    },
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "cdk_nag": {
-     "rules_to_suppress": [
-      {
-       "reason": "44OG44K544OI55So44Gu44K544K/44OD44Kv44Gu44Gf44KB44CBSUFNIOODneODquOCt+ODvOOBruODr+OCpOODq+ODieOCq+ODvOODieOCkuioseWPr+OBmeOCiw==",
-       "id": "AwsSolutions-IAM5",
-       "is_reason_encoded": true
-      }
-     ]
-    }
-   }
+   "DeletionPolicy": "Delete"
   },
   "LineMessagingApiMockHandlerinvokefunctionurl0EFEE7EC": {
    "Type": "AWS::Lambda::Permission",
@@ -509,18 +391,23 @@
     "Principal": "*"
    },
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete",
-   "Metadata": {
-    "cdk_nag": {
-     "rules_to_suppress": [
-      {
-       "reason": "44OG44K544OI55So44Gu44K544K/44OD44Kv44Gu44Gf44KB44CBSUFNIOODneODquOCt+ODvOOBruODr+OCpOODq+ODieOCq+ODvOODieOCkuioseWPr+OBmeOCiw==",
-       "id": "AwsSolutions-IAM5",
-       "is_reason_encoded": true
-      }
+   "DeletionPolicy": "Delete"
+  },
+  "LineMessagingApiMockHandlerinvokefunction5677EF8F": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "LineMessagingApiMockHandler53EC5DEF",
+      "Arn"
      ]
-    }
-   }
+    },
+    "InvokedViaFunctionUrl": true,
+    "Principal": "*"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
   }
  },
  "Outputs": {

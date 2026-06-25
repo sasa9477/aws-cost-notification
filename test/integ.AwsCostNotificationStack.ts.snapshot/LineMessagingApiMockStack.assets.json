@@ -1,5 +1,5 @@
 {
-  "version": "48.0.0",
+  "version": "54.0.0",
   "files": {
     "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6": {
       "displayName": "LineMessagingApiMockStack/Custom::S3AutoDeleteObjectsCustomResourceProvider Code",
@@ -8,11 +8,11 @@
         "packaging": "zip"
       },
       "destinations": {
-        "643202082981-ap-northeast-1-e865f2da": {
-          "bucketName": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
+        "current_account-ap-northeast-1-0e1bfc8f": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1",
           "objectKey": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip",
           "region": "ap-northeast-1",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-file-publishing-role-643202082981-ap-northeast-1"
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-ap-northeast-1"
         }
       }
     },
@@ -23,26 +23,26 @@
         "packaging": "zip"
       },
       "destinations": {
-        "643202082981-ap-northeast-1-1bd7508d": {
-          "bucketName": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
+        "current_account-ap-northeast-1-3045213f": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1",
           "objectKey": "f7877d6d3da99d4b068656e23a31d09f90fd929af7c318f1ce4e816cf7c8a7e3.zip",
           "region": "ap-northeast-1",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-file-publishing-role-643202082981-ap-northeast-1"
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-ap-northeast-1"
         }
       }
     },
-    "6e2921ec5ffb6cd650bff479c81bfc3ecb25413a82bd50e9c64aebda11af0a9e": {
+    "5288b9973cae863cf8c52c61140c3bfcb626899a237440154d224a3cf67e57b5": {
       "displayName": "LineMessagingApiMockStack Template",
       "source": {
         "path": "LineMessagingApiMockStack.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "643202082981-ap-northeast-1-dbb0e2e5": {
-          "bucketName": "cdk-hnb659fds-assets-643202082981-ap-northeast-1",
-          "objectKey": "6e2921ec5ffb6cd650bff479c81bfc3ecb25413a82bd50e9c64aebda11af0a9e.json",
+        "current_account-ap-northeast-1-6dae448c": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1",
+          "objectKey": "5288b9973cae863cf8c52c61140c3bfcb626899a237440154d224a3cf67e57b5.json",
           "region": "ap-northeast-1",
-          "assumeRoleArn": "arn:${AWS::Partition}:iam::643202082981:role/cdk-hnb659fds-file-publishing-role-643202082981-ap-northeast-1"
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-ap-northeast-1"
         }
       }
     }

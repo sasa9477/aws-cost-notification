@@ -1,0 +1,273 @@
+{
+  "/DataFlowTest/DefaultTest/DeployAssert": [
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new IntegTest in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:44:15)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/BootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "....pnpm...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/CheckBootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CheckBootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "....pnpm...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCallbudgetsUpdateBudgetc5d64cba7f1d4965447d015c6e62dac9/Default": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Role": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SingletonFunction1488541a7b23466481b69b4408076b81Role37ABCE73"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...DeployAssert.awsApiCall in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:77:39)",
+        "...node internals, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/LogGroup": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SingletonFunction1488541a7b23466481b69b4408076b81LogGroupB3CD1BAA"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...DeployAssert.awsApiCall in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:77:39)",
+        "...node internals, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction1488541a7b23466481b69b4408076b81/Handler": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SingletonFunction1488541a7b23466481b69b4408076b81HandlerCD40AE9F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...DeployAssert.awsApiCall in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:77:39)",
+        "...node internals, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329/Default": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/Default": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": "*"
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": "*"
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/AssertionResults": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AssertionResultsAwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "....pnpm...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction76b3e830a873425f8453eddd85c86925/Role": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SingletonFunction76b3e830a873425f8453eddd85c86925Role918961BB"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...AwsApiCall.waitForAssertions in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:126:4)",
+        "...node internals, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction76b3e830a873425f8453eddd85c86925/Handler": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SingletonFunction76b3e830a873425f8453eddd85c86925Handler81461ECE"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...AwsApiCall.waitForAssertions in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:126:4)",
+        "...node internals, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction5c1898e096fb4e3e95d5f6c67f3ce41a/Role": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SingletonFunction5c1898e096fb4e3e95d5f6c67f3ce41aRoleB84BD8CE"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...AwsApiCall.waitForAssertions in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:126:4)",
+        "...node internals, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/SingletonFunction5c1898e096fb4e3e95d5f6c67f3ce41a/Handler": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "SingletonFunction5c1898e096fb4e3e95d5f6c67f3ce41aHandlerADF3E6EA"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...AwsApiCall.waitForAssertions in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:126:4)",
+        "...node internals, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCallbudgetsUpdateBudgetc5d64cba7f1d4965447d015c6e62dac9/Default/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AwsApiCallbudgetsUpdateBudgetc5d64cba7f1d4965447d015c6e62dac9"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...DeployAssert.awsApiCall in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:77:39)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329/Default/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AwsApiCalllambdaInvokeaef4e29ae1b63c7c3e67b0982c78c329"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...DeployAssert.awsApiCall in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:104:55)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/Default/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...DeployAssert.awsApiCall in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:122:4)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/WaitFor/Role": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForRoleE9F8206A"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...AwsApiCall.waitForAssertions in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:126:4)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/WaitFor/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitFor563A32CD"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...AwsApiCall.waitForAssertions in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:126:4)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/WaitFor/IsCompleteProvider/Invoke": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForIsCompleteProviderInvoke988E71C3"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...AwsApiCall.waitForAssertions in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:126:4)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/DataFlowTest/DefaultTest/DeployAssert/AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546b/WaitFor/TimeoutProvider/Invoke": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "AwsApiCalls3ListObjectsV26c5350d08d29d6d29aa8cf62da5d546bWaitForTimeoutProviderInvoke5DB6BB5E"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...AwsApiCall.waitForAssertions in .pnpm...",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:126:4)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ]
+}

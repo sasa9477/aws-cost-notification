@@ -1,0 +1,544 @@
+{
+  "/LineMessagingApiMockStack": [
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockBucket": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "bucketName": "*",
+        "removalPolicy": "destroy",
+        "autoDeleteObjects": true
+      }
+    },
+    {
+      "type": "aws:cdk:acknowledged-rules",
+      "data": {
+        "annotation::AwsSolutions-S1": "テスト用のバケットのため、アクセスログは設定しない"
+      },
+      "trace": [
+        "Validations.recordAcknowledgment (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/aws-cdk-lib@2.260.0_constructs@10.6.0/node_modules/aws-cdk-lib/core/lib/validation/validations.js:1:2126)",
+        "Validations.acknowledge (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/aws-cdk-lib@2.260.0_constructs@10.6.0/node_modules/aws-cdk-lib/core/lib/validation/validations.js:1:1956)",
+        "new LineMessagingApiMockStack (/home/sasa9477/repos/aws-cost-notification/src/stacks/LineMessagingApiMockStack.ts:74:32)",
+        "Object.<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "Module._compile (node:internal/modules/cjs/loader:1854:14)",
+        "Module.m._compile (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/ts-node@10.9.2_@types+node@25.9.3_typescript@6.0.3/node_modules/ts-node/src/index.ts:1618:23)",
+        "node:internal/modules/cjs/loader:1985:10",
+        "Object.require.extensions.<computed> [as .ts] (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/ts-node@10.9.2_@types+node@25.9.3_typescript@6.0.3/node_modules/ts-node/src/index.ts:1621:12)",
+        "Module.load (node:internal/modules/cjs/loader:1577:32)",
+        "Module._load (node:internal/modules/cjs/loader:1379:12)",
+        "wrapModuleLoad (node:internal/modules/cjs/loader:255:19)",
+        "Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)",
+        "node:internal/main/run_main_module:33:47"
+      ]
+    },
+    {
+      "type": "aws:cdk:acknowledged-rules",
+      "data": {
+        "annotation::AwsSolutions-S10": "テスト用のバケットのため、SSLは設定しない"
+      },
+      "trace": [
+        "Validations.recordAcknowledgment (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/aws-cdk-lib@2.260.0_constructs@10.6.0/node_modules/aws-cdk-lib/core/lib/validation/validations.js:1:2126)",
+        "Validations.acknowledge (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/aws-cdk-lib@2.260.0_constructs@10.6.0/node_modules/aws-cdk-lib/core/lib/validation/validations.js:1:1956)",
+        "new LineMessagingApiMockStack (/home/sasa9477/repos/aws-cost-notification/src/stacks/LineMessagingApiMockStack.ts:79:32)",
+        "Object.<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "Module._compile (node:internal/modules/cjs/loader:1854:14)",
+        "Module.m._compile (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/ts-node@10.9.2_@types+node@25.9.3_typescript@6.0.3/node_modules/ts-node/src/index.ts:1618:23)",
+        "node:internal/modules/cjs/loader:1985:10",
+        "Object.require.extensions.<computed> [as .ts] (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/ts-node@10.9.2_@types+node@25.9.3_typescript@6.0.3/node_modules/ts-node/src/index.ts:1621:12)",
+        "Module.load (node:internal/modules/cjs/loader:1577:32)",
+        "Module._load (node:internal/modules/cjs/loader:1379:12)",
+        "wrapModuleLoad (node:internal/modules/cjs/loader:255:19)",
+        "Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)",
+        "node:internal/main/run_main_module:33:47"
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
+    {
+      "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+      "data": true
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandlerRole": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "assumedBy": {
+          "principalAccount": "*",
+          "assumeRoleAction": "*"
+        },
+        "managedPolicies": [
+          {
+            "managedPolicyArn": "*"
+          }
+        ]
+      }
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": {
+        "addToPrincipalPolicy": [
+          {}
+        ]
+      }
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": {
+        "attachInlinePolicy": [
+          "*"
+        ]
+      }
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": {
+        "attachInlinePolicy": [
+          "*"
+        ]
+      }
+    },
+    {
+      "type": "aws:cdk:acknowledged-rules",
+      "data": {
+        "AwsSolutions-IAM4[Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]": "Lambda で AWSLambdaBasicExecutionRole Managed Policy を使用するため、抑制する。"
+      }
+    },
+    {
+      "type": "aws:cdk:acknowledged-rules",
+      "data": {
+        "AwsSolutions-IAM5[Resource::*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Resource::<LineMessagingApiMockBucket163462C4.Arn>/*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:Abort*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:DeleteObject*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:GetBucket*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:GetObject*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:List*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する"
+      }
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandlerLogGroup": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "removalPolicy": "retain-on-update-or-delete",
+        "retention": 365
+      }
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandler": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "runtime": "*",
+        "memorySize": "*",
+        "timeout": "*",
+        "role": "*",
+        "logGroup": "*",
+        "entry": "*",
+        "functionName": "*",
+        "bundling": {
+          "externalModules": "*",
+          "tsconfig": "*"
+        },
+        "environment": "*",
+        "code": "*",
+        "handler": "*"
+      }
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": {}
+    },
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "runtime": "*",
+        "memorySize": "*",
+        "timeout": "*",
+        "role": "*",
+        "logGroup": "*",
+        "entry": "*",
+        "functionName": "*",
+        "bundling": {
+          "externalModules": "*",
+          "tsconfig": "*"
+        },
+        "environment": "*"
+      }
+    },
+    {
+      "type": "aws:cdk:acknowledged-rules",
+      "data": {
+        "annotation::AwsSolutions-L1": "Lambda で Nodejs 18x を使用するため、抑制する。"
+      },
+      "trace": [
+        "Validations.recordAcknowledgment (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/aws-cdk-lib@2.260.0_constructs@10.6.0/node_modules/aws-cdk-lib/core/lib/validation/validations.js:1:2126)",
+        "Validations.acknowledge (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/aws-cdk-lib@2.260.0_constructs@10.6.0/node_modules/aws-cdk-lib/core/lib/validation/validations.js:1:1956)",
+        "new LineMessagingApiMockStack (/home/sasa9477/repos/aws-cost-notification/src/stacks/LineMessagingApiMockStack.ts:46:32)",
+        "Object.<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "Module._compile (node:internal/modules/cjs/loader:1854:14)",
+        "Module.m._compile (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/ts-node@10.9.2_@types+node@25.9.3_typescript@6.0.3/node_modules/ts-node/src/index.ts:1618:23)",
+        "node:internal/modules/cjs/loader:1985:10",
+        "Object.require.extensions.<computed> [as .ts] (/home/sasa9477/repos/aws-cost-notification/node_modules/.pnpm/ts-node@10.9.2_@types+node@25.9.3_typescript@6.0.3/node_modules/ts-node/src/index.ts:1621:12)",
+        "Module.load (node:internal/modules/cjs/loader:1577:32)",
+        "Module._load (node:internal/modules/cjs/loader:1379:12)",
+        "wrapModuleLoad (node:internal/modules/cjs/loader:255:19)",
+        "Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)",
+        "node:internal/main/run_main_module:33:47"
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/BootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "....pnpm...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/CheckBootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CheckBootstrapVersion"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "....pnpm...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockBucket/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LineMessagingApiMockBucket163462C4"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in .pnpm...",
+        "new LineMessagingApiMockStack (/home/sasa9477/repos/aws-cost-notification/src/stacks/LineMessagingApiMockStack.ts:14:20)",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    },
+    {
+      "type": "aws:cdk:analytics:mixin",
+      "data": {
+        "mixin": "aws-cdk-lib.aws_s3.mixins.BucketAutoDeleteObjects"
+      }
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockBucket/Policy": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "bucket": "*"
+      }
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockBucket/AutoDeleteObjectsCustomResource": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/LineMessagingApiMockStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "....pnpm...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "....pnpm...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/HandlerLogGroup": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "logGroupName": "*",
+        "removalPolicy": "destroy",
+        "retention": 365
+      }
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandlerRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LineMessagingApiMockHandlerRole30AFAD31"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Role2 in .pnpm...",
+        "new NodeJsLambdaFunction (/home/sasa9477/repos/aws-cost-notification/src/cfn_resources/NodeJsLambdaFunction.ts:20:7)",
+        "new LineMessagingApiMockStack (/home/sasa9477/repos/aws-cost-notification/src/stacks/LineMessagingApiMockStack.ts:28:20)",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    },
+    {
+      "type": "aws:cdk:acknowledged-rules",
+      "data": {
+        "AwsSolutions-IAM5[Resource::*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Resource::<LineMessagingApiMockBucket163462C4.Arn>/*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:Abort*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:DeleteObject*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:GetBucket*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:GetObject*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:List*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する"
+      }
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandlerRole/DefaultPolicy": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": {
+        "attachToRole": [
+          "*"
+        ]
+      }
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": {
+        "attachToRole": [
+          "*"
+        ]
+      }
+    },
+    {
+      "type": "aws:cdk:analytics:method",
+      "data": {
+        "addStatements": [
+          {}
+        ]
+      }
+    },
+    {
+      "type": "aws:cdk:acknowledged-rules",
+      "data": {
+        "AwsSolutions-IAM5[Resource::*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Resource::<LineMessagingApiMockBucket163462C4.Arn>/*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:Abort*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:DeleteObject*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:GetBucket*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:GetObject*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:List*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する"
+      }
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandlerLogGroup/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LineMessagingApiMockHandlerLogGroup44C7D70C"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new LogGroup2 in .pnpm...",
+        "new NodeJsLambdaFunction (/home/sasa9477/repos/aws-cost-notification/src/cfn_resources/NodeJsLambdaFunction.ts:29:22)",
+        "new LineMessagingApiMockStack (/home/sasa9477/repos/aws-cost-notification/src/stacks/LineMessagingApiMockStack.ts:28:20)",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandler/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LineMessagingApiMockHandler53EC5DEF"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new NodejsFunction in .pnpm...",
+        "new NodeJsLambdaFunction (/home/sasa9477/repos/aws-cost-notification/src/cfn_resources/NodeJsLambdaFunction.ts:34:5)",
+        "new LineMessagingApiMockStack (/home/sasa9477/repos/aws-cost-notification/src/stacks/LineMessagingApiMockStack.ts:28:20)",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandler/FunctionUrl": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": {
+        "function": "*",
+        "authType": "NONE"
+      }
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandler/invoke-function-url": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LineMessagingApiMockHandlerinvokefunctionurl0EFEE7EC"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...NodeJsLambdaFunction.addFunctionUrl in .pnpm...",
+        "new LineMessagingApiMockStack (/home/sasa9477/repos/aws-cost-notification/src/stacks/LineMessagingApiMockStack.ts:38:31)",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandler/invoke-function": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LineMessagingApiMockHandlerinvokefunction5677EF8F"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...NodeJsLambdaFunction.addFunctionUrl in .pnpm...",
+        "new LineMessagingApiMockStack (/home/sasa9477/repos/aws-cost-notification/src/stacks/LineMessagingApiMockStack.ts:38:31)",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/Exports/Output{\"Fn::GetAtt\":[\"LineMessagingApiMockHandlerFunctionUrlBACC71E8\",\"FunctionUrl\"]}": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "ExportsOutputFnGetAttLineMessagingApiMockHandlerFunctionUrlBACC71E8FunctionUrlA76D3756"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "....pnpm, node internals...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockBucket/Policy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LineMessagingApiMockBucketPolicy256F0782"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new Bucket2 in .pnpm...",
+        "new LineMessagingApiMockStack (/home/sasa9477/repos/aws-cost-notification/src/stacks/LineMessagingApiMockStack.ts:14:20)",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "...node internals..."
+      ]
+    },
+    {
+      "type": "aws:cdk:analytics:mixin",
+      "data": {
+        "mixin": "aws-cdk-lib.aws_s3.mixins.BucketPolicyStatements"
+      }
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockBucket/AutoDeleteObjectsCustomResource/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LineMessagingApiMockBucketAutoDeleteObjectsCustomResource366A2574"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "....pnpm...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/HandlerLogGroup/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandlerLogGroup397C0130"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...new LogGroup2 in .pnpm...",
+        "CustomResourceLoggingConfigAspect.visit (/home/sasa9477/repos/aws-cost-notification/src/aspects/CustomResourceLoggingConfigAspect.ts:13:27)",
+        "....pnpm..."
+      ]
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandlerRole/DefaultPolicy/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LineMessagingApiMockHandlerRoleDefaultPolicy516E003A"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "....pnpm...",
+        "(no user code in 10 frames, use --stack-trace-limit to capture more)"
+      ]
+    },
+    {
+      "type": "aws:cdk:acknowledged-rules",
+      "data": {
+        "AwsSolutions-IAM5[Resource::*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Resource::<LineMessagingApiMockBucket163462C4.Arn>/*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:Abort*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:DeleteObject*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:GetBucket*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:GetObject*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する",
+        "AwsSolutions-IAM5[Action::s3:List*]": "テスト用のスタックのため、IAM ポリシーのワイルドカードを許可する"
+      }
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandler/Code/AssetBucket": [
+    {
+      "type": "aws:cdk:analytics:construct",
+      "data": "*"
+    }
+  ],
+  "/LineMessagingApiMockStack/LineMessagingApiMockHandler/FunctionUrl/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LineMessagingApiMockHandlerFunctionUrlBACC71E8"
+    },
+    {
+      "type": "aws:cdk:creationStack",
+      "data": [
+        "...NodeJsLambdaFunction.addFunctionUrl in .pnpm...",
+        "new LineMessagingApiMockStack (/home/sasa9477/repos/aws-cost-notification/src/stacks/LineMessagingApiMockStack.ts:38:31)",
+        "<anonymous> (/home/sasa9477/repos/aws-cost-notification/test/integ.AwsCostNotificationStack.ts:18:19)",
+        "...node internals, .pnpm, .pnpm..."
+      ]
+    }
+  ]
+}
