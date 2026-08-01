@@ -67,14 +67,11 @@ export class LineMessagingApiMockStack extends cdk.Stack {
       );
     });
 
-    cdk.Validations.of(bucket).acknowledge({
-      id: "AwsSolutions-S1",
-      reason: "テスト用のバケットのため、アクセスログは設定しない",
-    });
-
-    cdk.Validations.of(bucket).acknowledge({
-      id: "AwsSolutions-S10",
-      reason: "テスト用のバケットのため、SSLは設定しない",
+    // cdk-nag 3.0.1 は aws-cdk-lib 2.262.1 以降が記録する
+    // "Annotation::" プレフィックスを解釈できないため、ルール ID を直接記録する。
+    bucket.node.addMetadata(cdk.Validations.ACKNOWLEDGED_RULES_METADATA_KEY, {
+      "AwsSolutions-S1": "テスト用のバケットのため、アクセスログは設定しない",
+      "AwsSolutions-S10": "テスト用のバケットのため、SSLは設定しない",
     });
   }
 }
