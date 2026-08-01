@@ -17,6 +17,10 @@ updates:
     cooldown:
       # リリースから7日が経過していないパッケージは更新しない
       default-days: 7
+    ignore:
+      - dependency-name: "typescript"
+        # ts-node and ts-jest are not compatible with the TypeScript 7.0 Compiler API.
+        versions: ["7.0.x"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
