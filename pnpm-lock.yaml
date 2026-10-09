@@ -30,8 +30,8 @@ importers:
         specifier: ^1.11.23
         version: 1.11.23
       dotenv:
-        specifier: ^17.3.1
-        version: 17.4.2
+        specifier: ^18.0.5
+        version: 18.0.5
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -645,9 +645,10 @@ packages:
     resolution: {integrity: sha512-vtcDfH3TOjP8UekytvnHH1o1P4FcUdt4eQ1Y+Abap1tk/OB2MWQvcwS2ClCd1zuIhc3JKOx6p3kod8Vfys3E+A==}
     engines: {node: '>=0.3.1'}
 
-  dotenv@17.4.2:
-    resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
+  dotenv@18.0.5:
+    resolution: {integrity: sha512-aBrGvt6KhjxbEnatqMWOMidftwsrCiCvqh1yNIGB9QyF0J+VcWkKDMsvYOEm7ZS82oiV+BT1sTOtIlAmUlTpwQ==}
     engines: {node: '>=12'}
+    hasBin: true
 
   es-module-lexer@2.3.2:
     resolution: {integrity: sha512-poHGpORABojJJucnV9KbOavETW8lBVnphkW77ER5/BQ5Fz7oXSoCNek7IH3vR5nRjdsEz926ibFYX8KtLQmdyw==}
@@ -800,10 +801,6 @@ packages:
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
-
-  picomatch@4.0.5:
-    resolution: {integrity: sha512-RvwwcruNjI1ncT5xRakeyS9Lf8lcItv34KD+aif+VH9kduAyfYBipGh12274xtenIPZ119/R9BdTBa8gAwSh0A==}
-    engines: {node: '>=12'}
 
   picomatch@4.0.7:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
@@ -1515,7 +1512,7 @@ snapshots:
 
   diff@5.2.2: {}
 
-  dotenv@17.4.2: {}
+  dotenv@18.0.5: {}
 
   es-module-lexer@2.3.2: {}
 
@@ -1556,9 +1553,9 @@ snapshots:
 
   expect-type@1.4.0: {}
 
-  fdir@6.5.0(picomatch@4.0.5):
+  fdir@6.5.0(picomatch@4.0.7):
     optionalDependencies:
-      picomatch: 4.0.5
+      picomatch: 4.0.7
 
   fsevents@2.3.3:
     optional: true
@@ -1645,8 +1642,6 @@ snapshots:
 
   picocolors@1.1.1: {}
 
-  picomatch@4.0.5: {}
-
   picomatch@4.0.7: {}
 
   postcss@8.5.28:
@@ -1725,8 +1720,8 @@ snapshots:
 
   tinyglobby@0.2.17:
     dependencies:
-      fdir: 6.5.0(picomatch@4.0.5)
-      picomatch: 4.0.5
+      fdir: 6.5.0(picomatch@4.0.7)
+      picomatch: 4.0.7
 
   ts-node@10.9.2(@types/node@26.6.2)(typescript@6.0.3):
     dependencies:
