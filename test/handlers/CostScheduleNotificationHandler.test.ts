@@ -1,9 +1,10 @@
 import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
-import * as lambda from "aws-lambda";
-import MockDate from "mockdate";
-import { commonLambdaHandlerContext } from "../fixtures/commonLambdaHandlerContext";
-import { handler } from "../../src/handlers/CostScheduleNotificationHandler";
+import type * as lambda from "aws-lambda";
 import { mockClient } from "aws-sdk-client-mock";
+import MockDate from "mockdate";
+import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
+import { handler } from "../../src/handlers/CostScheduleNotificationHandler";
+import { commonLambdaHandlerContext } from "../fixtures/commonLambdaHandlerContext";
 
 const commonEvent: lambda.EventBridgeEvent<"Scheduled Event", any> = {
   id: "test",
@@ -25,7 +26,7 @@ describe("CostScheduleNotificationHandler", () => {
     MockDate.set("2024-05-14");
 
     // exchangerates API のモック
-    jest.spyOn(global, "fetch").mockImplementation(() =>
+    vi.spyOn(global, "fetch").mockImplementation(() =>
       Promise.resolve({
         ok: true,
         status: 200,
@@ -89,34 +90,78 @@ describe("CostScheduleNotificationHandler", () => {
           {
             Estimated: true,
             Groups: [
-              { Keys: ["AWS Amplify"], Metrics: { AmortizedCost: { Amount: "0.0010353708", Unit: "USD" } } },
-              { Keys: ["AWS Cost Explorer"], Metrics: { AmortizedCost: { Amount: "0.06", Unit: "USD" } } },
+              {
+                Keys: ["AWS Amplify"],
+                Metrics: {
+                  AmortizedCost: { Amount: "0.0010353708", Unit: "USD" },
+                },
+              },
+              {
+                Keys: ["AWS Cost Explorer"],
+                Metrics: { AmortizedCost: { Amount: "0.06", Unit: "USD" } },
+              },
               {
                 Keys: ["AWS Key Management Service"],
                 Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
               },
-              { Keys: ["AWS Lambda"], Metrics: { AmortizedCost: { Amount: "0.0000462902", Unit: "USD" } } },
-              { Keys: ["AWS Step Functions"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
+              {
+                Keys: ["AWS Lambda"],
+                Metrics: {
+                  AmortizedCost: { Amount: "0.0000462902", Unit: "USD" },
+                },
+              },
+              {
+                Keys: ["AWS Step Functions"],
+                Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
+              },
               {
                 Keys: ["AWS Systems Manager"],
                 Metrics: { AmortizedCost: { Amount: "0.000195", Unit: "USD" } },
               },
-              { Keys: ["AWS X-Ray"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-              { Keys: ["Amazon CloudFront"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-              { Keys: ["Amazon Cognito"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-              { Keys: ["Amazon DynamoDB"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-              { Keys: ["Amazon Route 53"], Metrics: { AmortizedCost: { Amount: "0.5009144", Unit: "USD" } } },
+              {
+                Keys: ["AWS X-Ray"],
+                Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
+              },
+              {
+                Keys: ["Amazon CloudFront"],
+                Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
+              },
+              {
+                Keys: ["Amazon Cognito"],
+                Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
+              },
+              {
+                Keys: ["Amazon DynamoDB"],
+                Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
+              },
+              {
+                Keys: ["Amazon Route 53"],
+                Metrics: {
+                  AmortizedCost: { Amount: "0.5009144", Unit: "USD" },
+                },
+              },
               {
                 Keys: ["Amazon Simple Notification Service"],
                 Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
               },
               {
                 Keys: ["Amazon Simple Storage Service"],
-                Metrics: { AmortizedCost: { Amount: "0.0237715209", Unit: "USD" } },
+                Metrics: {
+                  AmortizedCost: { Amount: "0.0237715209", Unit: "USD" },
+                },
               },
-              { Keys: ["AmazonCloudWatch"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-              { Keys: ["CloudWatch Events"], Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } } },
-              { Keys: ["Tax"], Metrics: { AmortizedCost: { Amount: "0.06", Unit: "USD" } } },
+              {
+                Keys: ["AmazonCloudWatch"],
+                Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
+              },
+              {
+                Keys: ["CloudWatch Events"],
+                Metrics: { AmortizedCost: { Amount: "0", Unit: "USD" } },
+              },
+              {
+                Keys: ["Tax"],
+                Metrics: { AmortizedCost: { Amount: "0.06", Unit: "USD" } },
+              },
             ],
             TimePeriod: { End: "2024-05-14", Start: "2024-05-01" },
             Total: {},
@@ -133,7 +178,10 @@ describe("CostScheduleNotificationHandler", () => {
         totalRetryDelay: 0,
       },
       ForecastResultsByTime: [
-        { MeanValue: "1.11254067343557", TimePeriod: { End: "2024-06-01", Start: "2024-05-01" } },
+        {
+          MeanValue: "1.11254067343557",
+          TimePeriod: { End: "2024-06-01", Start: "2024-05-01" },
+        },
       ],
       Total: { Amount: "1.11254067343557", Unit: "USD" },
     });
@@ -142,7 +190,7 @@ describe("CostScheduleNotificationHandler", () => {
   afterAll(() => {
     MockDate.reset();
     costExplorerMock.restore();
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   test("請求額の出力が正しい", async () => {

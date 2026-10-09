@@ -1,6 +1,7 @@
-import * as cdk from "aws-cdk-lib";
 import type { PolicyValidationPluginReport } from "aws-cdk-lib";
+import * as cdk from "aws-cdk-lib";
 import { AwsSolutionsChecks } from "cdk-nag";
+import { beforeAll, describe, test } from "vitest";
 
 import { LineMessagingApiMockStack } from "../src/stacks/LineMessagingApiMockStack";
 
@@ -10,7 +11,7 @@ describe("LineMessagingApiMock Stack", () => {
   beforeAll(() => {
     const app = new cdk.App();
     const checks = new AwsSolutionsChecks(app, { verbose: true });
-    new LineMessagingApiMockStack(app, "JestLineMessagingApiMockStack");
+    new LineMessagingApiMockStack(app, "TestLineMessagingApiMockStack");
 
     nagReport = checks.validateScope(app);
   });

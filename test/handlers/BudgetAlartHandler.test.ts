@@ -1,8 +1,9 @@
-import { commonLambdaHandlerContext } from "../fixtures/commonLambdaHandlerContext";
-import { handler } from "../../src/handlers/BudgetAlertHandler";
 import { CostExplorerClient, GetCostAndUsageCommand, GetCostForecastCommand } from "@aws-sdk/client-cost-explorer";
-import MockDate from "mockdate";
 import { mockClient } from "aws-sdk-client-mock";
+import MockDate from "mockdate";
+import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
+import { handler } from "../../src/handlers/BudgetAlertHandler";
+import { commonLambdaHandlerContext } from "../fixtures/commonLambdaHandlerContext";
 
 const costExplorerMock = mockClient(CostExplorerClient);
 
@@ -43,13 +44,16 @@ describe("BudgetAlertHandler", () => {
         totalRetryDelay: 0,
       },
       ForecastResultsByTime: [
-        { MeanValue: "1.11254067343557", TimePeriod: { End: "2024-06-01", Start: "2024-05-01" } },
+        {
+          MeanValue: "1.11254067343557",
+          TimePeriod: { End: "2024-06-01", Start: "2024-05-01" },
+        },
       ],
       Total: { Amount: "1.11254067343557", Unit: "USD" },
     });
 
     // exchangerates API のモック
-    jest.spyOn(global, "fetch").mockImplementation(() =>
+    vi.spyOn(global, "fetch").mockImplementation(() =>
       Promise.resolve({
         ok: true,
         status: 200,
@@ -69,7 +73,9 @@ describe("BudgetAlertHandler", () => {
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    MockDate.reset();
+    costExplorerMock.restore();
+    vi.restoreAllMocks();
   });
 
   test("予想額の出力が正しい", async () => {

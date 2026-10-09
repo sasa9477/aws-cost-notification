@@ -1,7 +1,6 @@
 allowBuilds:
-  '@parcel/watcher': true
+  "@parcel/watcher": true
   esbuild: true
-  unrs-resolver: true
 
 # 7 days (7 * 24 * 60 = 10080 minutes)
 minimumReleaseAge: 10080

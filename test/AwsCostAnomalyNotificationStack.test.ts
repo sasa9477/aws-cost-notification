@@ -1,6 +1,7 @@
-import * as cdk from "aws-cdk-lib";
 import type { PolicyValidationPluginReport } from "aws-cdk-lib";
+import * as cdk from "aws-cdk-lib";
 import { AwsSolutionsChecks } from "cdk-nag";
+import { beforeAll, describe, test } from "vitest";
 
 import { AwsCostAnomalyNotificationStack } from "../src/stacks/AwsCostAnomalyNotificationStack";
 import { testConfig } from "./fixtures/testConfig";
@@ -12,12 +13,12 @@ describe("AwsCostAnomalyNotification Stack", () => {
     const app = new cdk.App();
     const checks = new AwsSolutionsChecks(app, { verbose: true });
 
-    const topicStack = new cdk.Stack(app, "JestTopicStack");
+    const topicStack = new cdk.Stack(app, "TestTopicStack");
     const notificationTopic = new cdk.aws_sns.Topic(topicStack, "NotificationTopic", {
       enforceSSL: true,
     });
 
-    new AwsCostAnomalyNotificationStack(app, "JestAwsCostAnomalyNotificationStack", {
+    new AwsCostAnomalyNotificationStack(app, "TestAwsCostAnomalyNotificationStack", {
       config: testConfig,
       notificationTopic,
     });

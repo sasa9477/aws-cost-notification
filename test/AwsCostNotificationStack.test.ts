@@ -1,7 +1,8 @@
+import type { PolicyValidationPluginReport } from "aws-cdk-lib";
 import * as cdk from "aws-cdk-lib";
 import { Capture, Match, Template } from "aws-cdk-lib/assertions";
-import type { PolicyValidationPluginReport } from "aws-cdk-lib";
 import { AwsSolutionsChecks } from "cdk-nag";
+import { beforeAll, describe, expect, test } from "vitest";
 
 import * as AwsCostNotification from "../src/stacks/AwsCostNotificationStack";
 import { testConfig } from "./fixtures/testConfig";
@@ -16,7 +17,7 @@ describe("AWS Cost Notification Stack", () => {
 
     const app = new cdk.App();
     const checks = new AwsSolutionsChecks(app, { verbose: true });
-    stack = new AwsCostNotification.AwsCostNotificationStack(app, "JestStack", {
+    stack = new AwsCostNotification.AwsCostNotificationStack(app, "TestStack", {
       config: testConfig,
       lineChannelId: "",
       lineChannelSecret: "",

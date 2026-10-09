@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
+exports[`AWS Cost Notification Stack > スナップショットテスト 1`] = `
 {
   "Parameters": {
     "BootstrapVersion": {
@@ -28,7 +28,7 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
             "TZ": "Asia/Tokyo",
           },
         },
-        "FunctionName": "JestStackBudgetAlertHandler",
+        "FunctionName": "TestStackBudgetAlertHandler",
         "Handler": "index.handler",
         "LoggingConfig": {
           "LogGroup": {
@@ -47,7 +47,7 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       },
       "Type": "AWS::Lambda::Function",
     },
-    "BudgetAlertConstructBudgetAlertHandlerAllowInvokeJestStackBudgetAlertConstructBudgetAlertTopic187020EAD81C2F91": {
+    "BudgetAlertConstructBudgetAlertHandlerAllowInvokeTestStackBudgetAlertConstructBudgetAlertTopic68EC8B5E5B1649BA": {
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
@@ -214,8 +214,8 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
             "SuccessFeedbackSampleRate": "100",
           },
         ],
-        "DisplayName": "JestStackBudgetAlertTopic",
-        "TopicName": "JestStackBudgetAlertTopic",
+        "DisplayName": "TestStackBudgetAlertTopic",
+        "TopicName": "TestStackBudgetAlertTopic",
       },
       "Type": "AWS::SNS::Topic",
     },
@@ -338,7 +338,7 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
             "Amount": 100,
             "Unit": "USD",
           },
-          "BudgetName": "JestStack-MonthlyCostBudget",
+          "BudgetName": "TestStack-MonthlyCostBudget",
           "BudgetType": "COST",
           "TimeUnit": "MONTHLY",
         },
@@ -384,7 +384,7 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
         "FlexibleTimeWindow": {
           "Mode": "OFF",
         },
-        "Name": "JestStackCostNotificationSchedule",
+        "Name": "TestStackCostNotificationSchedule",
         "ScheduleExpression": "cron(0 10 ? * 2 *)",
         "ScheduleExpressionTimezone": "Asia/Tokyo",
         "Target": {
@@ -465,7 +465,7 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
             "TZ": "Asia/Tokyo",
           },
         },
-        "FunctionName": "JestStackCostScheduleNotificationHandler",
+        "FunctionName": "TestStackCostScheduleNotificationHandler",
         "Handler": "index.handler",
         "LoggingConfig": {
           "LogGroup": {
@@ -619,7 +619,7 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
             "LINE_USER_ID": "",
           },
         },
-        "FunctionName": "JestStackLineNotificationHandler",
+        "FunctionName": "TestStackLineNotificationHandler",
         "Handler": "index.handler",
         "LoggingConfig": {
           "LogGroup": {
@@ -638,7 +638,7 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
       },
       "Type": "AWS::Lambda::Function",
     },
-    "LineNotificationConstructLineNotificationHandlerAllowInvokeJestStackLineNotificationConstructNotificationTopic7196FCD41AF23999": {
+    "LineNotificationConstructLineNotificationHandlerAllowInvokeTestStackLineNotificationConstructNotificationTopic0DF1A60CA1085B28": {
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
@@ -728,8 +728,8 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
             "SuccessFeedbackSampleRate": "100",
           },
         ],
-        "DisplayName": "JestStackNotificationTopic",
-        "TopicName": "JestStackNotificationTopic",
+        "DisplayName": "TestStackNotificationTopic",
+        "TopicName": "TestStackNotificationTopic",
       },
       "Type": "AWS::SNS::Topic",
     },
