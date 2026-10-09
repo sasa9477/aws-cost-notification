@@ -20,7 +20,7 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "9df4fb7ed1a0b11dfc122b89b1fc5ab4d74c31a88f9f3edf4d2f5b02c9ea0281.zip",
+          "S3Key": "750fa67993af1ce1078214fe4f0e6ded98cc07ac21ff42e504c56a68962c0274.zip",
         },
         "Environment": {
           "Variables": {
@@ -457,7 +457,7 @@ exports[`AWS Cost Notification Stack スナップショットテスト 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "589916275409257f9fb3f98481bd9a2e5f9ac6d95c54a68b7ae05a04f460e8fb.zip",
+          "S3Key": "01f9af2a9eeec2f614b6ca5d8dde9694e3de3fc52857a7060e0f6419e9b17c85.zip",
         },
         "Environment": {
           "Variables": {
